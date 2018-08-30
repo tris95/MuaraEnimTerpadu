@@ -1,9 +1,9 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -16,15 +16,6 @@ import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link KontakFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link KontakFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class KontakFragment extends Fragment {
     Toolbar toolbar;
 
@@ -46,14 +37,14 @@ public class KontakFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_kontak, container, false);
         toolbar = v.findViewById(R.id.toolbar);
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Kontak");
         }
         return v;
     }

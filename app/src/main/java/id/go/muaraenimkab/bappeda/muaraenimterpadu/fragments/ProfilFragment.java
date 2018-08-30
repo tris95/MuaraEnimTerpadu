@@ -44,7 +44,7 @@ public class ProfilFragment extends Fragment {
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Profile");
         }
         return v;
     }
