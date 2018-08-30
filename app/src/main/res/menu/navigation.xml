@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/baseline_home_24"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_kontak"
+        android:icon="@drawable/baseline_domain_48"
+        android:title="@string/title_kontak" />
+
+    <item
+        android:id="@+id/navigation_event"
+        android:icon="@drawable/baseline_stars_24"
+        android:title="@string/title_event" />
+
+    <item
+        android:id="@+id/navigation_laporan"
+        android:icon="@drawable/baseline_report_24"
+        android:title="@string/title_laporan" />
+
+    <item
+        android:id="@+id/navigation_profil"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="@string/title_profil" />
+
+</menu>
