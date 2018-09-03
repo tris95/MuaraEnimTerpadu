@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/activity_vertical_margin"
+    android:paddingRight="3dp"
+    android:paddingLeft="3dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+    <com.github.siyamed.shapeimageview.RoundedImageView
         android:layout_width="130dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_launcher_foreground"
-        app:siSquare="true"/>
+        android:src="@drawable/jalan"
+        android:id="@+id/imgContent"
+        app:siRadius="14dp"
+        app:siBorderColor="@color/white"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:id="@+id/lblContent"
         android:text="@string/kuliner"
-        android:textColor="@color/red" />
+        android:textSize="20sp"
+        android:paddingTop="70dp"
+        android:paddingLeft="10dp"
+        android:textColor="@color/white"
+        android:paddingStart="10dp"
+        tools:ignore="RtlSymmetry" />
 </RelativeLayout>

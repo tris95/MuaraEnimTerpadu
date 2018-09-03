@@ -14,6 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -55,7 +57,6 @@ public class LaporanFragment extends Fragment {
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Laporan");
         }
-
         tabLayout = v.findViewById(R.id.tabs);
         mViewPager = v.findViewById(R.id.container);
         tabLayout.setTabTextColors(Color.parseColor("#E0E0E0"), Color.parseColor("#FFFFFF"));
@@ -74,6 +75,11 @@ public class LaporanFragment extends Fragment {
 
 //    public void onButtonPressed(Uri uri) {
 //    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu,inflater);
+        inflater.inflate(R.menu.navigation_profil, menu);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -98,9 +104,9 @@ public class LaporanFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new LaporanSayaFragment();
-                case 1:
                     return new KirimLaporanFragment();
+                case 1:
+                    return new LaporanSayaFragment();
             }
             return null;
         }

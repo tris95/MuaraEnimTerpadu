@@ -21,49 +21,69 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vpSlideshow"
+        <RelativeLayout
+            android:id="@+id/rlslide"
             android:layout_width="match_parent"
-            android:layout_height="100dp" />
+            android:layout_height="wrap_content">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vpSlideshow"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" />
+
+            <LinearLayout
+                android:id="@+id/slidedot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="130dp"
+                android:gravity="center"
+                android:orientation="horizontal" />
+        </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rcContent"
+            android:id="@+id/rvContent"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_below="@+id/vpSlideshow"
+            android:layout_height="120dp"
+            android:layout_below="@+id/rlslide"
             android:orientation="horizontal" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_below="@id/rcContent"
+            android:layout_below="@id/rvContent"
             android:background="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/lblBeritaterbaru"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rcContent"
+            android:layout_below="@+id/rvContent"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="@string/berita_baru"
             android:textColor="@color/red"
-            android:textStyle="bold" />
+            android:textStyle="bold" 
+            android:paddingBottom="5dp"/>
 
         <TextView
             android:id="@+id/lblBeritaselengkapnya"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/vpSlideshow"
-            android:layout_alignRight="@+id/vpSlideshow"
-            android:layout_below="@+id/rcContent"
+            android:layout_alignEnd="@+id/rlslide"
+            android:layout_alignRight="@+id/rlslide"
+            android:layout_below="@+id/rvContent"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:text="@string/berita_selengkapnya" />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/rvBerita"
             android:layout_below="@+id/lblBeritaterbaru"
             android:orientation="vertical" />
 
