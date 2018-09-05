@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.KontakFragment">
+    tools:context=".fragments.LaporanSayaFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -14,19 +14,18 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
+            android:layout_height="wrap_content" />
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_margin">
+        android:paddingTop="@dimen/activity_margin">
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rvKontak"/>
+            android:id="@+id/rvKategoriBerita"/>
     </RelativeLayout>
 
 </LinearLayout>

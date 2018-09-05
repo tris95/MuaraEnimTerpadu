@@ -1,6 +1,7 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,21 +19,22 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.KontakViewAdapter;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.BeritaViewAdapter;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 
-public class KontakFragment extends Fragment {
+
+public class BeritaFragment extends Fragment {
     Toolbar toolbar;
-    RecyclerView rvKontak;
+    RecyclerView rvBerita;
     LinearLayoutManager linearLayoutManager;
-    ArrayList<Kontak> mListKontak;
+    ArrayList<Berita> mListBerita;
 
-    public KontakFragment() {
+    public BeritaFragment() {
         // Required empty public constructor
     }
 
-    public static KontakFragment newInstance() {
-        KontakFragment fragment = new KontakFragment();
+    public static BeritaFragment newInstance() {
+        BeritaFragment fragment = new BeritaFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -47,28 +49,31 @@ public class KontakFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_kontak, container, false);
+        View v=inflater.inflate(R.layout.fragment_berita, container, false);
         toolbar = v.findViewById(R.id.toolbar);
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Kontak");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Politik");
         }
-
-        rvKontak=v.findViewById(R.id.rvKontak);
+        rvBerita=v.findViewById(R.id.rvBerita);
         linearLayoutManager=new LinearLayoutManager(getContext());
-        rvKontak.setLayoutManager(linearLayoutManager);
-        KontakViewAdapter kontakViewAdapter=new KontakViewAdapter(getContext(),mListKontak);
-        rvKontak.setAdapter(kontakViewAdapter);
+        rvBerita.setLayoutManager(linearLayoutManager);
+        BeritaViewAdapter kategoriberitaViewAdapter=new BeritaViewAdapter(getContext(),mListBerita);
+        rvBerita.setAdapter(kategoriberitaViewAdapter);
         return v;
     }
 
-//    public void onButtonPressed(Uri uri) {
-//    }
+    public void onButtonPressed(Uri uri) {
+
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
     }
 
     @Override
@@ -76,7 +81,4 @@ public class KontakFragment extends Fragment {
         super.onDetach();
     }
 
-//    public interface OnFragmentInteractionListener {
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.DetailBeritaFragment">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgDetaiBerita"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/jlntol" />
+
+        <TextView
+            android:id="@+id/lblLikeUnlike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/imgDetaiBerita"
+            android:drawableRight="@drawable/baseline_thumb_up_24"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:text="Suka"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/activity_margin">
+
+            <TextView
+                android:id="@+id/lblJudulBerita"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="Kabupaten Muara Enim"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/rlket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblJudulBerita"
+                android:paddingTop="6dp">
+
+                <TextView
+                    android:id="@+id/lbltanggalBerita"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:drawableLeft="@drawable/baseline_event_12"
+                    android:drawableTint="@color/colorPrimary"
+                    android:text="14-08-2018 11:56 am"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/lblLikeBerita"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="140dp"
+                    android:layout_marginStart="140dp"
+                    android:drawableLeft="@drawable/baseline_favorite_12"
+                    android:drawableTint="@color/colorPrimary"
+                    android:text="117"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/lblViewBerita"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="180dp"
+                    android:layout_marginStart="180dp"
+                    android:drawableLeft="@drawable/baseline_person_12"
+                    android:drawableTint="@color/colorPrimary"
+                    android:text="711"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/lblIsiBerita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlket"
+                android:paddingTop="5dp"
+                android:text="Material is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material streamlines collaboration between designers and developers, and helps teams quickly build beautiful products."
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

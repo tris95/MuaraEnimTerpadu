@@ -1,6 +1,7 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,21 +19,21 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.KontakViewAdapter;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.KategoriBeritaViewAdapter;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 
-public class KontakFragment extends Fragment {
+
+public class KategoriBeritaFragment extends Fragment {
     Toolbar toolbar;
-    RecyclerView rvKontak;
+    RecyclerView rvKategoriBerita;
     LinearLayoutManager linearLayoutManager;
-    ArrayList<Kontak> mListKontak;
-
-    public KontakFragment() {
+    ArrayList<KategoriBerita> mListKategoriBerita;
+    public KategoriBeritaFragment() {
         // Required empty public constructor
     }
 
-    public static KontakFragment newInstance() {
-        KontakFragment fragment = new KontakFragment();
+    public static KategoriBeritaFragment newInstance() {
+        KategoriBeritaFragment fragment = new KategoriBeritaFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -41,42 +42,48 @@ public class KontakFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_kontak, container, false);
+        View v = inflater.inflate(R.layout.fragment_kategori_berita, container, false);
         toolbar = v.findViewById(R.id.toolbar);
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Kontak");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Kategori Berita");
         }
-
-        rvKontak=v.findViewById(R.id.rvKontak);
+        rvKategoriBerita=v.findViewById(R.id.rvKategoriBerita);
         linearLayoutManager=new LinearLayoutManager(getContext());
-        rvKontak.setLayoutManager(linearLayoutManager);
-        KontakViewAdapter kontakViewAdapter=new KontakViewAdapter(getContext(),mListKontak);
-        rvKontak.setAdapter(kontakViewAdapter);
+        rvKategoriBerita.setLayoutManager(linearLayoutManager);
+        KategoriBeritaViewAdapter kategoriberitaViewAdapter=new KategoriBeritaViewAdapter(getContext(),mListKategoriBerita);
+        rvKategoriBerita.setAdapter(kategoriberitaViewAdapter);
         return v;
     }
 
-//    public void onButtonPressed(Uri uri) {
-//    }
+    public void onButtonPressed(Uri uri) {
+
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
     }
 
     @Override
     public void onDetach() {
+
         super.onDetach();
     }
 
-//    public interface OnFragmentInteractionListener {
-//        void onFragmentInteraction(Uri uri);
-//    }
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
+    }
+
 }

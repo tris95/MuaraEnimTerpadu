@@ -1,5 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/activity_margin"
+    android:paddingLeft="@dimen/activity_margin"
+    android:paddingRight="@dimen/activity_margin">
 
+    <com.github.siyamed.shapeimageview.RoundedImageView
+        android:id="@+id/imgkategori"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/jalan"
+        app:siBorderColor="@color/white"
+        app:siRadius="15dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/relative_background">
+
+        <TextView
+            android:id="@+id/lbljudulkategori"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            android:text="Politik"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="60dp"
+            android:layout_marginRight="60dp"
+            android:background="@color/colorAccent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:drawableTint="@color/white"
+            android:drawableRight="@drawable/baseline_keyboard_tab_24"
+            android:drawableEnd="@drawable/baseline_keyboard_tab_24" />
+    </RelativeLayout>
 </RelativeLayout>

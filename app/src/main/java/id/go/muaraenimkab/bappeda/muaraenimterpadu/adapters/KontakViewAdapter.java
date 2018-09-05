@@ -1,6 +1,5 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,35 +11,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailBeritaFragment;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.KontakFragment;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 
-public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.DataObjectHolder> {
+public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.DataObjectHolder>  {
     private Context context;
-    private ArrayList<Berita> mListBerita;
+    private ArrayList<Kontak> mListKontak;
 
 
-    public BeritaViewAdapter(Context context, ArrayList<Berita> mListBerita) {
+    public KontakViewAdapter(Context context, ArrayList<Kontak> mListKontak) {
         this.context = context;
-        this.mListBerita = mListBerita;
+        this.mListKontak = mListKontak;
     }
 
     @NonNull
     @Override
     public DataObjectHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_berita, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_kategori, parent, false);
         return new DataObjectHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final DataObjectHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.imgBerita.setImageResource(R.drawable.jalan);
-        holder.lblJudulBerita.setText("Material Design Android");
-        holder.lblIsiBerita.setText("Material is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material streamlines collaboration between designers and developers, and helps teams quickly build beautiful products.");
+        holder.imgkontak.setImageResource(R.drawable.jalan);
+        holder.lbljudulkontak.setText("Pemadap Kebakaran");
 
 //        Glide.with(context)
 //                .load(Utilities.getBaseURLImageProduk() + mListDatasetProduct.get(position).get(0).getGambar())
@@ -51,10 +48,7 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (MainActivity.flag2 == 6)
-                    MainActivity.replaceFragment(DetailBeritaFragment.newInstance(), 7);
-                else
-                    MainActivity.replaceFragment(DetailBeritaFragment.newInstance(), 5);
+                MainActivity.replaceFragment(KontakFragment.newInstance(), 5);
             }
         });
 
@@ -64,16 +58,14 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
     public int getItemCount() {
         return 5;
     }
-
     class DataObjectHolder extends RecyclerView.ViewHolder {
-        ImageView imgBerita;
-        TextView lblJudulBerita, lblIsiBerita;
+        ImageView imgkontak;
+        TextView lbljudulkontak;
 
         DataObjectHolder(View itemView) {
             super(itemView);
-            imgBerita = itemView.findViewById(R.id.imgBerita);
-            lblJudulBerita = itemView.findViewById(R.id.lblJudulBerita);
-            lblIsiBerita = itemView.findViewById(R.id.lblIsiBerita);
+            imgkontak = itemView.findViewById(R.id.imgkategori);
+            lbljudulkontak = itemView.findViewById(R.id.lbljudulkategori);
         }
     }
 }

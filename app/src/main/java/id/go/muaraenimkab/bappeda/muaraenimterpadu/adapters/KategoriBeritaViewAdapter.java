@@ -12,35 +12,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailBeritaFragment;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.BeritaFragment;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 
-public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.DataObjectHolder> {
+public class KategoriBeritaViewAdapter extends RecyclerView.Adapter<KategoriBeritaViewAdapter.DataObjectHolder> {
     private Context context;
-    private ArrayList<Berita> mListBerita;
+    private ArrayList<KategoriBerita> mListKategoriBerita;
 
 
-    public BeritaViewAdapter(Context context, ArrayList<Berita> mListBerita) {
+    public KategoriBeritaViewAdapter(Context context, ArrayList<KategoriBerita> mListKategoriBerita) {
         this.context = context;
-        this.mListBerita = mListBerita;
+        this.mListKategoriBerita = mListKategoriBerita;
     }
 
     @NonNull
     @Override
     public DataObjectHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_berita, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_kategori, parent, false);
         return new DataObjectHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final DataObjectHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.imgBerita.setImageResource(R.drawable.jalan);
-        holder.lblJudulBerita.setText("Material Design Android");
-        holder.lblIsiBerita.setText("Material is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material streamlines collaboration between designers and developers, and helps teams quickly build beautiful products.");
+        holder.imgkategoriBerita.setImageResource(R.drawable.jalan);
+        holder.lbljudulkategori.setText("Politik");
 
 //        Glide.with(context)
 //                .load(Utilities.getBaseURLImageProduk() + mListDatasetProduct.get(position).get(0).getGambar())
@@ -51,10 +49,7 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (MainActivity.flag2 == 6)
-                    MainActivity.replaceFragment(DetailBeritaFragment.newInstance(), 7);
-                else
-                    MainActivity.replaceFragment(DetailBeritaFragment.newInstance(), 5);
+                MainActivity.replaceFragment(BeritaFragment.newInstance(), 6);
             }
         });
 
@@ -64,16 +59,14 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
     public int getItemCount() {
         return 5;
     }
-
     class DataObjectHolder extends RecyclerView.ViewHolder {
-        ImageView imgBerita;
-        TextView lblJudulBerita, lblIsiBerita;
+        ImageView imgkategoriBerita;
+        TextView lbljudulkategori;
 
         DataObjectHolder(View itemView) {
             super(itemView);
-            imgBerita = itemView.findViewById(R.id.imgBerita);
-            lblJudulBerita = itemView.findViewById(R.id.lblJudulBerita);
-            lblIsiBerita = itemView.findViewById(R.id.lblIsiBerita);
+            imgkategoriBerita = itemView.findViewById(R.id.imgkategori);
+            lbljudulkategori = itemView.findViewById(R.id.lbljudulkategori);
         }
     }
 }

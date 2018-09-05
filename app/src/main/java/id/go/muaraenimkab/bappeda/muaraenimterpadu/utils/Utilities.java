@@ -34,6 +34,10 @@ public class Utilities {
         return server + "";
     }
 
+    public static String getURLImageIklan() {
+        return server + "";
+    }
+
     public static String getBaseURLImageUser() {
         return server + "";
     }
