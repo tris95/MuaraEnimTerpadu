@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailKontakFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.KontakFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 
@@ -48,7 +49,7 @@ public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.Da
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.replaceFragment(KontakFragment.newInstance(), 5);
+                MainActivity.replaceFragment(DetailKontakFragment.newInstance(), 5);
             }
         });
 

@@ -63,8 +63,6 @@ public class KontakFragment extends Fragment {
         return v;
     }
 
-//    public void onButtonPressed(Uri uri) {
-//    }
 
     @Override
     public void onAttach(Context context) {
@@ -76,7 +74,4 @@ public class KontakFragment extends Fragment {
         super.onDetach();
     }
 
-//    public interface OnFragmentInteractionListener {
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

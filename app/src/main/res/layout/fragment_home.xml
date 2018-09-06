@@ -28,8 +28,7 @@
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/slider"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/jlntol"/>
+            android:layout_height="150dp"/>
 
         <!--<LinearLayout-->
         <!--android:id="@+id/slidedot"-->
@@ -79,7 +78,10 @@
             android:layout_alignEnd="@+id/rvBerita"
             android:layout_alignRight="@+id/rvBerita"
             android:layout_alignTop="@+id/lblBeritaterbaru"
-            android:text="@string/berita_selengkapnya" />
+            android:text="@string/berita_selengkapnya"
+            android:textStyle="bold"
+            android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+            android:drawableTint="@color/colorPrimary"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvBerita"
