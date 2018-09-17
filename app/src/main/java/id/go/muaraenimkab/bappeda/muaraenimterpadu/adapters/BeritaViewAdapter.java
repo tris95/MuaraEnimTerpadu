@@ -11,13 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
-import java.util.List;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailBeritaFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
 public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.DataObjectHolder> {
     private Context context;
@@ -38,15 +40,27 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
 
     @Override
     public void onBindViewHolder(@NonNull final DataObjectHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.imgBerita.setImageResource(R.drawable.jalan);
-        holder.lblJudulBerita.setText("Material Design Android");
-        holder.lblIsiBerita.setText("Material is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material streamlines collaboration between designers and developers, and helps teams quickly build beautiful products.");
+        final String like,view;
+        holder.lblJudulBerita.setText(mListBerita.get(position).getJudul_berita());
+        holder.lblIsiBerita.setText(mListBerita.get(position).getIsi_berita());
+        holder.lbltanggalBerita.setText(mListBerita.get(position).getTanggl_post());
 
-//        Glide.with(context)
-//                .load(Utilities.getBaseURLImageProduk() + mListDatasetProduct.get(position).get(0).getGambar())
-//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                .placeholder(R.color.colorDivider)
-//                .into(holder.ivProductImage);
+        if (mListBerita.get(position).getJumlahlike() != null)
+            like=mListBerita.get(position).getJumlahlike();
+        else
+            like="0";
+        holder.lbllikeBerita.setText(like);
+
+        if (mListBerita.get(position).getJumlahview() != null)
+            view=mListBerita.get(position).getJumlahview();
+        else
+            view="0";
+
+        holder.lblviewBerita.setText(view);
+
+        Picasso.with(context)
+                .load(Utilities.getURLImageBerita() + mListBerita.get(position).getGambar_berita())
+                .into(holder.imgBerita);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +69,14 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
                     MainActivity.replaceFragment(DetailBeritaFragment.newInstance(), 7);
                 else
                     MainActivity.replaceFragment(DetailBeritaFragment.newInstance(), 5);
+
+                DetailBeritaFragment.idberita = mListBerita.get(position).getId_berita();
+                DetailBeritaFragment.judulberita = mListBerita.get(position).getJudul_berita();
+                DetailBeritaFragment.tanggalberita = mListBerita.get(position).getTanggl_post();
+                DetailBeritaFragment.likeberita = like;
+                DetailBeritaFragment.viewberita = view;
+                DetailBeritaFragment.gambar = Utilities.getURLImageBerita() + mListBerita.get(position).getGambar_berita();
+
             }
         });
 
@@ -62,18 +84,21 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
 
     @Override
     public int getItemCount() {
-        return 5;
+        return mListBerita.size();
     }
 
     class DataObjectHolder extends RecyclerView.ViewHolder {
         ImageView imgBerita;
-        TextView lblJudulBerita, lblIsiBerita;
+        TextView lblJudulBerita, lblIsiBerita, lbltanggalBerita, lbllikeBerita, lblviewBerita;
 
         DataObjectHolder(View itemView) {
             super(itemView);
             imgBerita = itemView.findViewById(R.id.imgBerita);
             lblJudulBerita = itemView.findViewById(R.id.lblJudulBerita);
             lblIsiBerita = itemView.findViewById(R.id.lblIsiBerita);
+            lbltanggalBerita = itemView.findViewById(R.id.lbltanggalBerita);
+            lbllikeBerita = itemView.findViewById(R.id.lblLikeBerita);
+            lblviewBerita = itemView.findViewById(R.id.lblViewBerita);
         }
     }
 }

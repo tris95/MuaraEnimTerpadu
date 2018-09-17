@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
 public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.DataObjectHolder> {
     private Context context;
@@ -32,8 +35,10 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull DataObjectHolder holder, int position) {
-        holder.imgContent.setImageResource(R.drawable.jalan);
-        holder.content.setText("Kuliner");
+        holder.content.setText(mListContent.get(position).getNama_kategori_pariwisata());
+        Picasso.with(context)
+                .load(Utilities.getURLImagePariwisata() + mListContent.get(position).getGambar_kategori_pariwisata())
+                .into(holder.imgContent);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,17 +50,18 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
 
     @Override
     public int getItemCount() {
-        return 5;
+        return mListContent.size();
     }
 
 
     class DataObjectHolder extends RecyclerView.ViewHolder {
         ImageView imgContent;
         TextView content;
+
         DataObjectHolder(View itemView) {
             super(itemView);
-            imgContent=itemView.findViewById(R.id.imgContent);
-            content=itemView.findViewById(R.id.lblContent);
+            imgContent = itemView.findViewById(R.id.imgContent);
+            content = itemView.findViewById(R.id.lblContent);
         }
     }
 }

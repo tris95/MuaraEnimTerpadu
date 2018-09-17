@@ -20,6 +20,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 
 public class DetailKontakFragment extends Fragment {
     Toolbar toolbar;
+    public static String kontak;
     public DetailKontakFragment() {
         // Required empty public constructor
     }
@@ -47,7 +48,7 @@ public class DetailKontakFragment extends Fragment {
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Pemadam Kebakaran");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(kontak);
         }
         return v;
     }

@@ -20,6 +20,43 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rl"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:src="@drawable/nointernet"
+                android:tint="@android:color/darker_gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tidak_terhubung_ke_server"
+                android:textSize="13sp"
+                android:textColor="@android:color/darker_gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coba_lagi"
+                android:id="@+id/tv_cobalagi"
+                android:textColor="@color/colorOrange"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@drawable/custom_button"
+                android:layout_marginTop="20dp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_margin"
         android:paddingRight="@dimen/activity_margin"
@@ -29,14 +66,6 @@
             android:id="@+id/slider"
             android:layout_width="match_parent"
             android:layout_height="150dp"/>
-
-        <!--<LinearLayout-->
-        <!--android:id="@+id/slidedot"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="130dp"-->
-        <!--android:gravity="center"-->
-        <!--android:orientation="horizontal" />-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvContent"
@@ -51,6 +80,8 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_below="@id/rvContent"
+            android:id="@+id/view"
+            android:visibility="gone"
             android:background="@color/colorPrimary" />
 
     </RelativeLayout>
@@ -58,6 +89,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/rlberita"
+        android:visibility="gone"
         android:paddingLeft="@dimen/activity_margin"
         android:paddingRight="@dimen/activity_margin"
         android:paddingTop="@dimen/activity_margin">

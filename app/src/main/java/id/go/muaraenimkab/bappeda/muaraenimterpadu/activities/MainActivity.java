@@ -1,5 +1,6 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -23,15 +23,25 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.KontakFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.LaporanFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.ProfilFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Ad;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 
 public class MainActivity extends AppCompatActivity {
     Fragment fragment;
     public static int flag2;
     static Fragment lastFragment,lastFragment2;
     static FragmentManager fragmentManager;
+    @SuppressLint("StaticFieldLeak")
     static BottomNavigationViewEx bottomNavigationView;
     static int currentFragment = 0, nowFragment = 0;
     public static List<Ad> ads = new ArrayList<>();
+    public static List<Content> contents = new ArrayList<>();
+    public static List<Kontak> kontaks = new ArrayList<>();
+    public static List<KategoriBerita> kategoriBeritas= new ArrayList<>();
+    public static List<Berita> Beritas= new ArrayList<>();
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -88,21 +98,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 return true;
-//                if (item.getItemId() == R.id.navigation_home) {
-//                    fragment = HomeFragment.newInstance();
-//                } else if (item.getItemId() == R.id.navigation_kontak) {
-//                    fragment = KontakFragment.newInstance();
-//                } else if (item.getItemId() == R.id.navigation_event) {
-//                    fragment = EventFragment.newInstance();
-//                } else if (item.getItemId() == R.id.navigation_laporan) {
-//                    fragment = LaporanFragment.newInstance();
-//                } else if (item.getItemId() == R.id.navigation_profil) {
-//                    fragment = ProfilFragment.newInstance();
-//                }
-//                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-//
-//                return true;
             }
         });
     }
@@ -123,9 +118,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
-    public static void setCurrenBNV(int flag) {
-        bottomNavigationView.setCurrentItem(flag);
-    }
 
     @Override
     public void onBackPressed() {

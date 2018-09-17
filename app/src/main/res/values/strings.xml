@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MuaraEnimTerpadu</string>
+    <string name="app_name">Mance</string>
     <string name="title_home">Home</string>
     <string name="title_kontak">Kontak penting</string>
     <string name="title_event">Event</string>
@@ -29,4 +29,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="tidak_terhubung_ke_server">Tidak terhubung ke server</string>
+    <string name="coba_lagi">Coba lagi</string>
+    <string name="suka">Suka</string>
 </resources>

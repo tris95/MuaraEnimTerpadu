@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="@dimen/activity_margin"
     tools:context=".fragments.KirimLaporanFragment">
 
@@ -12,33 +13,56 @@
         android:layout_height="wrap_content"
         android:text="Judul Laporan" />
 
-    <EditText
-        android:id="@+id/txtJudul"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lblJudul" />
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:background="@drawable/custom_button">
+
+        <EditText
+            android:id="@+id/txtJudul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_textview" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/lblIsi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtJudul"
+        android:layout_marginTop="@dimen/activity_margin"
         android:text="Isi Laporan" />
 
-    <EditText
-        android:id="@+id/txtIsi"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lblIsi" />
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:layout_weight="1"
+        android:background="@drawable/custom_button">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/txtIsi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/custom_textview" />
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnKirim"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+
         android:background="@drawable/button_background"
         android:text="Kirim"
         android:textColor="@color/white" />
 
 
-</RelativeLayout>
+</LinearLayout>

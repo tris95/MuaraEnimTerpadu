@@ -1,6 +1,7 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,14 +14,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -51,12 +50,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
     Toolbar toolbar;
+    View view;
     private SliderLayout mSlider;
-    //ViewPager viewPager;
-    //LinearLayout slideDots;
-    //int dotCount, count = 0, slidecount;
-    //ImageView[] dots;
-    TextView lblBeritaselengkapnya;
+    RelativeLayout rl,rlberita;
+    TextView lblBeritaselengkapnya,tv_cobalagi;
     RecyclerView rvContent, rvBerita;
     ArrayList<Content> mListContent;
     ArrayList<Berita> mListBerita;
@@ -84,6 +81,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         toolbar = v.findViewById(R.id.toolbar);
+        rl=v.findViewById(R.id.rl);
+        rlberita=v.findViewById(R.id.rlberita);
+        view=v.findViewById(R.id.view);
+        tv_cobalagi  = v.findViewById(R.id.tv_cobalagi);
+
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
@@ -91,45 +93,8 @@ public class HomeFragment extends Fragment {
         }
 
         mSlider = v.findViewById(R.id.slider);
-        //int images[]={R.drawable.jlntol,R.drawable.jalan};
-//        viewPager = v.findViewById(R.id.vpSlideshow);
-//        slideDots = v.findViewById(R.id.slidedot);
-//
-//        SlideAdapter slideAdapter = new SlideAdapter(getContext());
-//        viewPager.setAdapter(slideAdapter);
-//        dotCount = slideAdapter.getCount();
-//        dots = new ImageView[dotCount];
-//        slidecount = dotCount - 1;
-//
-//        for (int i = 0; i < dotCount; i++) {
-//            dots[i] = new ImageView(getContext());
-//            dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.nonactive_dot));
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//            params.setMargins(8, 0, 8, 0);
-//            slideDots.addView(dots[i], params);
-//        }
-//        dots[0].setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.active_dot));
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                for (int i = 0; i < dotCount; i++) {
-//                    dots[i].setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.nonactive_dot));
-//                }
-//                dots[position].setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.active_dot));
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
-        //Timer timer = new Timer();
-        //timer.scheduleAtFixedRate(new myTimerTask(), 4000, 4000);
+        rvContent = v.findViewById(R.id.rvContent);
+        rvBerita = v.findViewById(R.id.rvBerita);
 
         Display display = ((Activity) Objects.requireNonNull(getContext())).getWindowManager().getDefaultDisplay();
         final DisplayMetrics outMetrics = new DisplayMetrics();
@@ -140,9 +105,9 @@ public class HomeFragment extends Fragment {
 
         mSlider.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
-        if (MainActivity.ads.size() != 0) {
+        if (MainActivity.ads.size() != 0 && MainActivity.contents.size() != 0) {
             List<Ad> listDataAd = MainActivity.ads;
-            HashMap<String, String> url_maps = new HashMap<String, String>();
+            HashMap<String, String> url_maps = new HashMap<>();
 
             for (int a = 0; a < listDataAd.size(); a++) {
                 url_maps.put(listDataAd.get(a).getJudul_iklan(), Utilities.getURLImageIklan() + listDataAd.get(a).getGambar_iklan());
@@ -163,14 +128,23 @@ public class HomeFragment extends Fragment {
 
             mSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
             mSlider.setDuration(4000);
-        } else
-            getAd();
 
-        rvContent = v.findViewById(R.id.rvContent);
-        linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        rvContent.setLayoutManager(linearLayoutManagercontent);
-        ContentViewAdapter contentViewAdapter = new ContentViewAdapter(getContext(), mListContent);
-        rvContent.setAdapter(contentViewAdapter);
+            linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            rvContent.setLayoutManager(linearLayoutManagercontent);
+            ContentViewAdapter contentViewAdapter = new ContentViewAdapter(getContext(), (ArrayList<Content>) MainActivity.contents);
+            rvContent.setAdapter(contentViewAdapter);
+
+            linearLayoutManagerberita = new LinearLayoutManager(getContext());
+            rvBerita.setLayoutManager(linearLayoutManagerberita);
+            BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), (ArrayList<Berita>) MainActivity.Beritas);
+            rvBerita.setAdapter(beritaViewAdapter);
+
+            view.setVisibility(View.VISIBLE);
+            rlberita.setVisibility(View.VISIBLE);
+
+        } else {
+            getAd();
+        }
 
         lblBeritaselengkapnya = v.findViewById(R.id.lblBeritaselengkapnya);
         lblBeritaselengkapnya.setOnClickListener(new View.OnClickListener() {
@@ -180,40 +154,23 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        rvBerita = v.findViewById(R.id.rvBerita);
-        linearLayoutManagerberita = new LinearLayoutManager(getContext());
-        rvBerita.setLayoutManager(linearLayoutManagerberita);
-        BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
-        rvBerita.setAdapter(beritaViewAdapter);
+        tv_cobalagi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAd();
+            }
+        });
 
         return v;
     }
 
-//    class myTimerTask extends TimerTask {
-//
-//        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//        @Override
-//        public void run() {
-//            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (viewPager.getCurrentItem() == count) {
-//                        if (count < slidecount)
-//                            viewPager.setCurrentItem(count + 1);
-//                        else
-//                            count = 0;
-//                    }
-//                    else
-//                        viewPager.setCurrentItem(count);
-//
-//                }
-//            });
-//
-//        }
-//
-//    }
-
     private void getAd() {
+        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Loading...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         String random = Utilities.getRandom(5);
 
         OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
@@ -231,11 +188,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<Value<Ad>> call, @NonNull Response<Value<Ad>> response) {
                 if (response.body() != null) {
-                    int success = response.body().getSuccess();
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
-                        List<Ad> listDataAd = response.body().getData();
+                        List<Ad> listDataAd = Objects.requireNonNull(response.body()).getData();
                         MainActivity.ads = listDataAd;
-                        HashMap<String, String> url_maps = new HashMap<String, String>();
+                        HashMap<String, String> url_maps = new HashMap<>();
 
                         for (int a = 0; a < listDataAd.size(); a++) {
                             url_maps.put(listDataAd.get(a).getJudul_iklan(), Utilities.getURLImageIklan() + listDataAd.get(a).getGambar_iklan());
@@ -256,13 +213,20 @@ public class HomeFragment extends Fragment {
                         mSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
                         mSlider.setDuration(4000);
 
+                        rl.setVisibility(View.GONE);
+                        getContent(pDialog);
+
                     } else {
+                        pDialog.dismiss();
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
+                        rl.setVisibility(View.VISIBLE);
                     }
                 } else {
+                    pDialog.dismiss();
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                             Snackbar.LENGTH_LONG).show();
+                    rl.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -270,12 +234,128 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<Value<Ad>> call, @NonNull Throwable t) {
                 System.out.println("Retrofit Error:" + t.getMessage());
+                pDialog.dismiss();
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                         Snackbar.LENGTH_LONG).show();
+                rl.setVisibility(View.VISIBLE);
             }
         });
     }
 
+    private void getContent(final ProgressDialog pDialog) {
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<Value<Content>> call = api.getContent(random);
+        call.enqueue(new Callback<Value<Content>>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NonNull Call<Value<Content>> call, @NonNull Response<Value<Content>> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        mListContent = (ArrayList<Content>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.contents = mListContent;
+
+                        linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                        rvContent.setLayoutManager(linearLayoutManagercontent);
+                        ContentViewAdapter contentViewAdapter = new ContentViewAdapter(getContext(), mListContent);
+                        rvContent.setAdapter(contentViewAdapter);
+
+                        rl.setVisibility(View.GONE);
+
+                        getBerita(pDialog);
+                    } else {
+                        pDialog.dismiss();
+                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+                                Snackbar.LENGTH_LONG).show();
+                        rl.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    pDialog.dismiss();
+                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+                            Snackbar.LENGTH_LONG).show();
+                    rl.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<Value<Content>> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
+                pDialog.dismiss();
+                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
+                        Snackbar.LENGTH_LONG).show();
+                rl.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+    private void getBerita(final ProgressDialog pDialog) {
+
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<Value<Berita>> call = api.getBerita(random);
+        call.enqueue(new Callback<Value<Berita>>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NonNull Call<Value<Berita>> call, @NonNull Response<Value<Berita>> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        mListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.Beritas = mListBerita;
+
+                        linearLayoutManagerberita = new LinearLayoutManager(getContext());
+                        rvBerita.setLayoutManager(linearLayoutManagerberita);
+                        BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
+                        rvBerita.setAdapter(beritaViewAdapter);
+
+                        view.setVisibility(View.VISIBLE);
+                        rlberita.setVisibility(View.VISIBLE);
+                        pDialog.dismiss();
+
+                    } else {
+                        pDialog.dismiss();
+                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+                                Snackbar.LENGTH_LONG).show();
+                        rl.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    pDialog.dismiss();
+                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+                            Snackbar.LENGTH_LONG).show();
+                    rl.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<Value<Berita>> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
+                pDialog.dismiss();
+                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
+                        Snackbar.LENGTH_LONG).show();
+                rl.setVisibility(View.VISIBLE);
+            }
+        });
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

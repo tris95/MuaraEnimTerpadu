@@ -3,6 +3,9 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.services;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Ad;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import retrofit2.Call;
@@ -25,7 +28,25 @@ public interface APIServices {
                              @Field("token") String token);
 
     @FormUrlEncoded
+    @POST("getcontent.php")
+    Call<Value<Content>> getContent(@Field("xkey") String xkey);
+
+    @FormUrlEncoded
+    @POST("getkontak.php")
+    Call<Value<Kontak>> getKontak(@Field("xkey") String xkey);
+
+    @FormUrlEncoded
+    @POST("getkategoriberita.php")
+    Call<Value<KategoriBerita>> getKategoriBerita(@Field("xkey") String xkey);
+
+    @FormUrlEncoded
     @POST("getberita.php")
     Call<Value<Berita>> getBerita(@Field("xkey") String xkey);
+
+    @FormUrlEncoded
+    @POST("getisiberita.php")
+    Call<Value<Berita>> getIsiBerita(@Field("xkey") String xkey,
+                                     @Field("idberita") String idberita);
+
 
 }

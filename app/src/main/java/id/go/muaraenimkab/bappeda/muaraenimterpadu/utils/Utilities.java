@@ -48,6 +48,21 @@ public class Utilities {
         return server + "wp/gambar_iklan/";
     }
 
+    public static String getURLImagePariwisata() {
+        return server + "wp/gambar_pariwisata/";
+    }
+
+    public static String getURLImageKategoriBerita() {
+        return server + "wp/gambar_Kategori_berita/";
+    }
+    public static String getURLImageBerita() {
+        return server + "wp/gambar_berita/";
+    }
+
+    public static String getURLImageKontak() {
+        return server + "wp/gambar_kontak/";
+    }
+
     public static String getBaseURLImageUser() {
         return server + "";
     }

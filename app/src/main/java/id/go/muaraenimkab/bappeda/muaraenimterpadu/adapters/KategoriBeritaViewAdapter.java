@@ -11,12 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.BeritaFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
 public class KategoriBeritaViewAdapter extends RecyclerView.Adapter<KategoriBeritaViewAdapter.DataObjectHolder> {
     private Context context;
@@ -37,27 +40,25 @@ public class KategoriBeritaViewAdapter extends RecyclerView.Adapter<KategoriBeri
 
     @Override
     public void onBindViewHolder(@NonNull final DataObjectHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.imgkategoriBerita.setImageResource(R.drawable.jalan);
-        holder.lbljudulkategori.setText("Politik");
+        holder.lbljudulkategori.setText(mListKategoriBerita.get(position).getNama_kategori_berita());
 
-//        Glide.with(context)
-//                .load(Utilities.getBaseURLImageProduk() + mListDatasetProduct.get(position).get(0).getGambar())
-//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                .placeholder(R.color.colorDivider)
-//                .into(holder.ivProductImage);
+        Picasso.with(context)
+                .load(Utilities.getURLImageKategoriBerita() + mListKategoriBerita.get(position).getGambar_kategori_berita())
+                .into(holder.imgkategoriBerita);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.replaceFragment(BeritaFragment.newInstance(), 6);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MainActivity.replaceFragment(BeritaFragment.newInstance(), 6);
+//                BeritaFragment.kategoriberita=mListKategoriBerita.get(position).getNama_kategori_berita();
+//            }
+//        });
 
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return mListKategoriBerita.size();
     }
     class DataObjectHolder extends RecyclerView.ViewHolder {
         ImageView imgkategoriBerita;

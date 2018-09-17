@@ -28,6 +28,7 @@ public class BeritaFragment extends Fragment {
     RecyclerView rvBerita;
     LinearLayoutManager linearLayoutManager;
     ArrayList<Berita> mListBerita;
+    public static String kategoriberita;
 
     public BeritaFragment() {
         // Required empty public constructor
@@ -56,7 +57,7 @@ public class BeritaFragment extends Fragment {
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Politik");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(kategoriberita);
         }
         rvBerita=v.findViewById(R.id.rvBerita);
         linearLayoutManager=new LinearLayoutManager(getContext());

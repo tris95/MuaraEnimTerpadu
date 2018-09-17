@@ -19,13 +19,52 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rl"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            tools:ignore="UselessParent">
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:src="@drawable/nointernet"
+                android:tint="@android:color/darker_gray"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tidak_terhubung_ke_server"
+                android:textSize="13sp"
+                android:textColor="@android:color/darker_gray" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/coba_lagi"
+                android:id="@+id/tv_cobalagi"
+                android:textColor="@color/colorOrange"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:background="@drawable/custom_button"
+                android:layout_marginTop="20dp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imgDetaiBerita"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/jlntol" />
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/lblLikeUnlike"
@@ -36,8 +75,10 @@
             android:drawableRight="@drawable/baseline_thumb_up_24"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
-            android:text="Suka"
-            android:textSize="20sp" />
+            android:text="@string/suka"
+            android:textSize="20sp"
+            android:layout_alignParentEnd="true"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
     </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -53,7 +94,6 @@
                 android:id="@+id/lblJudulBerita"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:text="Kabupaten Muara Enim"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -72,8 +112,8 @@
                     android:layout_alignParentStart="true"
                     android:drawableLeft="@drawable/baseline_event_12"
                     android:drawableTint="@color/colorPrimary"
-                    android:text="14-08-2018 11:56 am"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="RtlHardcoded,UnusedAttribute" />
 
                 <TextView
                     android:id="@+id/lblLikeBerita"
@@ -85,8 +125,8 @@
                     android:layout_marginStart="140dp"
                     android:drawableLeft="@drawable/baseline_favorite_12"
                     android:drawableTint="@color/colorPrimary"
-                    android:text="117"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="RtlHardcoded,UnusedAttribute" />
 
                 <TextView
                     android:id="@+id/lblViewBerita"
@@ -98,8 +138,8 @@
                     android:layout_marginStart="180dp"
                     android:drawableLeft="@drawable/baseline_person_12"
                     android:drawableTint="@color/colorPrimary"
-                    android:text="711"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="RtlHardcoded,UnusedAttribute" />
             </RelativeLayout>
 
             <TextView
@@ -108,7 +148,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rlket"
                 android:paddingTop="5dp"
-                android:text="Material is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material streamlines collaboration between designers and developers, and helps teams quickly build beautiful products."
                 android:textSize="16sp" />
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

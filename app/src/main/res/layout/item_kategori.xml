@@ -12,7 +12,6 @@
         android:id="@+id/imgkategori"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:src="@drawable/jalan"
         app:siBorderColor="@color/white"
         app:siRadius="15dp" />
 
@@ -32,7 +31,6 @@
             android:layout_centerVertical="true"
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
-            android:text="Politik"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -58,6 +56,7 @@
             android:layout_marginRight="20dp"
             android:drawableTint="@color/white"
             android:drawableRight="@drawable/baseline_keyboard_tab_24"
-            android:drawableEnd="@drawable/baseline_keyboard_tab_24" />
+            android:drawableEnd="@drawable/baseline_keyboard_tab_24"
+            tools:targetApi="m" />
     </RelativeLayout>
 </RelativeLayout>

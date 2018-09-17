@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
@@ -17,6 +19,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailKontakFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.KontakFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
 public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.DataObjectHolder>  {
     private Context context;
@@ -37,19 +40,17 @@ public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.Da
 
     @Override
     public void onBindViewHolder(@NonNull final DataObjectHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.imgkontak.setImageResource(R.drawable.jalan);
-        holder.lbljudulkontak.setText("Pemadap Kebakaran");
+        holder.lbljudulkontak.setText(mListKontak.get(position).getNama_kantor());
 
-//        Glide.with(context)
-//                .load(Utilities.getBaseURLImageProduk() + mListDatasetProduct.get(position).get(0).getGambar())
-//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                .placeholder(R.color.colorDivider)
-//                .into(holder.ivProductImage);
+        Picasso.with(context)
+                .load(Utilities.getURLImageKontak() + mListKontak.get(position).getGambar_kantor())
+                .into(holder.imgkontak);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity.replaceFragment(DetailKontakFragment.newInstance(), 5);
+                DetailKontakFragment.kontak=mListKontak.get(position).getNama_kantor();
             }
         });
 
@@ -57,7 +58,7 @@ public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.Da
 
     @Override
     public int getItemCount() {
-        return 5;
+        return mListKontak.size();
     }
     class DataObjectHolder extends RecyclerView.ViewHolder {
         ImageView imgkontak;
