@@ -22,7 +22,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.TransparentToolbar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.TransparentToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBarOverlay">true</item>

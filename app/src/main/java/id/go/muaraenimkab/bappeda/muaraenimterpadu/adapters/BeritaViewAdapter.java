@@ -43,7 +43,7 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
         final String like,view;
         holder.lblJudulBerita.setText(mListBerita.get(position).getJudul_berita());
         holder.lblIsiBerita.setText(mListBerita.get(position).getIsi_berita());
-        holder.lbltanggalBerita.setText(mListBerita.get(position).getTanggl_post());
+        holder.lbltanggalBerita.setText(mListBerita.get(position).getTanggal_post());
 
         if (mListBerita.get(position).getJumlahlike() != null)
             like=mListBerita.get(position).getJumlahlike();
@@ -72,7 +72,7 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
 
                 DetailBeritaFragment.idberita = mListBerita.get(position).getId_berita();
                 DetailBeritaFragment.judulberita = mListBerita.get(position).getJudul_berita();
-                DetailBeritaFragment.tanggalberita = mListBerita.get(position).getTanggl_post();
+                DetailBeritaFragment.tanggalberita = mListBerita.get(position).getTanggal_post();
                 DetailBeritaFragment.likeberita = like;
                 DetailBeritaFragment.viewberita = view;
                 DetailBeritaFragment.gambar = Utilities.getURLImageBerita() + mListBerita.get(position).getGambar_berita();

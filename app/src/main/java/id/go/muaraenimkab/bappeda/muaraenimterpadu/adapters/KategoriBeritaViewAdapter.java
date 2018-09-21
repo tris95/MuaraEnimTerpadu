@@ -16,8 +16,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.BeritaFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 

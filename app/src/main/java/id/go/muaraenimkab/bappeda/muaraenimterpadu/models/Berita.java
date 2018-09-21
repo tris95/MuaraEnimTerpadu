@@ -1,14 +1,14 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.models;
 
 public class Berita {
-    private String id_berita,judul_berita,isi_berita,gambar_berita,tanggl_post,jumlahlike,jumlahview;
+    private String id_berita,judul_berita,isi_berita,gambar_berita,tanggal_post,jumlahlike,jumlahview;
 
-    public Berita(String id_berita, String judul_berita, String isi_berita, String gambar_berita, String tanggl_post, String jumlahlike, String jumlahview) {
+    public Berita(String id_berita, String judul_berita, String isi_berita, String gambar_berita, String tanggal_post, String jumlahlike, String jumlahview) {
         this.id_berita = id_berita;
         this.judul_berita = judul_berita;
         this.isi_berita = isi_berita;
         this.gambar_berita = gambar_berita;
-        this.tanggl_post = tanggl_post;
+        this.tanggal_post = tanggal_post;
         this.jumlahlike = jumlahlike;
         this.jumlahview = jumlahview;
     }
@@ -45,12 +45,12 @@ public class Berita {
         this.gambar_berita = gambar_berita;
     }
 
-    public String getTanggl_post() {
-        return tanggl_post;
+    public String getTanggal_post() {
+        return tanggal_post;
     }
 
-    public void setTanggl_post(String tanggl_post) {
-        this.tanggl_post = tanggl_post;
+    public void setTanggal_post(String tanggl_post) {
+        this.tanggal_post = tanggl_post;
     }
 
     public String getJumlahlike() {

@@ -21,7 +21,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.KontakFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
-public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.DataObjectHolder>  {
+public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.DataObjectHolder> {
     private Context context;
     private ArrayList<Kontak> mListKontak;
 
@@ -50,7 +50,13 @@ public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.Da
             @Override
             public void onClick(View v) {
                 MainActivity.replaceFragment(DetailKontakFragment.newInstance(), 5);
-                DetailKontakFragment.kontak=mListKontak.get(position).getNama_kantor();
+                DetailKontakFragment.kontak = mListKontak.get(position).getNama_kantor();
+                DetailKontakFragment.lat = mListKontak.get(position).getLat();
+                DetailKontakFragment.lng = mListKontak.get(position).getLng();
+                DetailKontakFragment.alamat = mListKontak.get(position).getAlamat();
+                DetailKontakFragment.no_hp = mListKontak.get(position).getNo_hp();
+                DetailKontakFragment.no_tlp = mListKontak.get(position).getNo_tlp();
+                DetailKontakFragment.gambar = Utilities.getURLImageKontak() + mListKontak.get(position).getGambar_kantor();
             }
         });
 
@@ -60,6 +66,7 @@ public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.Da
     public int getItemCount() {
         return mListKontak.size();
     }
+
     class DataObjectHolder extends RecyclerView.ViewHolder {
         ImageView imgkontak;
         TextView lbljudulkontak;

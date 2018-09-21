@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public static int flag2;
     static Fragment lastFragment,lastFragment2;
     static FragmentManager fragmentManager;
+    static FragmentTransaction fragmentTransaction;
     @SuppressLint("StaticFieldLeak")
     static BottomNavigationViewEx bottomNavigationView;
     static int currentFragment = 0, nowFragment = 0;
@@ -56,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
         currentFragment = 0;
         nowFragment = 0;
         fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+
+        bottomNavigationView.enableAnimation(true);
+        bottomNavigationView.enableShiftingMode(false);
+        bottomNavigationView.enableItemShiftingMode(false);
+        bottomNavigationView.setIconSize(27, 27);
+        bottomNavigationView.setTextSize(11);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -115,7 +123,10 @@ public class MainActivity extends AppCompatActivity {
             lastFragment = fragment;
         }
         flag2 = flag;
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.enter_from_right);
+        fragmentTransaction.replace(R.id.container, fragment).commit();
+        //fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
 
@@ -123,13 +134,23 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (nowFragment != currentFragment) {
             if (nowFragment == 7) {
-                fragmentManager.beginTransaction().replace(R.id.container, lastFragment2).commit();
+                fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
+                fragmentTransaction.replace(R.id.container, lastFragment2).commit();
+                //fragmentManager.beginTransaction().replace(R.id.container, lastFragment2).commit();
                 nowFragment = 6;
             } else if (nowFragment == 6) {
-                fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
+                fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
+                fragmentTransaction.replace(R.id.container, lastFragment).commit();
+                //fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
                 nowFragment = 5;
             } else {
-                bottomNavigationView.setCurrentItem(currentFragment);
+                fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
+                fragmentTransaction.replace(R.id.container, fragment).commit();
+                nowFragment = currentFragment;
+                //bottomNavigationView.setCurrentItem(currentFragment);
             }
         } else {
             super.onBackPressed();
@@ -140,13 +161,23 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         if (nowFragment != currentFragment) {
             if (nowFragment == 7) {
-                fragmentManager.beginTransaction().replace(R.id.container, lastFragment2).commit();
+                fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
+                fragmentTransaction.replace(R.id.container, lastFragment2).commit();
+                //fragmentManager.beginTransaction().replace(R.id.container, lastFragment2).commit();
                 nowFragment = 6;
             } else if (nowFragment == 6) {
-                fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
+                fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
+                fragmentTransaction.replace(R.id.container, lastFragment).commit();
+                //fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
                 nowFragment = 5;
             } else {
-                bottomNavigationView.setCurrentItem(currentFragment);
+                fragmentTransaction=fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
+                fragmentTransaction.replace(R.id.container, fragment).commit();
+                nowFragment = currentFragment;
+                //bottomNavigationView.setCurrentItem(currentFragment);
             }
         } else {
             super.onBackPressed();

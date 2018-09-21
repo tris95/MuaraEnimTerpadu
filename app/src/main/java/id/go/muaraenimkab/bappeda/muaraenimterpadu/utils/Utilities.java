@@ -37,7 +37,7 @@ import okhttp3.OkHttpClient;
 
 public class Utilities {
     private static Toast mToast;
-    private static String server = "http://10.10.29.215/";
+    private static String server = "http://www.freshyummy.co.id/mance/";
     private static String alphabet = "0123456789abcdefghijklmnopqrstuvwqyz";
 
     public static String getBaseURLUser() {
@@ -52,15 +52,19 @@ public class Utilities {
         return server + "wp/gambar_pariwisata/";
     }
 
+    public static String getURLImageKategoriPariwisata() {
+        return server + "wp/gambar_kategori_pariwisata/";
+    }
+
     public static String getURLImageKategoriBerita() {
-        return server + "wp/gambar_Kategori_berita/";
+        return server + "wp/gambar_kategori_berita/";
     }
     public static String getURLImageBerita() {
         return server + "wp/gambar_berita/";
     }
 
     public static String getURLImageKontak() {
-        return server + "wp/gambar_kontak/";
+        return server + "wp/gambar_kontak_penting/";
     }
 
     public static String getBaseURLImageUser() {
