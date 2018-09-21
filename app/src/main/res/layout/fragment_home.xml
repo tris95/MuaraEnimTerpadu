@@ -73,7 +73,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_margin">
 
                 <com.daimajia.slider.library.SliderLayout
                     android:id="@+id/slider"
@@ -88,15 +89,15 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/activity_margin" />
 
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@id/rvContent"
-                    android:background="@color/colorPrimary"
-                    android:visibility="gone"
-                    android:layout_marginLeft="@dimen/activity_margin"
-                    android:layout_marginRight="@dimen/activity_margin"/>
+                <!--<View-->
+                    <!--android:id="@+id/view"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0.5dp"-->
+                    <!--android:layout_below="@id/rvContent"-->
+                    <!--android:background="@color/colorPrimary"-->
+                    <!--android:visibility="gone"-->
+                    <!--android:layout_marginLeft="@dimen/activity_margin"-->
+                    <!--android:layout_marginRight="@dimen/activity_margin"/>-->
 
             </RelativeLayout>
 
