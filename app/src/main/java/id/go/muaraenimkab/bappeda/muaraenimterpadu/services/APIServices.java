@@ -8,6 +8,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -26,6 +27,16 @@ public interface APIServices {
                              @Field("email") String email,
                              @Field("password") String password,
                              @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("signup.php")
+    Call<ValueAdd> signup(@Field("xkey") String xkey,
+                          @Field("email") String email,
+                          @Field("password") String password,
+                          @Field("nama") String nama,
+                          @Field("noktp") String noktp,
+                          @Field("nohp") String nohp,
+                          @Field("alamat") String alamat);
 
     @FormUrlEncoded
     @POST("getcontent.php")

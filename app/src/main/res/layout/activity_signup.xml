@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/logomance" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/imageView"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baseline_keyboard_arrow_right_24"
+                            android:tint="@android:color/darker_gray" />
+
+                        <EditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="@android:color/darker_gray"
+                            android:hint="Alamat Email"
+                            android:textColorHint="@android:color/darker_gray"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText,UnusedAttribute" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baseline_lock_24"
+                            android:tint="@android:color/darker_gray" />
+
+                        <EditText
+                            android:id="@+id/etPass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="@android:color/darker_gray"
+                            android:hint="Password"
+                            android:textColorHint="@android:color/darker_gray"
+                            android:inputType="textPassword"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText,UnusedAttribute" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baseline_person_24"
+                            android:tint="@android:color/darker_gray" />
+
+                        <EditText
+                            android:id="@+id/etNama"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="@android:color/darker_gray"
+                            android:hint="Nama"
+                            android:textColorHint="@android:color/darker_gray"
+                            android:inputType="text"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText,UnusedAttribute" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baseline_keyboard_tab_24"
+                            android:tint="@android:color/darker_gray" />
+
+                        <EditText
+                            android:id="@+id/etNoKtp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="@android:color/darker_gray"
+                            android:hint="Nomor KTP"
+                            android:textColorHint="@android:color/darker_gray"
+                            android:inputType="number"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText,UnusedAttribute" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baseline_call_24"
+                            android:tint="@android:color/darker_gray" />
+
+                        <EditText
+                            android:id="@+id/etNoHp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="@android:color/darker_gray"
+                            android:hint="Nomor HP"
+                            android:textColorHint="@android:color/darker_gray"
+                            android:inputType="number"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText,UnusedAttribute" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/baseline_location_on_24"
+                            android:tint="@android:color/darker_gray" />
+
+                        <EditText
+                            android:id="@+id/etAlamat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
+                            android:backgroundTint="@android:color/darker_gray"
+                            android:hint="Alamat"
+                            android:textColorHint="@android:color/darker_gray"
+                            android:inputType="text"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText,UnusedAttribute" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Daftar"
+                        android:textColor="@android:color/white"
+                        android:textAllCaps="false"
+                        android:background="@drawable/button_background" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
