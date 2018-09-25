@@ -17,7 +17,7 @@
             android:layout_height="110dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/mance" />
+            android:src="@drawable/logomance" />
 
         <LinearLayout
             android:layout_width="match_parent"
