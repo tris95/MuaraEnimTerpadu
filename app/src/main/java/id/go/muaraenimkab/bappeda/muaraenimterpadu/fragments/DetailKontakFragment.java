@@ -2,9 +2,11 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -158,6 +160,23 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
             lblalamatkontak.setVisibility(View.GONE);
 
 
+        lblnohp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent =new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse(no_hp));
+                startActivity(callIntent);
+            }
+        });
+
+        lblnotlp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent =new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse(no_tlp));
+                startActivity(callIntent);
+            }
+        });
         return v;
     }
 
