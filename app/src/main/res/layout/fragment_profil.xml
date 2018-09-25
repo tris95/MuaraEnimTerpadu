@@ -18,142 +18,154 @@
             android:background="?attr/colorPrimary" />
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/activity_margin">
-
-        <com.github.siyamed.shapeimageview.CircularImageView
-            android:id="@+id/imgProfil"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true" />
+        android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@drawable/baseline_photo_camera_24" />
-        </RelativeLayout>
-
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imgProfil"
-            android:orientation="vertical"
-            android:paddingTop="10dp">
+            android:padding="@dimen/activity_margin">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:text="Data Akun"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/imgProfil"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/jalan"
+                android:layout_marginTop="15dp"/>
 
             <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="4dp"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:background="@drawable/baseline_photo_camera_24"
+                    tools:ignore="UnusedAttribute"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgProfil"
+                android:id="@+id/ll"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
 
-                <android.support.v7.widget.CardView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Data Akun"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-                        <LinearLayout
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingBottom="10dp"
-                                android:paddingTop="10dp"
-                                android:text="Nama" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingBottom="10dp"
-                                android:paddingTop="10dp"
-                                android:text="No.KTP" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingBottom="10dp"
-                                android:paddingTop="10dp"
-                                android:text="Email" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingBottom="10dp"
-                                android:paddingTop="10dp"
-                                android:text="No.HP" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingBottom="10dp"
-                                android:paddingTop="10dp"
-                                android:text="Alamat" />
-                        </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_button">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:padding="10dp">
 
-                            <EditText
+                            <LinearLayout
+                                android:layout_width="70dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="10dp"
+                                    android:paddingTop="10dp"
+                                    android:text="Nama" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="10dp"
+                                    android:paddingTop="10dp"
+                                    android:text="No.KTP" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="10dp"
+                                    android:paddingTop="10dp"
+                                    android:text="Email" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="10dp"
+                                    android:paddingTop="10dp"
+                                    android:text="No.HP" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="10dp"
+                                    android:paddingTop="10dp"
+                                    android:text="Alamat" />
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp" />
+                                android:orientation="vertical">
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="14sp" />
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="14sp"/>
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="14sp" />
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="14sp" />
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="14sp" />
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="14sp" />
 
-                            <EditText
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textSize="14sp" />
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="14sp" />
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-            </RelativeLayout>
-        </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/button_background"
-            android:text="Perbarui Profil"
-            android:textColor="@color/white" />
-    </RelativeLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_background"
+                android:text="Perbarui Profil"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+    </ScrollView>
 </LinearLayout>
