@@ -19,7 +19,7 @@
     </style>
 
     <style name="AppTheme.TransparentToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimary">#80000000</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

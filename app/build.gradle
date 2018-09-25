@@ -53,6 +53,11 @@ dependencies {
     implementation 'com.daimajia.slider:library:1.1.5@aar'
     implementation 'com.squareup.picasso:picasso:2.4.0'
     implementation 'com.nineoldandroids:library:2.4.0'
+
+    //up panel
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'jp.wasabeef:blurry:2.1.1'
+
     //implementation 'com.facebook.android:facebook-android-sdk:4.33.0'
     //implementation 'com.facebook.android:account-kit-sdk:4.33.0'
     testImplementation 'junit:junit:4.12'
