@@ -7,94 +7,103 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:paddingTop="25dp">
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="30dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:src="@drawable/logomance" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/imageView"
+            android:layout_marginBottom="50dp">
 
             <LinearLayout
-                android:id="@+id/ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/baseline_account_circle_24"
-                    android:tint="@android:color/darker_gray" />
-
-                <EditText
-                    android:id="@+id/etEmail"
+                <LinearLayout
+                    android:id="@+id/ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:backgroundTint="@android:color/darker_gray"
-                    android:hint="Alamat Email"
-                    android:textColorHint="@android:color/darker_gray"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="14sp"
-                    tools:ignore="HardcodedText,UnusedAttribute" />
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp">
 
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/baseline_account_circle_24"
+                        android:tint="@android:color/darker_gray" />
 
-            <LinearLayout
-                android:id="@+id/ll2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:hint="Alamat Email"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="14sp"
+                        tools:ignore="HardcodedText,UnusedAttribute" />
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/baseline_lock_24"
-                    android:tint="@android:color/darker_gray" />
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/etPass"
+                <LinearLayout
+                    android:id="@+id/ll2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:backgroundTint="@android:color/darker_gray"
-                    android:hint="Password"
-                    android:textColorHint="@android:color/darker_gray"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="14sp"
-                    tools:ignore="HardcodedText,UnusedAttribute" />
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp">
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Masuk"
-                android:textColor="@android:color/white"
-                android:textAllCaps="false"
-                android:background="@drawable/button_background" />
-        </LinearLayout>
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/baseline_lock_24"
+                        android:tint="@android:color/darker_gray" />
+
+                    <EditText
+                        android:id="@+id/etPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:hint="Password"
+                        android:textColorHint="@android:color/darker_gray"
+                        android:inputType="textPassword"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="14sp"
+                        tools:ignore="HardcodedText,UnusedAttribute" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Masuk"
+                    android:textColor="@android:color/white"
+                    android:textAllCaps="false"
+                    android:background="@drawable/button_background" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <!--<TextView-->
             <!--android:id="@+id/textView5"-->
@@ -171,14 +180,14 @@
             android:background="@drawable/button_background" />
     </RelativeLayout>
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:visibility="gone"/>
+    <!--<com.facebook.login.widget.LoginButton-->
+        <!--android:id="@+id/login_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:layout_marginBottom="30dp"-->
+        <!--android:visibility="gone"/>-->
 
     <LinearLayout
         android:id="@+id/ll_daftar"

@@ -33,7 +33,6 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/jalan"
                 android:layout_marginTop="15dp"/>
 
             <RelativeLayout
@@ -132,26 +131,31 @@
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:id="@+id/etNama"
                                     android:textSize="14sp"/>
 
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:id="@+id/etNoKtp"
                                     android:textSize="14sp" />
 
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:id="@+id/etEmail"
                                     android:textSize="14sp" />
 
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:id="@+id/etNoHp"
                                     android:textSize="14sp" />
 
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:id="@+id/etAlamat"
                                     android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -161,11 +165,11 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/btnAction"
                 android:layout_below="@+id/ll"
                 android:layout_marginTop="15dp"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/button_background"
-                android:text="Perbarui Profil"
                 android:textColor="@android:color/white" />
         </RelativeLayout>
     </ScrollView>

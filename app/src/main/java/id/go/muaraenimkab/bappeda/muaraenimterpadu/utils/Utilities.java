@@ -8,9 +8,12 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -33,6 +36,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import okhttp3.OkHttpClient;
 
 public class Utilities {
@@ -68,8 +72,9 @@ public class Utilities {
     }
 
     public static String getBaseURLImageUser() {
-        return server + "";
+        return server + "wp/gambar_user/";
     }
+
     public static void showAsToast(Context context, String text) {
         if (context != null) {
             if (mToast != null) mToast.cancel();
@@ -90,9 +95,65 @@ public class Utilities {
         return formatter.format(testDate);
     }
 
+    public static void setUser(Context context, User user) {
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        prefsEditor.putString("xUser", json);
+        prefsEditor.apply();
+    }
+
+    public static void signOutUser(Context context) {
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+
+        prefsEditor.putBoolean("xLogin", false);
+        prefsEditor.apply();
+    }
+
+    public static User getUser(Context context) {
+        if (isLogin(context)) {
+            SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+            Gson gson = new Gson();
+            String json = mPrefs.getString("xUser", "");
+            return gson.fromJson(json, User.class);
+        } else {
+            return new User();
+        }
+    }
+
     public static void hideKeyboard(Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    public static Boolean isLogin(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean("xLogin", false);
+    }
+
+    public static void setLogin(Context context) {
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+
+        prefsEditor.putBoolean("xLogin", true);
+        prefsEditor.apply();
+    }
+
+//    public static String getToken() {
+//        String token = FirebaseInstanceId.getInstance().getToken();
+//        Log.e("token", token);
+//        if (token == null) {
+//            token = "";
+//        }
+//        return token;
+//    }
+
+    public static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public static boolean isNetworkAvailable(Context context) {
@@ -116,11 +177,6 @@ public class Utilities {
         //Locale currentLocale=new Locale("in","ID");
         //NumberFormat currency=NumberFormat.getCurrencyInstance(currentLocale);
         //return currency.format(Double.parseDouble(value));
-    }
-
-    public Boolean isLogin(Context context) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getBoolean("xLogin", false);
     }
 
     public static Bitmap getBitmapFromPath(String path) {
