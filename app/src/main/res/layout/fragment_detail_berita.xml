@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ext="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".fragments.DetailBeritaFragment">
 
@@ -78,21 +79,8 @@
                     android:id="@+id/imgDetaiBerita"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    tools:ignore="ContentDescription" />
+                    android:scaleType="fitXY"/>
 
-                <TextView
-                    android:id="@+id/lblLikeUnlike"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/imgDetaiBerita"
-                    android:drawableRight="@drawable/baseline_thumb_up_24"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:text="@string/suka"
-                    android:textSize="20sp"
-                    tools:ignore="RtlHardcoded,RtlSymmetry" />
             </RelativeLayout>
 
 
@@ -113,53 +101,110 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lblJudulBerita"
-                    android:paddingTop="6dp">
+                    android:padding="5dp">
 
-                    <TextView
-                        android:id="@+id/lbltanggalBerita"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:id="@+id/ll1"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:drawableLeft="@drawable/baseline_event_12"
-                        android:drawableTint="@color/colorPrimary"
-                        android:textSize="12sp"
-                        tools:ignore="RtlHardcoded,UnusedAttribute" />
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_event_24"
+                            android:tint="@color/colorPrimary"/>
+                        <TextView
+                            android:id="@+id/lbltanggalBerita"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/lblLikeBerita"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="140dp"
-                        android:layout_marginStart="140dp"
-                        android:drawableLeft="@drawable/baseline_favorite_12"
-                        android:drawableTint="@color/colorPrimary"
-                        android:textSize="12sp"
-                        tools:ignore="RtlHardcoded,UnusedAttribute" />
+                        android:orientation="horizontal"
+                        android:id="@+id/ll2"
+                        android:layout_toRightOf="@+id/ll1"
+                        android:gravity="center"
+                        android:layout_toEndOf="@+id/ll1"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_favorite_24"
+                            android:tint="@color/colorPrimary"/>
+                        <TextView
+                            android:id="@+id/lblLikeBerita"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/lblViewBerita"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="180dp"
-                        android:layout_marginStart="180dp"
-                        android:drawableLeft="@drawable/baseline_person_12"
-                        android:drawableTint="@color/colorPrimary"
-                        android:textSize="12sp"
-                        tools:ignore="RtlHardcoded,UnusedAttribute" />
+                        android:orientation="horizontal"
+                        android:id="@+id/ll3"
+                        android:layout_toRightOf="@+id/ll2"
+                        android:gravity="center"
+                        android:layout_toEndOf="@+id/ll2"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_person_24"
+                            android:tint="@color/colorPrimary"/>
+                        <TextView
+                            android:id="@+id/lblViewBerita"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true">
+                        <TextView
+                            android:id="@+id/lblLikeUnlike"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text="@string/suka"
+                            android:layout_marginRight="3dp"
+                            android:layout_marginEnd="3dp" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_thumb_up_24" />
+                    </LinearLayout>
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/lblIsiBerita"
-                    android:layout_width="match_parent"
+                <!--<TextView-->
+                    <!--android:id="@+id/lblIsiBerita"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/rlket"-->
+                    <!--android:paddingTop="5dp"-->
+                    <!--android:textSize="16sp" />-->
+
+                <com.bluejamesbond.text.DocumentView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlket"
-                    android:paddingTop="5dp"
-                    android:textSize="16sp" />
+                    android:id="@+id/lblIsiBerita"
+                    android:textSize="16sp"
+                    ext:documentView_textAlignment="justified" />
+
             </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

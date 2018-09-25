@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bluejamesbond.text.DocumentView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,7 +38,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DetailBeritaFragment extends Fragment {
     public static String idberita,judulberita,tanggalberita,likeberita,viewberita,gambar;
     Toolbar toolbar;
-    TextView tv_cobalagi,lblLikeUnlike,lblJudulBerita,lbltanggalBerita,lblLikeBerita,lblViewBerita,lblIsiBerita;
+    TextView tv_cobalagi,lblLikeUnlike,lblJudulBerita,lbltanggalBerita,lblLikeBerita,lblViewBerita;
+    DocumentView lblIsiBerita;
     ImageView imgDetaiBerita;
     ArrayList<Berita> mListBerita;
     RelativeLayout rl,rlket;

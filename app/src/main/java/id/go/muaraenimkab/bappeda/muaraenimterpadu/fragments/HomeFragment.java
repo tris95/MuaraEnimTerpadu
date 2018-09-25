@@ -116,6 +116,7 @@ public class HomeFragment extends Fragment {
             for (String name : url_maps.keySet()) {
                 TextSliderView textSliderView = new TextSliderView(getContext());
                 textSliderView
+                        .description(name)
                         .image(url_maps.get(name))
                         .setScaleType(BaseSliderView.ScaleType.Fit);
 
