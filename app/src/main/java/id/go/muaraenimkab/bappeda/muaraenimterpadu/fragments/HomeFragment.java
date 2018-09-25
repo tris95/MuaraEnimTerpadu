@@ -50,7 +50,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
     Toolbar toolbar;
-    View view;
+    //View view;
     private SliderLayout mSlider;
     RelativeLayout rl,rlberita;
     TextView lblBeritaselengkapnya,tv_cobalagi;
@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
         toolbar = v.findViewById(R.id.toolbar);
         rl=v.findViewById(R.id.rl);
         rlberita=v.findViewById(R.id.rlberita);
-        view=v.findViewById(R.id.view);
+        //view=v.findViewById(R.id.view);
         tv_cobalagi  = v.findViewById(R.id.tv_cobalagi);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
             BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), (ArrayList<Berita>) MainActivity.Beritas);
             rvBerita.setAdapter(beritaViewAdapter);
 
-            view.setVisibility(View.VISIBLE);
+            //view.setVisibility(View.VISIBLE);
             rlberita.setVisibility(View.VISIBLE);
 
         } else {
@@ -327,7 +327,7 @@ public class HomeFragment extends Fragment {
                         BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
                         rvBerita.setAdapter(beritaViewAdapter);
 
-                        view.setVisibility(View.VISIBLE);
+                        //view.setVisibility(View.VISIBLE);
                         rlberita.setVisibility(View.VISIBLE);
                         pDialog.dismiss();
 
