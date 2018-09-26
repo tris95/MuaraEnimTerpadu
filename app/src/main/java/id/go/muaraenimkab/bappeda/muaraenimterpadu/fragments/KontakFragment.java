@@ -82,10 +82,8 @@ public class KontakFragment extends Fragment {
             rvKontak.setLayoutManager(linearLayoutManagerkontak);
             KontakViewAdapter kontakViewAdapter = new KontakViewAdapter(getContext(), (ArrayList<Kontak>) MainActivity.kontaks);
             rvKontak.setAdapter(kontakViewAdapter);
-
         } else
             getKontak();
-
 
         tv_cobalagi.setOnClickListener(new View.OnClickListener() {
             @Override

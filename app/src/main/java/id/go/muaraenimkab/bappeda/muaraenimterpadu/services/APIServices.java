@@ -39,6 +39,22 @@ public interface APIServices {
                           @Field("alamat") String alamat);
 
     @FormUrlEncoded
+    @POST("ubahpass.php")
+    Call<ValueAdd> ubahpass(@Field("xkey") String xkey,
+                          @Field("email") String email,
+                          @Field("oldpass") String oldpass,
+                            @Field("newpass") String newpass);
+
+    @FormUrlEncoded
+    @POST("update.php")
+    Call<Value<User>> update(@Field("xkey") String xkey,
+                          @Field("email") String email,
+                          @Field("nama") String nama,
+                          @Field("noktp") String noktp,
+                          @Field("nohp") String nohp,
+                          @Field("alamat") String alamat);
+
+    @FormUrlEncoded
     @POST("getcontent.php")
     Call<Value<Content>> getContent(@Field("xkey") String xkey);
 
