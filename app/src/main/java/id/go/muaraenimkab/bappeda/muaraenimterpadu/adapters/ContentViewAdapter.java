@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailWisataFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
@@ -43,7 +45,7 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MainActivity.replaceFragment(DetailWisataFragment.newInstance(), 5);
             }
         });
     }
