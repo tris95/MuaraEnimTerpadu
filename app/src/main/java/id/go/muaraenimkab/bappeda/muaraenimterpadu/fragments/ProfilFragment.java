@@ -213,37 +213,41 @@ public class ProfilFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    View dialogView = inflater.inflate(R.layout.dialog_ganti_password, null);
-                    final EditText oldPas = dialogView.findViewById(R.id.et_old_password);
-                    final EditText newPas = dialogView.findViewById(R.id.et_new_password);
-                    final EditText rePass = dialogView.findViewById(R.id.et_repassword);
+                    if(Utilities.isLogin(getActivity())) {
+                        View dialogView = inflater.inflate(R.layout.dialog_ganti_password, null);
+                        final EditText oldPas = dialogView.findViewById(R.id.et_old_password);
+                        final EditText newPas = dialogView.findViewById(R.id.et_new_password);
+                        final EditText rePass = dialogView.findViewById(R.id.et_repassword);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).
-                            setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).
+                                setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String strOldPass = oldPas.getText().toString();
+                                String strNewPass = newPas.getText().toString();
+                                String strRePass = rePass.getText().toString();
+                                if (strNewPass.equals(strRePass)) {
+                                    User user = Utilities.getUser(getContext());
+                                    ubahPassword(user.getEmail(), strOldPass, strNewPass);
+                                } else {
+                                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Password baru tidak sesuai",
+                                            Snackbar.LENGTH_LONG).show();
                                 }
-                            }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String strOldPass = oldPas.getText().toString();
-                            String strNewPass = newPas.getText().toString();
-                            String strRePass = rePass.getText().toString();
-                            if (strNewPass.equals(strRePass)) {
-                                User user = Utilities.getUser(getContext());
-                                ubahPassword(user.getEmail(), strOldPass, strNewPass);
-                            }else {
-                                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Password baru tidak sesuai",
-                                        Snackbar.LENGTH_LONG).show();
                             }
-                        }
-                    }).setView(dialogView);
+                        }).setView(dialogView);
 
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-                    alertDialog.setCancelable(false);
-                    alertDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                        alertDialog.setCancelable(false);
+                        alertDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    }else {
+                        startActivity(new Intent(getContext(), SignInActivity.class));
+                    }
                     return true;
                 }
                 return false;
