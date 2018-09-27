@@ -201,6 +201,7 @@ public class HomeFragment extends Fragment {
                         for (String name : url_maps.keySet()) {
                             TextSliderView textSliderView = new TextSliderView(getContext());
                             textSliderView
+                                    .description(name)
                                     .image(url_maps.get(name))
                                     .setScaleType(BaseSliderView.ScaleType.Fit);
 
@@ -263,6 +264,7 @@ public class HomeFragment extends Fragment {
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
+                        mSlider.setVisibility(View.VISIBLE);
                         mListContent = (ArrayList<Content>) Objects.requireNonNull(response.body()).getData();
                         MainActivity.contents = mListContent;
 

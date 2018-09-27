@@ -32,7 +32,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 public class MainActivity extends AppCompatActivity {
     Fragment fragment;
     public static int flag2;
-    static Fragment lastFragment,lastFragment2;
+    static Fragment lastFragment, lastFragment2;
     static FragmentManager fragmentManager;
     static FragmentTransaction fragmentTransaction;
     @SuppressLint("StaticFieldLeak")
@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
     public static List<Ad> ads = new ArrayList<>();
     public static List<Content> contents = new ArrayList<>();
     public static List<Kontak> kontaks = new ArrayList<>();
-    public static List<KategoriBerita> kategoriBeritas= new ArrayList<>();
-    public static List<Berita> Beritas= new ArrayList<>();
+    public static List<KategoriBerita> kategoriBeritas = new ArrayList<>();
+    public static List<Berita> Beritas = new ArrayList<>();
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -113,75 +113,55 @@ public class MainActivity extends AppCompatActivity {
     public static void replaceFragment(Fragment fragment, int flag) {
         if (flag == 7) {
             nowFragment = flag;
-        }
-        else if (flag == 6) {
+        } else if (flag == 6) {
             nowFragment = flag;
             lastFragment2 = fragment;
-        }
-        else {
+        } else {
             nowFragment = flag;
             lastFragment = fragment;
         }
         flag2 = flag;
-        fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.enter_from_right);
-        fragmentTransaction.replace(R.id.container, fragment).commit();
-        //fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+//        fragmentTransaction=fragmentManager.beginTransaction();
+//        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.enter_from_right);
+//        fragmentTransaction.replace(R.id.container, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
     }
 
 
-    @Override
-    public void onBackPressed() {
+    public void Back() {
         if (nowFragment != currentFragment) {
             if (nowFragment == 7) {
-                fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
-                fragmentTransaction.replace(R.id.container, lastFragment2).commit();
-                //fragmentManager.beginTransaction().replace(R.id.container, lastFragment2).commit();
+//                fragmentTransaction=fragmentManager.beginTransaction();
+//                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
+//                fragmentTransaction.replace(R.id.container, lastFragment2).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, lastFragment2).commit();
                 nowFragment = 6;
             } else if (nowFragment == 6) {
-                fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
-                fragmentTransaction.replace(R.id.container, lastFragment).commit();
-                //fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
+//                fragmentTransaction=fragmentManager.beginTransaction();
+//                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
+//                fragmentTransaction.replace(R.id.container, lastFragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
                 nowFragment = 5;
             } else {
-                fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
-                fragmentTransaction.replace(R.id.container, fragment).commit();
+//                fragmentTransaction=fragmentManager.beginTransaction();
+//                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
+//                fragmentTransaction.replace(R.id.container, fragment).commit();
+                bottomNavigationView.setCurrentItem(currentFragment);
                 nowFragment = currentFragment;
-                //bottomNavigationView.setCurrentItem(currentFragment);
             }
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Back();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        if (nowFragment != currentFragment) {
-            if (nowFragment == 7) {
-                fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
-                fragmentTransaction.replace(R.id.container, lastFragment2).commit();
-                //fragmentManager.beginTransaction().replace(R.id.container, lastFragment2).commit();
-                nowFragment = 6;
-            } else if (nowFragment == 6) {
-                fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
-                fragmentTransaction.replace(R.id.container, lastFragment).commit();
-                //fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
-                nowFragment = 5;
-            } else {
-                fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
-                fragmentTransaction.replace(R.id.container, fragment).commit();
-                nowFragment = currentFragment;
-                //bottomNavigationView.setCurrentItem(currentFragment);
-            }
-        } else {
-            super.onBackPressed();
-        }
+        Back();
         return true;
     }
 }
