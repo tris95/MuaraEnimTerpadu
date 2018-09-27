@@ -61,7 +61,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }else if (etAlamat.getText().toString().isEmpty()){
                     etAlamat.setError("Silahkan isi alamat Anda");
                 }else {
-
                     signup();
                 }
             }
@@ -88,7 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
         APIServices api = retrofit.create(APIServices.class);
         Call<ValueAdd> call = api.signup(random, etEmail.getText().toString().trim(), etPassword.getText().toString().trim(),
                 etNama.getText().toString().trim(), etNoKtp.getText().toString().trim(), etNoHp.getText().toString().trim(),
-                etEmail.getText().toString().trim());
+                etAlamat.getText().toString().trim());
         call.enqueue(new Callback<ValueAdd>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override

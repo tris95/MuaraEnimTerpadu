@@ -28,6 +28,15 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/activity_margin">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgEdit"
+                android:src="@drawable/baseline_edit_24"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:padding="10dp"/>
+
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:id="@+id/imgProfil"
                 android:layout_width="100dp"
@@ -80,82 +89,99 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:padding="10dp">
+                            android:padding="13dp">
 
                             <LinearLayout
-                                android:layout_width="70dp"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:gravity="center_vertical">
 
-                                <TextView
+                                <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingBottom="10dp"
-                                    android:paddingTop="10dp"
-                                    android:text="Nama" />
+                                    android:src="@drawable/baseline_person_24"/>
 
-                                <TextView
+                                <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingBottom="10dp"
-                                    android:paddingTop="10dp"
-                                    android:text="No.KTP" />
+                                    android:paddingTop="15dp"
+                                    android:src="@drawable/baseline_keyboard_arrow_right_24"/>
 
-                                <TextView
+                                <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingBottom="10dp"
-                                    android:paddingTop="10dp"
-                                    android:text="Email" />
+                                    android:paddingTop="15dp"
+                                    android:src="@drawable/baseline_keyboard_arrow_right_24"/>
 
-                                <TextView
+                                <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingBottom="10dp"
-                                    android:paddingTop="10dp"
-                                    android:text="No.HP" />
+                                    android:paddingTop="20dp"
+                                    android:src="@drawable/baseline_lock_24"/>
 
-                                <TextView
+                                <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingBottom="10dp"
-                                    android:paddingTop="10dp"
-                                    android:text="Alamat" />
+                                    android:paddingTop="15dp"
+                                    android:src="@drawable/baseline_call_24"/>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="15dp"
+                                    android:src="@drawable/baseline_location_on_24"/>
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp">
 
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/etNama"
+                                    android:hint="Nama"
                                     android:textSize="14sp"/>
 
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/etNoKtp"
+                                    android:hint="Nomor KTP"
                                     android:textSize="14sp" />
 
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/etEmail"
+                                    android:hint="Alamat email"
                                     android:textSize="14sp" />
 
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:id="@+id/etPassword"
+                                    android:hint="* * * * *"
+                                    android:drawableRight="@drawable/baseline_edit_24"
+                                    android:textSize="14sp"
+                                    android:drawableEnd="@drawable/baseline_edit_24" />
+
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:id="@+id/etNoHp"
+                                    android:hint="Nomor HP"
                                     android:textSize="14sp" />
 
                                 <EditText
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/etAlamat"
+                                    android:hint="Alamat"
                                     android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
