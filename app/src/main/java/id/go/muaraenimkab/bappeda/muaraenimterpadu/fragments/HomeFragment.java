@@ -130,6 +130,8 @@ public class HomeFragment extends Fragment {
             mSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
             mSlider.setDuration(4000);
 
+            mSlider.setVisibility(View.VISIBLE);
+            
             linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             rvContent.setLayoutManager(linearLayoutManagercontent);
             ContentViewAdapter contentViewAdapter = new ContentViewAdapter(getContext(), (ArrayList<Content>) MainActivity.contents);
