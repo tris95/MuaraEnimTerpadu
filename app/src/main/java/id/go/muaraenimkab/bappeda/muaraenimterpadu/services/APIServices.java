@@ -6,7 +6,6 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
@@ -72,17 +71,9 @@ public interface APIServices {
     Call<Value<Berita>> getBerita(@Field("xkey") String xkey);
 
     @FormUrlEncoded
-    @POST("getberitaofkategori.php")
-    Call<Value<Berita>> getBeritaOfKategori(@Field("xkey") String xkey,
-                                            @Field("idkategori") String idkategori);
-
-    @FormUrlEncoded
     @POST("getisiberita.php")
     Call<Value<Berita>> getIsiBerita(@Field("xkey") String xkey,
                                      @Field("idberita") String idberita);
 
-    @FormUrlEncoded
-    @POST("getKategoripariwisata.php")
-    Call<Value<Pariwisata>> getKategoripariwisata(@Field("xkey") String xkey,
-                                                  @Field("idkategori") String idkategori);
+
 }
