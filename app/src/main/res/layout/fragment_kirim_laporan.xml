@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button"
+            android:hint="Judul laporan Anda"
             android:padding="7dp"/>
 
         <TextView
@@ -41,9 +42,56 @@
             android:background="@drawable/custom_button"
             android:padding="7dp"
             android:minLines="5"
+            android:hint="Isi laporan Anda"
             android:textAlignment="textStart"
             android:layout_marginTop="@dimen/activity_margin"
             android:gravity="start" />
+
+        <TextView
+            android:id="@+id/lblLokasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:text="Lokasi" />
+
+        <EditText
+            android:id="@+id/txtLokasi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_button"
+            android:padding="7dp"
+            android:minLines="2"
+            android:hint="Detail lokasi kejadian (optional)"
+            android:textAlignment="textStart"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:gravity="start" />
+
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="250dp"-->
+            <!--android:id="@+id/imgLaporan"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="@drawable/jalan"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_marginRight="5dp"/>-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:text="Foto Laporan" />
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/imgLaporan"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerCrop"
+            android:src="@drawable/add_image"/>
 
         <Button
             android:id="@+id/btnKirim"

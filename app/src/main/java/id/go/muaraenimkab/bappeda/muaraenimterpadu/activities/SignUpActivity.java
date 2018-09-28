@@ -86,8 +86,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         APIServices api = retrofit.create(APIServices.class);
         Call<ValueAdd> call = api.signup(random, etEmail.getText().toString().trim(), etPassword.getText().toString().trim(),
-                etNama.getText().toString().trim(), etNoKtp.getText().toString().trim(), etNoHp.getText().toString().trim(),
-                etAlamat.getText().toString().trim());
+                etNama.getText().toString().trim().toUpperCase(), etNoKtp.getText().toString().trim(), etNoHp.getText().toString().trim(),
+                etAlamat.getText().toString().trim().toUpperCase());
         call.enqueue(new Callback<ValueAdd>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override

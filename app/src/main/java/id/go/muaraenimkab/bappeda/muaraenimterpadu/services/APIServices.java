@@ -6,6 +6,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
@@ -46,7 +47,22 @@ public interface APIServices {
                             @Field("newpass") String newpass);
 
     @FormUrlEncoded
-    @POST("update.php")
+    @POST("kirimlaporan.php")
+    Call<ValueAdd> kirimlaporan(@Field("xkey") String xkey,
+                            @Field("iduser") String iduser,
+                            @Field("judul") String judul,
+                            @Field("isi") String isi,
+                                @Field("nohp") String nohp,
+                                @Field("lokasi") String lokasi,
+                                @Field("foto") String foto);
+
+    @FormUrlEncoded
+    @POST("getlaporan.php")
+    Call<Value<Laporan>> getlaporan(@Field("xkey") String xkey,
+                                    @Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("updateprofil.php")
     Call<Value<User>> update(@Field("xkey") String xkey,
                           @Field("email") String email,
                           @Field("nama") String nama,

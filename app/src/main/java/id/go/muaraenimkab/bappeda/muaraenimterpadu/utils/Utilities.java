@@ -75,6 +75,10 @@ public class Utilities {
         return server + "wp/gambar_user/";
     }
 
+    public static String getBaseURLImageLaporan() {
+        return server + "wp/gambar_laporan/";
+    }
+
     public static void showAsToast(Context context, String text) {
         if (context != null) {
             if (mToast != null) mToast.cancel();
