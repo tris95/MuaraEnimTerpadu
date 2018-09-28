@@ -57,7 +57,9 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.DirectionsJSONParser
 
 public class DetailKontakFragment extends Fragment implements OnMapReadyCallback {
     Toolbar toolbar;
-    public static String kontak, no_tlp, no_hp, alamat, gambar, lat, lng;
+    private static final String ARG_kontak = "kontak",ARG_lat = "latitude",ARG_lng = "longitude",
+            ARG_alamat = "alamat",ARG_notlp = "notlp",ARG_gambar = "gambar";
+    String kontak, no_tlp, alamat, gambar, lat, lng;
     TextView lblnotlp, lblalamatkontak;
     ImageView imgKontak;
     CollapsingToolbarLayout collapsingKontak;
@@ -70,16 +72,31 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
         // Required empty public constructor
     }
 
-    public static DetailKontakFragment newInstance() {
+    public static DetailKontakFragment newInstance(String kontak,String lat,String lng,
+                                                   String alamat,String no_tlp,String gambar) {
         DetailKontakFragment fragment = new DetailKontakFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        args.putString(ARG_kontak, kontak);
+        args.putString(ARG_lat, lat);
+        args.putString(ARG_lng, lng);
+        args.putString(ARG_alamat, alamat);
+        args.putString(ARG_notlp, no_tlp);
+        args.putString(ARG_gambar, gambar);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            kontak = getArguments().getString(ARG_kontak);
+            lat = getArguments().getString(ARG_lat);
+            lng = getArguments().getString(ARG_lng);
+            alamat = getArguments().getString(ARG_alamat);
+            no_tlp = getArguments().getString(ARG_notlp);
+            gambar = getArguments().getString(ARG_gambar);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

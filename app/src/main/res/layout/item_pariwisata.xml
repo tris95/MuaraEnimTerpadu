@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_margin"
     android:paddingLeft="@dimen/activity_margin"
-    android:paddingRight="@dimen/activity_margin">
+    android:paddingRight="@dimen/activity_margin"
+    android:background="@drawable/custom_button">
 
-    <com.github.siyamed.shapeimageview.RoundedImageView
+    <ImageView
         android:id="@+id/imgkategori"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        app:siBorderColor="@color/white"
         android:scaleType="fitXY"
-        app:siRadius="15dp"/>
+        tools:ignore="ContentDescription" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,9 +21,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/imgkategori"
-        android:padding="5dp"
-        android:background="@drawable/relative_background"
-        android:layout_marginTop="-20dp">
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/lbljudulkategori"
@@ -34,21 +31,11 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:layout_toLeftOf="@+id/tvArrow"
-            android:textColor="@color/white"
+            android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:ignore="RtlSymmetry"
             android:layout_toStartOf="@+id/tvArrow" />
-
-        <!--<View-->
-            <!--android:layout_width="1dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_marginEnd="60dp"-->
-            <!--android:layout_marginRight="60dp"-->
-            <!--android:background="@color/colorAccent" />-->
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +46,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
-            android:drawableTint="@color/white"
+            android:drawableTint="#000000"
             android:drawableRight="@drawable/baseline_keyboard_tab_24"
             android:drawableEnd="@drawable/baseline_keyboard_tab_24"
             tools:targetApi="m"
