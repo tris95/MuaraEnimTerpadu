@@ -36,7 +36,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class DetailBeritaFragment extends Fragment {
-    public static String idberita,judulberita,tanggalberita,likeberita,viewberita,gambar;
+    private static final String ARG_idberita = "idberita",ARG_judulberita = "judulberita",ARG_tanggalberita = "tanggalberita",
+            ARG_likeberita = "likeberita",ARG_viewberita = "viewberita",ARG_gambar = "gambar";
+    String idberita,judulberita,tanggalberita,likeberita,viewberita,gambar;
     Toolbar toolbar;
     TextView tv_cobalagi,lblLikeUnlike,lblJudulBerita,lbltanggalBerita,lblLikeBerita,lblViewBerita;
     DocumentView lblIsiBerita;
@@ -48,9 +50,16 @@ public class DetailBeritaFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DetailBeritaFragment newInstance() {
+    public static DetailBeritaFragment newInstance(String idberita,String judulberita,String tanggalberita,
+                                                   String likeberita,String viewberita,String gambar) {
         DetailBeritaFragment fragment = new DetailBeritaFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_idberita, idberita);
+        args.putString(ARG_judulberita, judulberita);
+        args.putString(ARG_tanggalberita, tanggalberita);
+        args.putString(ARG_likeberita, likeberita);
+        args.putString(ARG_viewberita, viewberita);
+        args.putString(ARG_gambar, gambar);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,6 +67,14 @@ public class DetailBeritaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            idberita = getArguments().getString(ARG_idberita);
+            judulberita = getArguments().getString(ARG_judulberita);
+            tanggalberita = getArguments().getString(ARG_tanggalberita);
+            likeberita = getArguments().getString(ARG_likeberita);
+            viewberita = getArguments().getString(ARG_viewberita);
+            gambar = getArguments().getString(ARG_gambar);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

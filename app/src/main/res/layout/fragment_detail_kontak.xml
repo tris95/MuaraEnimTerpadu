@@ -78,18 +78,18 @@
                         android:textSize="15sp"
                         tools:ignore="RtlHardcoded" />
 
-                    <TextView
-                        android:id="@+id/lblnohp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/activity_margin"
-                        android:layout_marginStart="@dimen/activity_margin"
-                        android:background="@drawable/button_background"
-                        android:drawableLeft="@drawable/baseline_phone_24"
-                        android:padding="5dp"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
-                        tools:ignore="RtlHardcoded" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/lblnohp"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="@dimen/activity_margin"-->
+                        <!--android:layout_marginStart="@dimen/activity_margin"-->
+                        <!--android:background="@drawable/button_background"-->
+                        <!--android:drawableLeft="@drawable/baseline_phone_24"-->
+                        <!--android:padding="5dp"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:textSize="15sp"-->
+                        <!--tools:ignore="RtlHardcoded" />-->
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

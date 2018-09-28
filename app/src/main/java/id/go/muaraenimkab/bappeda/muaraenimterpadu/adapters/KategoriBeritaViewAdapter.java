@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.BeritaFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
@@ -44,13 +46,12 @@ public class KategoriBeritaViewAdapter extends RecyclerView.Adapter<KategoriBeri
                 .load(Utilities.getURLImageKategoriBerita() + mListKategoriBerita.get(position).getGambar_kategori_berita())
                 .into(holder.imgkategoriBerita);
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                MainActivity.replaceFragment(BeritaFragment.newInstance(), 6);
-//                BeritaFragment.kategoriberita=mListKategoriBerita.get(position).getNama_kategori_berita();
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.replaceFragment(BeritaFragment.newInstance(mListKategoriBerita.get(position).getId_kategori_berita(),mListKategoriBerita.get(position).getNama_kategori_berita()), 6);
+            }
+        });
 
     }
 
@@ -58,6 +59,7 @@ public class KategoriBeritaViewAdapter extends RecyclerView.Adapter<KategoriBeri
     public int getItemCount() {
         return mListKategoriBerita.size();
     }
+
     class DataObjectHolder extends RecyclerView.ViewHolder {
         ImageView imgkategoriBerita;
         TextView lbljudulkategori;

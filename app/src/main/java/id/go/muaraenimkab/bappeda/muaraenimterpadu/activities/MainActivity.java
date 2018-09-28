@@ -115,12 +115,12 @@ public class MainActivity extends AppCompatActivity {
             nowFragment = flag;
         } else if (flag == 6) {
             nowFragment = flag;
+            flag2 = flag;
             lastFragment2 = fragment;
         } else {
             nowFragment = flag;
             lastFragment = fragment;
         }
-        flag2 = flag;
 //        fragmentTransaction=fragmentManager.beginTransaction();
 //        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.enter_from_right);
 //        fragmentTransaction.replace(R.id.container, fragment).commit();
@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
 //                fragmentTransaction.replace(R.id.container, lastFragment).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
                 nowFragment = 5;
+                flag2=4;
             } else {
 //                fragmentTransaction=fragmentManager.beginTransaction();
 //                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,6 +59,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Content> mListContent;
     ArrayList<Berita> mListBerita;
     LinearLayoutManager linearLayoutManagercontent, linearLayoutManagerberita;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeFragment() {
 
@@ -84,6 +86,7 @@ public class HomeFragment extends Fragment {
         rl=v.findViewById(R.id.rl);
         rlberita=v.findViewById(R.id.rlberita);
         //view=v.findViewById(R.id.view);
+        swipeRefreshLayout = v.findViewById(R.id.swipe);
         tv_cobalagi  = v.findViewById(R.id.tv_cobalagi);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
@@ -131,7 +134,7 @@ public class HomeFragment extends Fragment {
             mSlider.setDuration(4000);
 
             mSlider.setVisibility(View.VISIBLE);
-            
+
             linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             rvContent.setLayoutManager(linearLayoutManagercontent);
             ContentViewAdapter contentViewAdapter = new ContentViewAdapter(getContext(), (ArrayList<Content>) MainActivity.contents);
@@ -148,6 +151,14 @@ public class HomeFragment extends Fragment {
         } else {
             getAd();
         }
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                getAd();
+            }
+        });
 
         lblBeritaselengkapnya = v.findViewById(R.id.lblBeritaselengkapnya);
         lblBeritaselengkapnya.setOnClickListener(new View.OnClickListener() {

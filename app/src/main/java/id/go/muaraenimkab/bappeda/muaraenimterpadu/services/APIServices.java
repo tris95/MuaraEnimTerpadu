@@ -71,6 +71,11 @@ public interface APIServices {
     Call<Value<Berita>> getBerita(@Field("xkey") String xkey);
 
     @FormUrlEncoded
+    @POST("getberitaofkategori.php")
+    Call<Value<Berita>> getBeritaOfKategori(@Field("xkey") String xkey,
+                                            @Field("idkategori") String idkategori);
+
+    @FormUrlEncoded
     @POST("getisiberita.php")
     Call<Value<Berita>> getIsiBerita(@Field("xkey") String xkey,
                                      @Field("idberita") String idberita);

@@ -1,5 +1,6 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -35,9 +38,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class KategoriBeritaFragment extends Fragment {
     Toolbar toolbar;
+    TextView tv_cobalagi;
     RecyclerView rvKategoriBerita;
     LinearLayoutManager linearLayoutManager;
     ArrayList<KategoriBerita> mListKategoriBerita;
+    RelativeLayout rl;
 
     public KategoriBeritaFragment() {
         // Required empty public constructor
@@ -62,6 +67,8 @@ public class KategoriBeritaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_kategori_berita, container, false);
         toolbar = v.findViewById(R.id.toolbar);
+        rl=v.findViewById(R.id.rl);
+        tv_cobalagi  = v.findViewById(R.id.tv_cobalagi);
         rvKategoriBerita=v.findViewById(R.id.rvKategoriBerita);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
@@ -82,10 +89,21 @@ public class KategoriBeritaFragment extends Fragment {
             getKategoriBerita();
 
 
+        tv_cobalagi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getKategoriBerita();
+            }
+        });
         return v;
     }
 
     private void getKategoriBerita() {
+        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Loading...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
         String random = Utilities.getRandom(5);
 
         OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
@@ -112,14 +130,19 @@ public class KategoriBeritaFragment extends Fragment {
                         rvKategoriBerita.setLayoutManager(linearLayoutManager);
                         KategoriBeritaViewAdapter kategoriBeritaViewAdapter=new KategoriBeritaViewAdapter(getContext(),mListKategoriBerita);
                         rvKategoriBerita.setAdapter(kategoriBeritaViewAdapter);
-
+                        rl.setVisibility(View.GONE);
+                        pDialog.dismiss();
                     } else {
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
+                        pDialog.dismiss();
+                        rl.setVisibility(View.VISIBLE);
                     }
                 } else {
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                             Snackbar.LENGTH_LONG).show();
+                    pDialog.dismiss();
+                    rl.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -129,6 +152,8 @@ public class KategoriBeritaFragment extends Fragment {
                 System.out.println("Retrofit Error:" + t.getMessage());
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                         Snackbar.LENGTH_LONG).show();
+                pDialog.dismiss();
+                rl.setVisibility(View.VISIBLE);
             }
         });
     }
