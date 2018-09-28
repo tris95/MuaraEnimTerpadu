@@ -35,23 +35,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PariwisataFragment extends Fragment {
     Toolbar toolbar;
-    private static final String ARG_idKategori_pariwisata = "idkategoripariwisata",ARG_namaKategori_pariwisata = "namakategoripariwisata";
+    private static final String ARG_idKategori_pariwisata = "idkategoripariwisata", ARG_namaKategori_pariwisata = "namakategoripariwisata",
+            ARG_jumlahtempat = "jumlahtempat";
     RecyclerView rvPariwisata;
     TextView tv_cobalagi;
     LinearLayoutManager linearLayoutManager;
     ArrayList<Pariwisata> mListPariwisata;
-    String idkategoripariwisata,namakategoripariwisata;
-    RelativeLayout rl,rlcontentkosong;
+    String idkategoripariwisata, namakategoripariwisata,jumlahtempat;
+    RelativeLayout rl, rlcontentkosong;
 
     public PariwisataFragment() {
         // Required empty public constructor
     }
 
-    public static PariwisataFragment newInstance(String idkategoripariwisata,String namakategoripariwisata) {
+    public static PariwisataFragment newInstance(String idkategoripariwisata, String namakategoripariwisata, String jumlahtempat) {
         PariwisataFragment fragment = new PariwisataFragment();
         Bundle args = new Bundle();
         args.putString(ARG_idKategori_pariwisata, idkategoripariwisata);
         args.putString(ARG_namaKategori_pariwisata, namakategoripariwisata);
+        args.putString(ARG_jumlahtempat, jumlahtempat);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,6 +64,7 @@ public class PariwisataFragment extends Fragment {
         if (getArguments() != null) {
             idkategoripariwisata = getArguments().getString(ARG_idKategori_pariwisata);
             namakategoripariwisata = getArguments().getString(ARG_namaKategori_pariwisata);
+            jumlahtempat = getArguments().getString(ARG_jumlahtempat);
         }
     }
 
@@ -70,11 +73,11 @@ public class PariwisataFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_pariwisata, container, false);
+        View v = inflater.inflate(R.layout.fragment_pariwisata, container, false);
         toolbar = v.findViewById(R.id.toolbar);
-        rl=v.findViewById(R.id.rl);
-        rlcontentkosong=v.findViewById(R.id.rlcontentkosong);
-        tv_cobalagi  = v.findViewById(R.id.tv_cobalagi);
+        rl = v.findViewById(R.id.rl);
+        rlcontentkosong = v.findViewById(R.id.rlcontentkosong);
+        tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -112,7 +115,7 @@ public class PariwisataFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<Pariwisata>> call = api.getKategoripariwisata(random,idkategoripariwisata);
+        Call<Value<Pariwisata>> call = api.getKategoripariwisata(random, idkategoripariwisata);
         call.enqueue(new Callback<Value<Pariwisata>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -122,15 +125,14 @@ public class PariwisataFragment extends Fragment {
                     if (success == 1) {
                         mListPariwisata = (ArrayList<Pariwisata>) Objects.requireNonNull(response.body()).getData();
 
-                        if (mListPariwisata.size()!=0) {
+                        if (mListPariwisata.size() != 0) {
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             rvPariwisata.setLayoutManager(linearLayoutManager);
-                            PariwisataViewAdapter pariwisataViewAdapter = new PariwisataViewAdapter(getContext(), mListPariwisata);
+                            PariwisataViewAdapter pariwisataViewAdapter = new PariwisataViewAdapter(getContext(), mListPariwisata,jumlahtempat);
                             rvPariwisata.setAdapter(pariwisataViewAdapter);
                             rlcontentkosong.setVisibility(View.GONE);
                             rvPariwisata.setVisibility(View.VISIBLE);
-                        }
-                        else {
+                        } else {
                             rlcontentkosong.setVisibility(View.VISIBLE);
                             rvPariwisata.setVisibility(View.GONE);
                         }

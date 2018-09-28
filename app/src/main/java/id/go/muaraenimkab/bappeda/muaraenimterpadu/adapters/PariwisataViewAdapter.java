@@ -25,11 +25,13 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 public class PariwisataViewAdapter extends RecyclerView.Adapter<PariwisataViewAdapter.DataObjectHolder> {
     private Context context;
     private ArrayList<Pariwisata> mListPariwisata;
+    private String jumlahtempat;
 
 
-    public PariwisataViewAdapter(Context context, ArrayList<Pariwisata> mListPariwisata) {
+    public PariwisataViewAdapter(Context context, ArrayList<Pariwisata> mListPariwisata,String jumlahtempat) {
         this.context = context;
         this.mListPariwisata = mListPariwisata;
+        this.jumlahtempat=jumlahtempat;
     }
 
     @NonNull
@@ -50,7 +52,7 @@ public class PariwisataViewAdapter extends RecyclerView.Adapter<PariwisataViewAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListPariwisata.get(position).getId_kategori_pariwisata().equals("1"))
+                if (jumlahtempat.equals("1"))
                     MainActivity.replaceFragment(DetailKulinerFragment.newInstance(mListPariwisata.get(position).getId_pariwisata(), mListPariwisata.get(position).getNama_pariwisata()), 6);
                 else
                     MainActivity.replaceFragment(DetailWisataFragment.newInstance(mListPariwisata.get(position).getId_pariwisata(), mListPariwisata.get(position).getNama_pariwisata()), 6);

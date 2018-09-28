@@ -47,7 +47,8 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.replaceFragment(PariwisataFragment.newInstance(mListContent.get(position).getId_kategori_pariwisata(),mListContent.get(position).getNama_kategori_pariwisata()), 5);
+                MainActivity.replaceFragment(PariwisataFragment.newInstance(mListContent.get(position).getId_kategori_pariwisata(),mListContent.get(position).getNama_kategori_pariwisata(),
+                        mListContent.get(position).getJumlah_tempat()), 5);
             }
         });
     }
