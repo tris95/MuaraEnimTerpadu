@@ -1,7 +1,6 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,9 +21,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.KategoriBeritaViewAdapter;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.PariwisataViewAdapter;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
@@ -35,22 +33,25 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
-public class KategoriBeritaFragment extends Fragment {
+public class PariwisataFragment extends Fragment {
     Toolbar toolbar;
+    private static final String ARG_idKategori_pariwisata = "idkategoripariwisata",ARG_namaKategori_pariwisata = "namakategoripariwisata";
+    RecyclerView rvPariwisata;
     TextView tv_cobalagi;
-    RecyclerView rvKategoriBerita;
     LinearLayoutManager linearLayoutManager;
-    ArrayList<KategoriBerita> mListKategoriBerita;
-    RelativeLayout rl;
+    ArrayList<Pariwisata> mListPariwisata;
+    String idkategoripariwisata,namakategoripariwisata;
+    RelativeLayout rl,rlcontentkosong;
 
-    public KategoriBeritaFragment() {
+    public PariwisataFragment() {
         // Required empty public constructor
     }
 
-    public static KategoriBeritaFragment newInstance() {
-        KategoriBeritaFragment fragment = new KategoriBeritaFragment();
+    public static PariwisataFragment newInstance(String idkategoripariwisata,String namakategoripariwisata) {
+        PariwisataFragment fragment = new PariwisataFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_idKategori_pariwisata, idkategoripariwisata);
+        args.putString(ARG_namaKategori_pariwisata, namakategoripariwisata);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,54 +59,50 @@ public class KategoriBeritaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null) {
+            idkategoripariwisata = getArguments().getString(ARG_idKategori_pariwisata);
+            namakategoripariwisata = getArguments().getString(ARG_namaKategori_pariwisata);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_kategori_berita, container, false);
+        // Inflate the layout for this fragment
+        View v=inflater.inflate(R.layout.fragment_pariwisata, container, false);
         toolbar = v.findViewById(R.id.toolbar);
         rl=v.findViewById(R.id.rl);
+        rlcontentkosong=v.findViewById(R.id.rlcontentkosong);
         tv_cobalagi  = v.findViewById(R.id.tv_cobalagi);
-        rvKategoriBerita=v.findViewById(R.id.rvKategoriBerita);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Kategori Berita");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(namakategoripariwisata);
         }
+        rvPariwisata = v.findViewById(R.id.rvPariwisata);
 
-        if (MainActivity.kategoriBeritas.size() != 0) {
-            linearLayoutManager=new LinearLayoutManager(getContext());
-            rvKategoriBerita.setLayoutManager(linearLayoutManager);
-            KategoriBeritaViewAdapter kategoriberitaViewAdapter=new KategoriBeritaViewAdapter(getContext(), (ArrayList<KategoriBerita>) MainActivity.kategoriBeritas);
-            rvKategoriBerita.setAdapter(kategoriberitaViewAdapter);
-
-        } else
-            getKategoriBerita();
-
+        getPariwisata();
 
         tv_cobalagi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getKategoriBerita();
+                getPariwisata();
             }
         });
         return v;
     }
 
-    private void getKategoriBerita() {
+    private void getPariwisata() {
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
         pDialog.show();
         String random = Utilities.getRandom(5);
-
         OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -115,60 +112,60 @@ public class KategoriBeritaFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<KategoriBerita>> call = api.getKategoriBerita(random);
-        call.enqueue(new Callback<Value<KategoriBerita>>() {
+        Call<Value<Pariwisata>> call = api.getKategoripariwisata(random,idkategoripariwisata);
+        call.enqueue(new Callback<Value<Pariwisata>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onResponse(@NonNull Call<Value<KategoriBerita>> call, @NonNull Response<Value<KategoriBerita>> response) {
+            public void onResponse(@NonNull Call<Value<Pariwisata>> call, @NonNull Response<Value<Pariwisata>> response) {
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
-                        mListKategoriBerita = (ArrayList<KategoriBerita>) Objects.requireNonNull(response.body()).getData();
-                        MainActivity.kategoriBeritas = mListKategoriBerita;
+                        mListPariwisata = (ArrayList<Pariwisata>) Objects.requireNonNull(response.body()).getData();
 
-                        linearLayoutManager=new LinearLayoutManager(getContext());
-                        rvKategoriBerita.setLayoutManager(linearLayoutManager);
-                        KategoriBeritaViewAdapter kategoriBeritaViewAdapter=new KategoriBeritaViewAdapter(getContext(),mListKategoriBerita);
-                        rvKategoriBerita.setAdapter(kategoriBeritaViewAdapter);
+                        if (mListPariwisata.size()!=0) {
+                            linearLayoutManager = new LinearLayoutManager(getContext());
+                            rvPariwisata.setLayoutManager(linearLayoutManager);
+                            PariwisataViewAdapter pariwisataViewAdapter = new PariwisataViewAdapter(getContext(), mListPariwisata);
+                            rvPariwisata.setAdapter(pariwisataViewAdapter);
+                            rlcontentkosong.setVisibility(View.GONE);
+                            rvPariwisata.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            rlcontentkosong.setVisibility(View.VISIBLE);
+                            rvPariwisata.setVisibility(View.GONE);
+                        }
                         rl.setVisibility(View.GONE);
                         pDialog.dismiss();
+
                     } else {
+                        pDialog.dismiss();
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
-                        pDialog.dismiss();
                         rl.setVisibility(View.VISIBLE);
+                        rlcontentkosong.setVisibility(View.GONE);
+                        rvPariwisata.setVisibility(View.GONE);
                     }
                 } else {
+                    pDialog.dismiss();
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                             Snackbar.LENGTH_LONG).show();
-                    pDialog.dismiss();
                     rl.setVisibility(View.VISIBLE);
+                    rlcontentkosong.setVisibility(View.GONE);
+                    rvPariwisata.setVisibility(View.GONE);
                 }
             }
 
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onFailure(@NonNull Call<Value<KategoriBerita>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Value<Pariwisata>> call, @NonNull Throwable t) {
                 System.out.println("Retrofit Error:" + t.getMessage());
+                pDialog.dismiss();
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                         Snackbar.LENGTH_LONG).show();
-                pDialog.dismiss();
                 rl.setVisibility(View.VISIBLE);
+                rlcontentkosong.setVisibility(View.GONE);
+                rvPariwisata.setVisibility(View.GONE);
             }
         });
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-    }
-
-    @Override
-    public void onDetach() {
-
-        super.onDetach();
-    }
-
-
 }

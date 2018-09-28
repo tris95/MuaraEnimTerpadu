@@ -57,8 +57,10 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.DirectionsJSONParser
 
 public class DetailKontakFragment extends Fragment implements OnMapReadyCallback {
     Toolbar toolbar;
-    public static String kontak, no_tlp, no_hp, alamat, gambar, lat, lng;
-    TextView lblnotlp, lblnohp, lblalamatkontak;
+    private static final String ARG_kontak = "kontak",ARG_lat = "latitude",ARG_lng = "longitude",
+            ARG_alamat = "alamat",ARG_notlp = "notlp",ARG_gambar = "gambar";
+    String kontak, no_tlp, alamat, gambar, lat, lng;
+    TextView lblnotlp, lblalamatkontak;
     ImageView imgKontak;
     CollapsingToolbarLayout collapsingKontak;
     private GoogleMap mMap;
@@ -70,16 +72,31 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
         // Required empty public constructor
     }
 
-    public static DetailKontakFragment newInstance() {
+    public static DetailKontakFragment newInstance(String kontak,String lat,String lng,
+                                                   String alamat,String no_tlp,String gambar) {
         DetailKontakFragment fragment = new DetailKontakFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        args.putString(ARG_kontak, kontak);
+        args.putString(ARG_lat, lat);
+        args.putString(ARG_lng, lng);
+        args.putString(ARG_alamat, alamat);
+        args.putString(ARG_notlp, no_tlp);
+        args.putString(ARG_gambar, gambar);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            kontak = getArguments().getString(ARG_kontak);
+            lat = getArguments().getString(ARG_lat);
+            lng = getArguments().getString(ARG_lng);
+            alamat = getArguments().getString(ARG_alamat);
+            no_tlp = getArguments().getString(ARG_notlp);
+            gambar = getArguments().getString(ARG_gambar);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -90,9 +107,8 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
         toolbar = v.findViewById(R.id.toolbar);
         //mapskontak = (SupportMapFragment) Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentById(R.id.mapsKontak);
         imgKontak = v.findViewById(R.id.imgkontak);
-        collapsingKontak=v.findViewById(R.id.collapsingKontak);
+        collapsingKontak = v.findViewById(R.id.collapsingKontak);
         lblnotlp = v.findViewById(R.id.lblnotlp);
-        lblnohp = v.findViewById(R.id.lblnohp);
         lblalamatkontak = v.findViewById(R.id.lblalamatkontak);
 
         //mapskontak.getMapAsync(this);
@@ -149,32 +165,22 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
         else
             lblnotlp.setVisibility(View.GONE);
 
-        if (!no_hp.equals(""))
-            lblnohp.setText(no_hp);
-        else
-            lblnohp.setVisibility(View.GONE);
-
         if (!alamat.equals(""))
             lblalamatkontak.setText(alamat);
         else
             lblalamatkontak.setVisibility(View.GONE);
 
-
-        lblnohp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent callIntent =new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse(no_hp));
-                startActivity(callIntent);
-            }
-        });
-
         lblnotlp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent callIntent =new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse(no_tlp));
-                startActivity(callIntent);
+                if (!no_tlp.equals("")) {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.CALL_PHONE},
+                            1);
+                } else {
+                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak Ada Nomor",
+                            Snackbar.LENGTH_LONG).show();
+                }
             }
         });
         return v;
@@ -225,37 +231,43 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case 1: {
+                if (grantResults[0] == 0) {
+                    String uri = "tel:" + no_tlp;
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse(uri));
+                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    startActivity(intent);
+                } else {
+                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Izinkan Aplikasi Mengakses Kontak",
+                            Snackbar.LENGTH_LONG).show();
+                }
+            }
+            case 2:{
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
                             android.Manifest.permission.ACCESS_COARSE_LOCATION)
                             != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
                                 new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
-                    }
-                    else {
+                    } else {
                         ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
                                 new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
                     }
-                }else {
+                } else {
                     ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
                             new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                             1);
                 }
-                return;
-            }
-            case 2: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    Utilities util = new Utilities();
-//                    if (!util.getUser(this).getAlamat().equals("") && !util.getUser(this).getLatitude().equals("") && !util.getUser(this).getLongitude().equals("")) {
-//                        currentLatLng = new LatLng(Double.parseDouble(util.getUser(this).getLatitude()), Double.parseDouble(util.getUser(this).getLongitude()));
-////                        address = util.getUser(MapsActivity.this).getAlamat();
-//                        MarkerOptions options = new MarkerOptions();
-//                        options.position(currentLatLng);
-//                        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-//                        gMap.addMarker(options.title("Me")).showInfoWindow();
-//                        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
-////                        Utilities.showAsToast(MapsActivity.this, "Tekan dan tahan pada peta untuk menetapkan lokasi", Toast.LENGTH_LONG);
-//                    }else{
 
                     mFusedLocationClient.getLastLocation()
                             .addOnSuccessListener(Objects.requireNonNull(getActivity()), new OnSuccessListener<Location>() {
@@ -279,20 +291,11 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
                                     }
                                 }
                             });
-//                      }
-//                    }
-                }else {
+                } else {
                     ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
                             new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
                 }
             }
-//            case 3 : {
-//                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-//                    ActivityCompat.requestPermissions(MainActivity.this,
-//                            new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
-//                            3);
-//                }
-//            }
         }
     }
 
@@ -422,7 +425,7 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
 
             try {
                 mMap.addPolyline(lineOptions);
-            }catch (Exception e){
+            } catch (Exception e) {
                 Log.e("polyline", e.toString());
             }
         }

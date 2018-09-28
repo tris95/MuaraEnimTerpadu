@@ -1,5 +1,6 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailWisataFragment;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.PariwisataFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
@@ -36,7 +38,7 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DataObjectHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DataObjectHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.content.setText(mListContent.get(position).getNama_kategori_pariwisata());
         Picasso.with(context)
                 .load(Utilities.getURLImageKategoriPariwisata() + mListContent.get(position).getGambar_kategori_pariwisata())
@@ -45,7 +47,7 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.replaceFragment(DetailWisataFragment.newInstance(), 5);
+                MainActivity.replaceFragment(PariwisataFragment.newInstance(mListContent.get(position).getId_kategori_pariwisata(),mListContent.get(position).getNama_kategori_pariwisata()), 5);
             }
         });
     }

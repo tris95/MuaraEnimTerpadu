@@ -39,7 +39,7 @@ public class DetailWisataFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DetailWisataFragment newInstance() {
+    public static DetailWisataFragment newInstance(String idkategoripariwisata,String namakategoripari) {
         DetailWisataFragment fragment = new DetailWisataFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);

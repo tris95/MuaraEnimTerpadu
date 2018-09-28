@@ -66,16 +66,14 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
             @Override
             public void onClick(View v) {
                 if (MainActivity.flag2 == 6)
-                    MainActivity.replaceFragment(DetailBeritaFragment.newInstance(), 7);
-                else
-                    MainActivity.replaceFragment(DetailBeritaFragment.newInstance(), 5);
+                    MainActivity.replaceFragment(DetailBeritaFragment.newInstance(mListBerita.get(position).getId_berita(),
+                            mListBerita.get(position).getJudul_berita(),mListBerita.get(position).getTanggal_post(),
+                            like,view,Utilities.getURLImageBerita() + mListBerita.get(position).getGambar_berita()), 7);
+                else if(MainActivity.flag2 == 4)
+                    MainActivity.replaceFragment(DetailBeritaFragment.newInstance(mListBerita.get(position).getId_berita(),
+                            mListBerita.get(position).getJudul_berita(),mListBerita.get(position).getTanggal_post(),
+                            like,view,Utilities.getURLImageBerita() + mListBerita.get(position).getGambar_berita()), 5);
 
-                DetailBeritaFragment.idberita = mListBerita.get(position).getId_berita();
-                DetailBeritaFragment.judulberita = mListBerita.get(position).getJudul_berita();
-                DetailBeritaFragment.tanggalberita = mListBerita.get(position).getTanggal_post();
-                DetailBeritaFragment.likeberita = like;
-                DetailBeritaFragment.viewberita = view;
-                DetailBeritaFragment.gambar = Utilities.getURLImageBerita() + mListBerita.get(position).getGambar_berita();
 
             }
         });

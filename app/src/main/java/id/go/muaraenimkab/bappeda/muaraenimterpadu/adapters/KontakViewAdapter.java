@@ -49,14 +49,9 @@ public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.Da
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.replaceFragment(DetailKontakFragment.newInstance(), 5);
-                DetailKontakFragment.kontak = mListKontak.get(position).getNama_kantor();
-                DetailKontakFragment.lat = mListKontak.get(position).getLat();
-                DetailKontakFragment.lng = mListKontak.get(position).getLng();
-                DetailKontakFragment.alamat = mListKontak.get(position).getAlamat();
-                DetailKontakFragment.no_hp = mListKontak.get(position).getNo_hp();
-                DetailKontakFragment.no_tlp = mListKontak.get(position).getNo_tlp();
-                DetailKontakFragment.gambar = Utilities.getURLImageKontak() + mListKontak.get(position).getGambar_kantor();
+                MainActivity.replaceFragment(DetailKontakFragment.newInstance(mListKontak.get(position).getNama_kantor(),
+                        mListKontak.get(position).getLat(),mListKontak.get(position).getLng(),mListKontak.get(position).getAlamat(),
+                        mListKontak.get(position).getNo_tlp(),Utilities.getURLImageKontak() + mListKontak.get(position).getGambar_kantor()), 5);
             }
         });
 
