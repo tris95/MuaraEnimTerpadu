@@ -6,6 +6,8 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
@@ -41,18 +43,18 @@ public interface APIServices {
     @FormUrlEncoded
     @POST("ubahpass.php")
     Call<ValueAdd> ubahpass(@Field("xkey") String xkey,
-                          @Field("email") String email,
-                          @Field("oldpass") String oldpass,
+                            @Field("email") String email,
+                            @Field("oldpass") String oldpass,
                             @Field("newpass") String newpass);
 
     @FormUrlEncoded
     @POST("update.php")
     Call<Value<User>> update(@Field("xkey") String xkey,
-                          @Field("email") String email,
-                          @Field("nama") String nama,
-                          @Field("noktp") String noktp,
-                          @Field("nohp") String nohp,
-                          @Field("alamat") String alamat);
+                             @Field("email") String email,
+                             @Field("nama") String nama,
+                             @Field("noktp") String noktp,
+                             @Field("nohp") String nohp,
+                             @Field("alamat") String alamat);
 
     @FormUrlEncoded
     @POST("getcontent.php")
@@ -75,5 +77,29 @@ public interface APIServices {
     Call<Value<Berita>> getIsiBerita(@Field("xkey") String xkey,
                                      @Field("idberita") String idberita);
 
+    @FormUrlEncoded
+    @POST("getberitaofkategori.php")
+    Call<Value<Berita>> getBeritaOfKategori(@Field("xkey") String xkey,
+                                            @Field("idkategori") String idkategori);
+
+    @FormUrlEncoded
+    @POST("getKategoripariwisata.php")
+    Call<Value<Pariwisata>> getKategoripariwisata(@Field("xkey") String xkey,
+                                                  @Field("idkategori") String idkategori);
+
+    @FormUrlEncoded
+    @POST("getKategoripariwisata.php")
+    Call<ValueAdd> kirimlaporan(@Field("xkey") String xkey,
+                                       @Field("iduser") String iduser,
+                                       @Field("judul") String judul,
+                                       @Field("isi") String isi,
+                                       @Field("nohp") String nohp,
+                                       @Field("lokasi") String lokasi,
+                                       @Field("foto") String foto);
+
+    @FormUrlEncoded
+    @POST("getlaporan.php")
+    Call<Value<Laporan>> getlaporan(@Field("xkey") String xkey,
+                                   @Field("id") String id);
 
 }
