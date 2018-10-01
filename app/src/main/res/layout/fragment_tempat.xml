@@ -29,12 +29,14 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            tools:ignore="UselessParent">
             <ImageView
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:src="@drawable/nointernet"
-                android:tint="@android:color/darker_gray"/>
+                android:tint="@android:color/darker_gray"
+                tools:ignore="ContentDescription" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:id="@+id/rvToko"/>
+            android:id="@+id/rvtempat"/>
     </RelativeLayout>
 
 </LinearLayout>

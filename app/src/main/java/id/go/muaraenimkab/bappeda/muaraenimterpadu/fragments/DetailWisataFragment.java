@@ -32,16 +32,20 @@ public class DetailWisataFragment extends Fragment {
     RelativeLayout rlup,rlback;
     private BottomSheetBehavior bottomSheetBehavior;
     View bottomsheet;
-    ImageView imgup,imgback;
+    ImageView imgup,imgback,imgdetailwisata;
     MainActivity mainActivity =new MainActivity();
+    String idparawisata, namapariwisata;
+    private static final String ARG_idparawisata = "idparawisata",ARG_namapariwisata = "namapariwisata";
 
     public DetailWisataFragment() {
         // Required empty public constructor
     }
 
-    public static DetailWisataFragment newInstance(String idkategoripariwisata,String namakategoripari) {
+    public static DetailWisataFragment newInstance(String idpariwisata,String namapariwisata) {
         DetailWisataFragment fragment = new DetailWisataFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_idparawisata, idpariwisata);
+        args.putString(ARG_namapariwisata, namapariwisata);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,6 +53,10 @@ public class DetailWisataFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            idparawisata = getArguments().getString(ARG_idparawisata);
+            namapariwisata = getArguments().getString(ARG_namapariwisata);
+         }
 
     }
 
@@ -63,6 +71,7 @@ public class DetailWisataFragment extends Fragment {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomsheet);
         imgup = v.findViewById(R.id.imgup);
         imgback = v.findViewById(R.id.imgback);
+        imgdetailwisata=v.findViewById(R.id.imgdetailwisata);
         rlup = v.findViewById(R.id.rlup);
         rlback=v.findViewById(R.id.rlback);
 
@@ -71,7 +80,7 @@ public class DetailWisataFragment extends Fragment {
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(false);
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Curup Panas");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(namapariwisata);
         }
 
         imgup.setOnClickListener(new View.OnClickListener() {

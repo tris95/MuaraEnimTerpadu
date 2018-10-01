@@ -8,24 +8,20 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.bluejamesbond.text.DocumentView;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.DetailPariwisata;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.TempatViewAdapter;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
@@ -37,27 +33,23 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class DetailKulinerFragment extends Fragment {
+public class TempatFragment extends Fragment {
     Toolbar toolbar;
-    Button btnToko;
-    ArrayList<DetailPariwisata> mListPariwisata;
-    String idpariwisata,namapariwisata,gambar;
+    private static final String ARG_idpariwisata = "idpariwisata";
+    String idpariwisata;
     RelativeLayout rl;
-    TextView lbljudulpariwisata;
-    DocumentView lbldeskripsipariwisata;
-    ImageView imgDetaiKuliner;
-    private static final String ARG_idpariwisata = "idpariwisata",ARG_namapariwisata = "namapariwisata",ARG_gambar = "gambar";
+    RecyclerView rvTempat;
+    LinearLayoutManager linearLayoutManager;
+    ArrayList<TempatPariwisata> mListtempatPariwisata;
 
-    public DetailKulinerFragment() {
+    public TempatFragment() {
         // Required empty public constructor
     }
 
-    public static DetailKulinerFragment newInstance(String idpariwisata, String namapariwisata,String gambar) {
-        DetailKulinerFragment fragment = new DetailKulinerFragment();
+    public static TempatFragment newInstance(String idpariwisata) {
+        TempatFragment fragment = new TempatFragment();
         Bundle args = new Bundle();
         args.putString(ARG_idpariwisata, idpariwisata);
-        args.putString(ARG_namapariwisata, namapariwisata);
-        args.putString(ARG_gambar, gambar);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,8 +59,6 @@ public class DetailKulinerFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             idpariwisata = getArguments().getString(ARG_idpariwisata);
-            namapariwisata = getArguments().getString(ARG_namapariwisata);
-            gambar = getArguments().getString(ARG_gambar);
         }
     }
 
@@ -76,35 +66,24 @@ public class DetailKulinerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_detail_kuliner, container, false);
+        View v=inflater.inflate(R.layout.fragment_tempat, container, false);
         toolbar = v.findViewById(R.id.toolbar);
-        btnToko = v.findViewById(R.id.btnToko);
-        rl=v.findViewById(R.id.rl);
-        imgDetaiKuliner=v.findViewById(R.id.imgDetaiKuliner);
-        lbljudulpariwisata=v.findViewById(R.id.lbljudulpariwisata);
-        lbldeskripsipariwisata=v.findViewById(R.id.lbldeskripsipariwisata);
+        rvTempat = v.findViewById(R.id.rvtempat);
+        rl = v.findViewById(R.id.rl);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Daftar Toko");
         }
 
-        getPariwisata();
-
-        btnToko.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.replaceFragment(TempatFragment.newInstance(idpariwisata), 7);
-            }
-        });
+        gettempatPariwisata();
         return v;
     }
 
-
-    public void getPariwisata() {
+    public void gettempatPariwisata() {
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
         pDialog.setIndeterminate(false);
@@ -122,26 +101,29 @@ public class DetailKulinerFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<DetailPariwisata>> call = api.getpariwisata(random,idpariwisata);
-        call.enqueue(new Callback<Value<DetailPariwisata>>() {
+        Call<Value<TempatPariwisata>> call = api.gettempatpariwisata(random,idpariwisata);
+        call.enqueue(new Callback<Value<TempatPariwisata>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onResponse(@NonNull Call<Value<DetailPariwisata>> call, @NonNull Response<Value<DetailPariwisata>> response) {
+            public void onResponse(@NonNull Call<Value<TempatPariwisata>> call, @NonNull Response<Value<TempatPariwisata>> response) {
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
-                        mListPariwisata = (ArrayList<DetailPariwisata>) Objects.requireNonNull(response.body()).getData();
+                        mListtempatPariwisata = (ArrayList<TempatPariwisata>) Objects.requireNonNull(response.body()).getData();
 
-                        lbljudulpariwisata.setText(namapariwisata);
-
-                        Picasso.with(getContext())
-                                .load(gambar)
-                                .into(imgDetaiKuliner);
-
-                        lbldeskripsipariwisata.setText(mListPariwisata.get(0).getDeskripsi_pariwisata());
-
+                        if (mListtempatPariwisata.size()!=0) {
+                            linearLayoutManager = new LinearLayoutManager(getContext());
+                            rvTempat.setLayoutManager(linearLayoutManager);
+                            TempatViewAdapter tempatViewAdapter = new TempatViewAdapter(getContext(), mListtempatPariwisata);
+                            rvTempat.setAdapter(tempatViewAdapter);
+                            //rltidakadaberita.setVisibility(View.GONE);
+                            rvTempat.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            //rltidakadaberita.setVisibility(View.VISIBLE);
+                            rvTempat.setVisibility(View.GONE);
+                        }
                         rl.setVisibility(View.GONE);
-
                         pDialog.dismiss();
 
                     } else {
@@ -162,7 +144,7 @@ public class DetailKulinerFragment extends Fragment {
 
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onFailure(@NonNull Call<Value<DetailPariwisata>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Value<TempatPariwisata>> call, @NonNull Throwable t) {
                 System.out.println("Retrofit Error:" + t.getMessage());
                 rl.setVisibility(View.VISIBLE);
                 pDialog.dismiss();

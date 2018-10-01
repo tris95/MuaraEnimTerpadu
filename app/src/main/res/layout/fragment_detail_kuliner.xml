@@ -68,13 +68,26 @@
                     android:id="@+id/imgDetaiKuliner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/jlntol"
                     android:scaleType="fitXY"
                     tools:ignore="ContentDescription" />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#80000000"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="@dimen/activity_margin"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:id="@+id/lbljudulpariwisata"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="@dimen/activity_margin"
+                    android:layout_marginBottom="@dimen/activity_margin"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -83,7 +96,7 @@
                 android:layout_marginTop="@dimen/activity_margin">
 
                 <com.bluejamesbond.text.DocumentView
-                    android:id="@+id/lblIsiBerita"
+                    android:id="@+id/lbldeskripsipariwisata"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
@@ -104,14 +117,16 @@
             </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.design.widget.AppBarLayout>
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.TransparentToolbar"/>
+    <!--</android.support.design.widget.AppBarLayout>-->
 
 </RelativeLayout>

@@ -4,10 +4,12 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.services;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Ad;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.DetailPariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
@@ -102,4 +104,13 @@ public interface APIServices {
     Call<Value<Laporan>> getlaporan(@Field("xkey") String xkey,
                                    @Field("id") String id);
 
+    @FormUrlEncoded
+    @POST("getpariwisata.php")
+    Call<Value<DetailPariwisata>> getpariwisata(@Field("xkey") String xkey,
+                                                @Field("idpariwisata") String idpariwisata);
+
+    @FormUrlEncoded
+    @POST("gettempatpariwisata.php")
+    Call<Value<TempatPariwisata>> gettempatpariwisata(@Field("xkey") String xkey,
+                                                      @Field("idpariwisata") String idpariwisata);
 }

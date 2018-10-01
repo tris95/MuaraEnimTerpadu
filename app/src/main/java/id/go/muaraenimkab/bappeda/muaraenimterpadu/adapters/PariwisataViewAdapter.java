@@ -53,7 +53,7 @@ public class PariwisataViewAdapter extends RecyclerView.Adapter<PariwisataViewAd
             @Override
             public void onClick(View v) {
                 if (jumlahtempat.equals("1"))
-                    MainActivity.replaceFragment(DetailKulinerFragment.newInstance(mListPariwisata.get(position).getId_pariwisata(), mListPariwisata.get(position).getNama_pariwisata()), 6);
+                    MainActivity.replaceFragment(DetailKulinerFragment.newInstance(mListPariwisata.get(position).getId_pariwisata(), mListPariwisata.get(position).getNama_pariwisata(),Utilities.getURLImagePariwisata() + mListPariwisata.get(position).getGambar_pariwisata()), 6);
                 else
                     MainActivity.replaceFragment(DetailWisataFragment.newInstance(mListPariwisata.get(position).getId_pariwisata(), mListPariwisata.get(position).getNama_pariwisata()), 6);
             }
