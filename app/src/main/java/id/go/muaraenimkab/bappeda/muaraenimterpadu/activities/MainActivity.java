@@ -26,6 +26,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.ProfilFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Ad;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Event;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public static List<KategoriBerita> kategoriBeritas = new ArrayList<>();
     public static List<Berita> Beritas = new ArrayList<>();
     public static List<Laporan> laporans = new ArrayList<>();
-
+    public static List<Event> events = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override

@@ -5,6 +5,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Ad;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.DetailPariwisata;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Event;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
@@ -64,6 +65,10 @@ public interface APIServices {
                                         @Field("id") String id,
                                         @Field("oldfoto") String oldfoto,
                                         @Field("foto") String foto);
+
+    @FormUrlEncoded
+    @POST("getevent.php")
+    Call<Value<Event>> getevent(@Field("xkey") String xkey);
 
     @FormUrlEncoded
     @POST("getcontent.php")

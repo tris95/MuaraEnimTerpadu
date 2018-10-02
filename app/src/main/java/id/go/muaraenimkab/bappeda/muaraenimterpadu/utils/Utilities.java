@@ -83,6 +83,10 @@ public class Utilities {
         return server + "wp/gambar_tempat_wisata/";
     }
 
+    public static String getBaseURLImageEvent() {
+        return server + "wp/gambar_event/";
+    }
+
     public static void showAsToast(Context context, String text) {
         if (context != null) {
             if (mToast != null) mToast.cancel();
