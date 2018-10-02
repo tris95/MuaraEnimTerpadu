@@ -207,7 +207,7 @@ public class KirimLaporanFragment extends Fragment {
         final CharSequence[] options = { "Camera", "Gallery" };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Ambil bukti transfer dari ?");
+        builder.setTitle("Ambil foto dari ?");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {

@@ -50,13 +50,20 @@ public interface APIServices {
                             @Field("newpass") String newpass);
 
     @FormUrlEncoded
-    @POST("update.php")
-    Call<Value<User>> update(@Field("xkey") String xkey,
-                             @Field("email") String email,
-                             @Field("nama") String nama,
-                             @Field("noktp") String noktp,
-                             @Field("nohp") String nohp,
-                             @Field("alamat") String alamat);
+    @POST("updateprofil.php")
+    Call<Value<User>> updateprofil(@Field("xkey") String xkey,
+                                   @Field("email") String email,
+                                   @Field("nama") String nama,
+                                   @Field("noktp") String noktp,
+                                   @Field("nohp") String nohp,
+                                   @Field("alamat") String alamat);
+
+    @FormUrlEncoded
+    @POST("updateprofilimage.php")
+    Call<Value<User>> updateprofilimage(@Field("xkey") String xkey,
+                                        @Field("id") String id,
+                                        @Field("oldfoto") String oldfoto,
+                                        @Field("foto") String foto);
 
     @FormUrlEncoded
     @POST("getcontent.php")
