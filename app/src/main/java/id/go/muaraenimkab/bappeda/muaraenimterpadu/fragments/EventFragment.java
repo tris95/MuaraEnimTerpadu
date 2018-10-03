@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -41,6 +43,8 @@ public class EventFragment extends Fragment {
     RecyclerView rvEvent;
     LinearLayoutManager linearLayoutManager;
     ArrayList<Event> mListEvent;
+    RelativeLayout relativeLayout;
+    TextView tv_cobalagi;
 
     public EventFragment() {
         // Required empty public constructor
@@ -64,7 +68,10 @@ public class EventFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_event, container, false);
         toolbar = v.findViewById(R.id.toolbar);
+        relativeLayout = v.findViewById(R.id.rl);
         rvEvent = v.findViewById(R.id.rvEvent);
+        tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
+
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
@@ -75,6 +82,13 @@ public class EventFragment extends Fragment {
 //        rvEvent.setLayoutManager(linearLayoutManager);
 //        EventViewAdapter eventViewAdapter=new EventViewAdapter(getContext(),mListEvent);
 //        rvEvent.setAdapter(eventViewAdapter);
+
+        tv_cobalagi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getEvent();
+            }
+        });
 
         getEvent();
 
@@ -119,6 +133,7 @@ public class EventFragment extends Fragment {
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
+                        relativeLayout.setVisibility(View.GONE);
                         mListEvent = (ArrayList<Event>) Objects.requireNonNull(response.body()).getData();
                         MainActivity.events = mListEvent;
 
@@ -127,10 +142,12 @@ public class EventFragment extends Fragment {
                         EventViewAdapter eventViewAdapter=new EventViewAdapter(getContext(),mListEvent);
                         rvEvent.setAdapter(eventViewAdapter);
                     } else {
+                        relativeLayout.setVisibility(View.VISIBLE);
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
                     }
                 } else {
+                    relativeLayout.setVisibility(View.VISIBLE);
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                             Snackbar.LENGTH_LONG).show();
                 }
@@ -141,6 +158,7 @@ public class EventFragment extends Fragment {
             public void onFailure(@NonNull Call<Value<Event>> call, @NonNull Throwable t) {
                 System.out.println("Retrofit Error:" + t.getMessage());
                 pDialog.dismiss();
+                relativeLayout.setVisibility(View.VISIBLE);
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                         Snackbar.LENGTH_LONG).show();
             }
