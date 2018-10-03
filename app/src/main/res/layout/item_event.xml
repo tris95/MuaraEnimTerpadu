@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnLokasi"
         android:layout_alignParentTop="true"
-        android:paddingBottom="10dp">
+        android:paddingBottom="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -66,14 +66,15 @@
                     android:id="@+id/vw"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/ll"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/colorAccent"/>
 
                 <com.bluejamesbond.text.DocumentView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/vw"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:textSize="16sp"
                     android:id="@+id/lblDesEvent"
                     ext:documentView_textAlignment="justified" />
