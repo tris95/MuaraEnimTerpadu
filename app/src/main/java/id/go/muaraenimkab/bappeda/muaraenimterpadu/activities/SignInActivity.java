@@ -2,6 +2,7 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,6 +41,8 @@ public class SignInActivity extends AppCompatActivity {
     Button button;
     TextView tvDaftar;
     public static boolean flagsignin;
+
+    public static String BROADCAST_ACTION = "id.go.muaraenimkab.bappeda.muaraenimterpadu.activities";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,7 +106,7 @@ public class SignInActivity extends AppCompatActivity {
                     if (success == 1) {
                         flagsignin = true;
                         Utilities.setLogin(SignInActivity.this);
-                        for (User user : response.body().getData()) {
+                        for (User user : Objects.requireNonNull(response.body()).getData()) {
                             Utilities.setUser(SignInActivity.this, user);
                         }
                         Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "SignIn Success",
@@ -141,4 +144,9 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+        finish();
+    }
 }

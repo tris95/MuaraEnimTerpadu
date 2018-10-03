@@ -1,6 +1,10 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.activities;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,9 +12,9 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
@@ -36,9 +40,8 @@ public class MainActivity extends AppCompatActivity {
     public static int flag2;
     static Fragment lastFragment, lastFragment2;
     static FragmentManager fragmentManager;
-    static FragmentTransaction fragmentTransaction;
     @SuppressLint("StaticFieldLeak")
-    static BottomNavigationViewEx bottomNavigationView;
+    BottomNavigationViewEx bottomNavigationView;
     static int currentFragment = 0, nowFragment = 0;
     public static List<Ad> ads = new ArrayList<>();
     public static List<Content> contents = new ArrayList<>();
@@ -47,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
     public static List<Berita> Beritas = new ArrayList<>();
     public static List<Laporan> laporans = new ArrayList<>();
     public static List<Event> events = new ArrayList<>();
+
+//    private BroadcastReceiver broadcastRefresh = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            nowFragment = 0;
+//            currentFragment = 0;
+//            bottomNavigationView.setCurrentItem(currentFragment);
+//        }
+//    };
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -145,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 //                fragmentTransaction.replace(R.id.container, lastFragment).commit();
                 fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
                 nowFragment = 5;
-                flag2=4;
+                flag2 = 4;
             } else {
 //                fragmentTransaction=fragmentManager.beginTransaction();
 //                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
@@ -168,4 +180,5 @@ public class MainActivity extends AppCompatActivity {
         Back();
         return true;
     }
+
 }

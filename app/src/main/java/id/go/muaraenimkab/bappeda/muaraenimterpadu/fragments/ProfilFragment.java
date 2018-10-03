@@ -301,6 +301,7 @@ public class ProfilFragment extends Fragment {
                 btnAction.setText("SignIn");
                 Picasso.with(getActivity()).load(Utilities.getBaseURLImageUser() + "default.png").into(imgProfil);
                 startActivity(new Intent(getContext(), SignInActivity.class));
+                getActivity().finish();
             }
         }else {
             if (SignInActivity.flagsignin){

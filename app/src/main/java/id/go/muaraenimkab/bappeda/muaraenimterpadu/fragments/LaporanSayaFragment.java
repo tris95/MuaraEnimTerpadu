@@ -85,6 +85,7 @@ public class LaporanSayaFragment extends Fragment {
                 getLaporan(user.getId_user());
             }else {
                 startActivity(new Intent(getContext(), SignInActivity.class));
+                getActivity().finish();
             }
         }
 
