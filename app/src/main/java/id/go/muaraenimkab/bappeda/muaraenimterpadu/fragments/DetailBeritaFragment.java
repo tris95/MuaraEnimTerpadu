@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
@@ -23,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bluejamesbond.text.DocumentView;
 import com.squareup.picasso.Picasso;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
@@ -87,6 +89,7 @@ public class DetailBeritaFragment extends Fragment {
             gambar = getArguments().getString(ARG_gambar);
         }
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -255,7 +258,7 @@ public class DetailBeritaFragment extends Fragment {
                         int success = Objects.requireNonNull(response.body()).getSuccess();
                         if (success == 1) {
                             String data = Objects.requireNonNull(response.body()).getMessage();
-                            if (!data.equals("ada")) {
+                             if (data.equals("kosong")) {
                                 setDataView();
                             }
                             getisiBerita(pDialog);
@@ -335,8 +338,7 @@ public class DetailBeritaFragment extends Fragment {
                         requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 2);
                     }
                 } else {
-                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
-                            1);
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
                 }
                 return;
             }
@@ -344,11 +346,10 @@ public class DetailBeritaFragment extends Fragment {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         Log.e("permission", "DENIED");
-                        return;
+                        cekIME();
                     } else {
                         Log.e("permission", "GRANTED");
                     }
-                    cekIME();
                 }
             }
         }

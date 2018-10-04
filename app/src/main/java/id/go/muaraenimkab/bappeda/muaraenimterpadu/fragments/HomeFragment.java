@@ -1,8 +1,6 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,25 +8,18 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,8 +48,8 @@ public class HomeFragment extends Fragment {
     //Toolbar toolbar;
     //View view;
     private SliderLayout mSlider;
-    RelativeLayout rl,rlberita,rlslider;
-    TextView lblBeritaselengkapnya,tv_cobalagi;
+    RelativeLayout rl, rlberita, rlslider;
+    TextView lblBeritaselengkapnya, tv_cobalagi;
     RecyclerView rvContent, rvBerita;
     ArrayList<Content> mListContent;
     ArrayList<Berita> mListBerita;
@@ -77,6 +68,7 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,12 +80,12 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         //toolbar = v.findViewById(R.id.toolbar);
-        rl=v.findViewById(R.id.rl);
-        rlberita=v.findViewById(R.id.rlberita);
+        rl = v.findViewById(R.id.rl);
+        rlberita = v.findViewById(R.id.rlberita);
         //view=v.findViewById(R.id.view);
         swipeRefreshLayout = v.findViewById(R.id.swipe);
-        tv_cobalagi  = v.findViewById(R.id.tv_cobalagi);
-        indicator= v.findViewById(R.id.custom_indicator);
+        tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
+        indicator = v.findViewById(R.id.custom_indicator);
 
         //((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -104,7 +96,7 @@ public class HomeFragment extends Fragment {
         mSlider = v.findViewById(R.id.slider);
         rvContent = v.findViewById(R.id.rvContent);
         rvBerita = v.findViewById(R.id.rvBerita);
-        rlslider=v.findViewById(R.id.rlslider);
+        rlslider = v.findViewById(R.id.rlslider);
 
 //        Display display = ((Activity) Objects.requireNonNull(getContext())).getWindowManager().getDefaultDisplay();
 //        final DisplayMetrics outMetrics = new DisplayMetrics();
@@ -216,7 +208,7 @@ public class HomeFragment extends Fragment {
                         MainActivity.ads = listDataAd;
                         HashMap<String, String> url_maps = new HashMap<>();
 
-                        if (listDataAd.size()!=0) {
+                        if (listDataAd.size() != 0) {
                             for (int a = 0; a < listDataAd.size(); a++) {
                                 url_maps.put(listDataAd.get(a).getJudul_iklan(), Utilities.getURLImageIklan() + listDataAd.get(a).getGambar_iklan());
                             }
@@ -242,8 +234,7 @@ public class HomeFragment extends Fragment {
 
                             rl.setVisibility(View.GONE);
                             getContent(pDialog);
-                        }
-                        else {
+                        } else {
                             mSlider.setBackgroundResource(R.drawable.defaultimage);
                         }
                     } else {
@@ -329,6 +320,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     private void getBerita(final ProgressDialog pDialog) {
 
         String random = Utilities.getRandom(5);
@@ -387,16 +379,5 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
 
 }
