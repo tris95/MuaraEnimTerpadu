@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
@@ -228,7 +229,8 @@ public class DetailBeritaFragment extends Fragment {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        ime = Objects.requireNonNull(telephonyManager).getDeviceId();
+        //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
+        ime= Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
 
         if (!ime.equals("")) {
 
