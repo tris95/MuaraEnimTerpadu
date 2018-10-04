@@ -7,12 +7,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/imgBerita"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:scaleType="fitXY"/>
 
         <TextView
@@ -53,10 +53,10 @@
             <ImageView
                 android:layout_width="13dp"
                 android:layout_height="13dp"
-                android:background="@drawable/baseline_event_6"
-                android:backgroundTint="@color/colorPrimary"
+                android:src="@drawable/baseline_event_24"
+                android:tint="@color/colorPrimary"
                 android:layout_gravity="center"
-                tools:ignore="UnusedAttribute" />
+                tools:ignore="ContentDescription"/>
 
             <TextView
                 android:id="@+id/lbltanggalBerita"
@@ -68,12 +68,12 @@
             <ImageView
                 android:layout_width="13dp"
                 android:layout_height="13dp"
-                android:background="@drawable/baseline_favorite_6"
-                android:backgroundTint="@color/colorPrimary"
+                android:src="@drawable/baseline_favorite_24"
                 android:layout_gravity="center"
-                tools:ignore="UnusedAttribute"
+                android:tint="@color/colorPrimary"
                 android:layout_marginLeft="5dp"
-                android:layout_marginStart="5dp" />
+                android:layout_marginStart="5dp"
+                tools:ignore="ContentDescription"/>
 
             <TextView
                 android:id="@+id/lblLikeBerita"
@@ -85,10 +85,10 @@
             <ImageView
                 android:layout_width="13dp"
                 android:layout_height="13dp"
-                android:background="@drawable/baseline_person_6"
-                android:backgroundTint="@color/colorPrimary"
+                android:src="@drawable/baseline_person_24"
                 android:layout_gravity="center"
-                tools:ignore="UnusedAttribute"
+                tools:ignore="ContentDescription"
+                android:tint="@color/colorPrimary"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"/>
 

@@ -31,8 +31,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -48,6 +50,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
@@ -68,10 +72,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class KirimLaporanFragment extends Fragment {
-    EditText txtJudul, txtIsi, txtLokasi;
+    EditText txtJudul, txtIsi, txtLokasi, txtNoHp;
     Button btnKirim;
     CircularImageView imgLaporan;
     String foto;
+    Spinner spOpd;
 
     public KirimLaporanFragment() {
         // Required empty public constructor
@@ -98,7 +103,9 @@ public class KirimLaporanFragment extends Fragment {
         txtJudul = v.findViewById(R.id.txtJudul);
         btnKirim = v.findViewById(R.id.btnKirim);
         txtLokasi = v.findViewById(R.id.txtLokasi);
+        txtNoHp = v.findViewById(R.id.txtNoHp);
         imgLaporan = v.findViewById(R.id.imgLaporan);
+        spOpd = v.findViewById(R.id.spOpd);
 
         foto="";
 
@@ -126,6 +133,37 @@ public class KirimLaporanFragment extends Fragment {
                 dialogAmbilGambar();
             }
         });
+
+        txtNoHp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                final int DRAWABLE_RIGHT = 2;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    if (motionEvent.getRawX() >= (txtNoHp.getRight()-txtNoHp.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())){
+                        User user = Utilities.getUser(getContext());
+                        txtNoHp.setText(user.getNo_hp_user());
+                    }
+                }
+                return false;
+            }
+        });
+
+        List<String> arr = new ArrayList<String>();
+        arr.add("Sekretaris Daerah");
+        arr.add("DPRD Muara Enim");
+        arr.add("Kejaksaan Negeri");
+        arr.add("Badan Perencanaan Pembangunan Daerah");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arr);
+        spOpd.setAdapter(adapter);
+
+        if (Utilities.isLogin(getContext())) {
+            User user = Utilities.getUser(getContext());
+//            getLaporan(user.getId_user());
+        }else {
+            startActivity(new Intent(getContext(), SignInActivity.class));
+            getActivity().finish();
+        }
 
         return v;
     }

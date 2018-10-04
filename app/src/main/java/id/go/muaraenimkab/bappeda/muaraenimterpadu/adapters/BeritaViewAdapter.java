@@ -2,13 +2,17 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -97,6 +101,14 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
             lbltanggalBerita = itemView.findViewById(R.id.lbltanggalBerita);
             lbllikeBerita = itemView.findViewById(R.id.lblLikeBerita);
             lblviewBerita = itemView.findViewById(R.id.lblViewBerita);
+
+            Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
+            final DisplayMetrics outMetrics = new DisplayMetrics();
+            display.getMetrics(outMetrics);
+            int viewPagerWidth = Math.round(outMetrics.widthPixels)/4;
+            int viewPagerHeight = Math.round(outMetrics.widthPixels)/4;
+
+            imgBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
         }
     }
 }

@@ -170,12 +170,15 @@ public class LokasiEventFragment extends Fragment {
                                     gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi));
 //                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
 
-                                    if (currentLatLng != null && destlatLng != null) {
+//                                    if (currentLatLng != null && destlatLng != null) {
                                         String url = getUrl(currentLatLng, destlatLng);
                                         DownloadTask FetchUrl = new DownloadTask();
                                         FetchUrl.execute(url);
-                                    }
+//                                    }
                                 } else {
+                                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
+                                            Snackbar.LENGTH_LONG).show();
+
                                     LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
                                     gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi));
                                     gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
@@ -253,6 +256,7 @@ public class LokasiEventFragment extends Fragment {
 
                     mFusedLocationClient.getLastLocation()
                             .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                                @SuppressLint("NewApi")
                                 @Override
                                 public void onSuccess(Location location) {
                                     if (location != null) {
@@ -265,12 +269,15 @@ public class LokasiEventFragment extends Fragment {
                                         gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi));
 //                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
 
-                                        if (currentLatLng != null && destlatLng != null) {
+//                                        if (currentLatLng != null && destlatLng != null) {
                                             String url = getUrl(currentLatLng, destlatLng);
                                             DownloadTask FetchUrl = new DownloadTask();
                                             FetchUrl.execute(url);
-                                        }
+//                                        }
                                     } else {
+                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
+                                                Snackbar.LENGTH_LONG).show();
+
                                         LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
                                         gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi));
                                         gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));

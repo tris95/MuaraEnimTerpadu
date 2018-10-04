@@ -12,10 +12,26 @@
         tools:context=".fragments.KirimLaporanFragment">
 
         <TextView
+            android:id="@+id/lblTujuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Dinas Tujuan"/>
+
+        <Spinner
+            android:id="@+id/spOpd"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button"
+            android:padding="7dp"/>
+
+        <TextView
             android:id="@+id/lblJudul"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:layout_marginTop="@dimen/activity_margin"
             android:text="Judul Laporan" />
 
         <EditText
@@ -46,6 +62,27 @@
             android:textAlignment="textStart"
             android:layout_marginTop="@dimen/activity_margin"
             android:gravity="start" />
+
+        <TextView
+            android:id="@+id/lblnotlp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:text="No. Hp" />
+
+        <EditText
+            android:id="@+id/txtNoHp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_button"
+            android:padding="7dp"
+            android:hint="No. Hp yang dapat dihubungi"
+            android:textAlignment="textStart"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:gravity="start"
+            android:drawableRight="@drawable/baseline_edit_24"
+            android:drawableEnd="@drawable/baseline_edit_24" />
 
         <TextView
             android:id="@+id/lblLokasi"
