@@ -114,7 +114,7 @@ public class SignInActivity extends AppCompatActivity {
                         new Timer().schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                finish();
+                                onBackPressed();
                             }
                         }, 2000);
                     } else  if (success == 2) {

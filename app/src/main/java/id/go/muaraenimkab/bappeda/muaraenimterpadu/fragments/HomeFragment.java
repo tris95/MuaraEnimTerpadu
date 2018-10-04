@@ -1,5 +1,6 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,11 +9,15 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -98,14 +103,15 @@ public class HomeFragment extends Fragment {
         rvBerita = v.findViewById(R.id.rvBerita);
         rlslider = v.findViewById(R.id.rlslider);
 
-//        Display display = ((Activity) Objects.requireNonNull(getContext())).getWindowManager().getDefaultDisplay();
-//        final DisplayMetrics outMetrics = new DisplayMetrics();
-//        display.getMetrics(outMetrics);
-//        int viewPagerWidth = Math.round(outMetrics.widthPixels);
-//        int more = viewPagerWidth / 6;
-//        int viewPagerHeight = viewPagerWidth / 4 + more;
-//
-//        mSlider.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+        Display display = ((Activity) Objects.requireNonNull(getContext())).getWindowManager().getDefaultDisplay();
+        final DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        int viewPagerWidth = Math.round(outMetrics.widthPixels);
+        int viewPagerHeight = viewPagerWidth / 2;
+
+        rlslider.setLayoutParams(new LinearLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+
+        rvBerita.addItemDecoration(new DividerItemDecoration(rvBerita.getContext(), DividerItemDecoration.VERTICAL));
 
         if (MainActivity.ads.size() != 0 && MainActivity.contents.size() != 0) {
             List<Ad> listDataAd = MainActivity.ads;
@@ -132,7 +138,6 @@ public class HomeFragment extends Fragment {
             mSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
             mSlider.setCustomIndicator(indicator);
             mSlider.setDuration(4000);
-
 
             linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             rvContent.setLayoutManager(linearLayoutManagercontent);

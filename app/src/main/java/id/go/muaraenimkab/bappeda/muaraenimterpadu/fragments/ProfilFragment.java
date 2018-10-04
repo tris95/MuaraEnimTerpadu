@@ -151,6 +151,7 @@ public class ProfilFragment extends Fragment {
                                     Utilities.signOutUser(getContext());
                                     Intent mIntent = new Intent(getContext(), SignInActivity.class);
                                     startActivity(mIntent);
+                                    getActivity().finish();
                                 }
                             })
                             .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

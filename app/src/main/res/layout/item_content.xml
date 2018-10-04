@@ -4,26 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingRight="5dp"
-    android:paddingEnd="5dp"
+    android:paddingRight="10dp"
+    android:paddingEnd="10dp"
     tools:ignore="RtlSymmetry">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/rl"
         tools:ignore="UselessParent">
 
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/imgContent"
-            android:layout_width="130dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:siBorderColor="@color/white"
             android:scaleType="fitXY"
             app:siRadius="13dp" />
 
         <RelativeLayout
-            android:layout_width="130dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/custom_content">
 
         </RelativeLayout>
@@ -32,10 +33,9 @@
             android:id="@+id/lblContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:paddingTop="70dp"
             android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:padding="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:ignore="RtlSymmetry" />
