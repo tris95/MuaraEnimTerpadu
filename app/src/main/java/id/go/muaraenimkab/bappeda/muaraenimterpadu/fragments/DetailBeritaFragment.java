@@ -12,9 +12,11 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,6 +110,10 @@ public class DetailBeritaFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Detail Berita");
+        }
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED ) {
+            requestPermissions(new String[]{
+                    Manifest.permission.READ_PHONE_STATE}, 1);
         }
         cekIME();
 
@@ -221,8 +227,7 @@ public class DetailBeritaFragment extends Fragment {
         }
         ime = Objects.requireNonNull(telephonyManager).getDeviceId();
 
-        Toast.makeText(getContext(), ""+ime, Toast.LENGTH_SHORT).show();
-        if (ime.equals("")) {
+        if (!ime.equals("")) {
 
             final ProgressDialog pDialog = new ProgressDialog(getActivity());
             pDialog.setMessage("Loading...");
@@ -315,6 +320,38 @@ public class DetailBeritaFragment extends Fragment {
 
             }
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
+                            Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 2);
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 2);
+                    }
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
+                            1);
+                }
+                return;
+            }
+            case 2: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        Log.e("permission", "DENIED");
+                        return;
+                    } else {
+                        Log.e("permission", "GRANTED");
+                    }
+                    cekIME();
+                }
+            }
+        }
     }
 }
 
