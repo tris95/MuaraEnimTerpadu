@@ -104,17 +104,17 @@ public interface APIServices {
     @FormUrlEncoded
     @POST("getKategoripariwisata.php")
     Call<ValueAdd> kirimlaporan(@Field("xkey") String xkey,
-                                       @Field("iduser") String iduser,
-                                       @Field("judul") String judul,
-                                       @Field("isi") String isi,
-                                       @Field("nohp") String nohp,
-                                       @Field("lokasi") String lokasi,
-                                       @Field("foto") String foto);
+                                @Field("iduser") String iduser,
+                                @Field("judul") String judul,
+                                @Field("isi") String isi,
+                                @Field("nohp") String nohp,
+                                @Field("lokasi") String lokasi,
+                                @Field("foto") String foto);
 
     @FormUrlEncoded
     @POST("getlaporan.php")
     Call<Value<Laporan>> getlaporan(@Field("xkey") String xkey,
-                                   @Field("id") String id);
+                                    @Field("id") String id);
 
     @FormUrlEncoded
     @POST("getpariwisata.php")
@@ -125,4 +125,16 @@ public interface APIServices {
     @POST("gettempatpariwisata.php")
     Call<Value<TempatPariwisata>> gettempatpariwisata(@Field("xkey") String xkey,
                                                       @Field("idpariwisata") String idpariwisata);
+
+    @FormUrlEncoded
+    @POST("cekime.php")
+    Call<ValueAdd> cekime(@Field("xkey") String xkey,
+                          @Field("ime") String ime,
+                          @Field("idberita") String idberita);
+
+    @FormUrlEncoded
+    @POST("setdataview.php")
+    Call<ValueAdd> setDataView(@Field("xkey") String xkey,
+                               @Field("ime") String ime,
+                               @Field("idberita") String idberita);
 }
