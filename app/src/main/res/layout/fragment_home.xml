@@ -117,20 +117,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:padding="5dp"/>
+                    android:layout_marginTop="10dp" />
 
                 <View
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:background="@color/colorDivider" />
 
                 <RelativeLayout
                     android:id="@+id/rlberita"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:padding="10dp">
 
                     <TextView

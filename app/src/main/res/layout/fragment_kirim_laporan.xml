@@ -23,8 +23,7 @@
             android:layout_marginTop="@dimen/activity_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_button"
-            android:padding="7dp"/>
+            android:background="@drawable/custom_button"/>
 
         <TextView
             android:id="@+id/lblJudul"
