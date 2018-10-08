@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".fragments.HomeFragment">
 
     <!--<android.support.design.widget.AppBarLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:theme="@style/AppTheme.AppBarOverlay">-->
 
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:id="@+id/toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="?attr/actionBarSize"-->
-            <!--android:background="?attr/colorPrimary" />-->
+    <!--<android.support.v7.widget.Toolbar-->
+    <!--android:id="@+id/toolbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="?attr/actionBarSize"-->
+    <!--android:background="?attr/colorPrimary" />-->
     <!--</android.support.design.widget.AppBarLayout>-->
 
     <RelativeLayout
@@ -54,10 +54,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_button"
-                android:paddingBottom="7dp"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="7dp"
                 android:text="@string/coba_lagi"
                 android:textColor="@color/colorOrange" />
         </LinearLayout>
@@ -78,9 +78,9 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/rlslider"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:id="@+id/rlslider"
                     android:visibility="gone">
 
                     <com.daimajia.slider.library.SliderLayout
@@ -89,36 +89,36 @@
                         android:layout_height="match_parent"
                         app:auto_cycle="true"
                         app:indicator_visibility="visible"
-                        app:pager_animation_span="1100"/>
+                        app:pager_animation_span="1100" />
 
                     <com.daimajia.slider.library.Indicators.PagerIndicator
+                        android:id="@+id/custom_indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/custom_indicator"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="40dp"
                         android:gravity="center"
                         app:selected_color="@color/colorPrimary"
-                        app:unselected_color="#55333333"
-                        app:shape="rect"
+                        app:selected_height="6dp"
                         app:selected_padding_left="5dp"
                         app:selected_padding_right="5dp"
+                        app:selected_width="6dp"
+                        app:shape="rect"
+                        app:unselected_color="#55333333"
+                        app:unselected_height="6dp"
                         app:unselected_padding_left="5dp"
                         app:unselected_padding_right="5dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_alignParentBottom="true"
-                        app:selected_width="6dp"
-                        app:selected_height="6dp"
-                        app:unselected_width="6dp"
-                        app:unselected_height="6dp"
-                        android:layout_marginBottom="40dp"/>
+                        app:unselected_width="6dp" />
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="10dp"
-                    android:padding="5dp"/>
+                    android:orientation="horizontal"
+                    android:padding="5dp" />
 
                 <View
                     android:id="@+id/view"
@@ -137,33 +137,37 @@
                         android:id="@+id/lblBeritaterbaru"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:text="@string/berita_baru"
                         android:textColor="@color/red"
-                        android:layout_centerVertical="true"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/lblBeritaselengkapnya"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableTint="@color/colorPrimary"
-                        android:text="@string/berita_selengkapnya"
                         android:textStyle="bold"
-                        android:layout_toLeftOf="@+id/tvArrow"
-                        tools:ignore="UnusedAttribute"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/tvArrow" />
+                        tools:ignore="RelativeOverlap" />
 
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/llkategoriberita"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tvArrow"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/baseline_keyboard_arrow_right_24"
-                        android:tint="@color/colorPrimary"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"/>
+                        android:layout_alignParentRight="true"
+                        tools:ignore="RelativeOverlap,UseCompoundDrawables">
 
+                        <TextView
+                            android:id="@+id/lblBeritaselengkapnya"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableTint="@color/colorPrimary"
+                            android:text="@string/berita_selengkapnya"
+                            android:textStyle="bold"
+                            tools:ignore="RelativeOverlap,UnusedAttribute" />
+
+                        <ImageView
+                            android:id="@+id/tvArrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_keyboard_arrow_right_24"
+                            android:tint="@color/colorPrimary"
+                            tools:ignore="ContentDescription" />
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
