@@ -26,6 +26,7 @@ import java.util.Objects;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.DetailPariwisata;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
@@ -41,18 +42,18 @@ public class DetailKulinerFragment extends Fragment {
     Toolbar toolbar;
     Button btnToko;
     ArrayList<DetailPariwisata> mListPariwisata;
-    String idpariwisata,namapariwisata,gambar;
+    String idpariwisata, namapariwisata, gambar;
     RelativeLayout rl;
     TextView lbljudulpariwisata;
     DocumentView lbldeskripsipariwisata;
     ImageView imgDetaiKuliner;
-    private static final String ARG_idpariwisata = "idpariwisata",ARG_namapariwisata = "namapariwisata",ARG_gambar = "gambar";
+    private static final String ARG_idpariwisata = "idpariwisata", ARG_namapariwisata = "namapariwisata", ARG_gambar = "gambar";
 
     public DetailKulinerFragment() {
         // Required empty public constructor
     }
 
-    public static DetailKulinerFragment newInstance(String idpariwisata, String namapariwisata,String gambar) {
+    public static DetailKulinerFragment newInstance(String idpariwisata, String namapariwisata, String gambar) {
         DetailKulinerFragment fragment = new DetailKulinerFragment();
         Bundle args = new Bundle();
         args.putString(ARG_idpariwisata, idpariwisata);
@@ -79,10 +80,10 @@ public class DetailKulinerFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_detail_kuliner, container, false);
         toolbar = v.findViewById(R.id.toolbar);
         btnToko = v.findViewById(R.id.btnToko);
-        rl=v.findViewById(R.id.rl);
-        imgDetaiKuliner=v.findViewById(R.id.imgDetaiKuliner);
-        lbljudulpariwisata=v.findViewById(R.id.lbljudulpariwisata);
-        lbldeskripsipariwisata=v.findViewById(R.id.lbldeskripsipariwisata);
+        rl = v.findViewById(R.id.rl);
+        imgDetaiKuliner = v.findViewById(R.id.imgDetaiKuliner);
+        lbljudulpariwisata = v.findViewById(R.id.lbljudulpariwisata);
+        lbldeskripsipariwisata = v.findViewById(R.id.lbldeskripsipariwisata);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -92,6 +93,7 @@ public class DetailKulinerFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("");
         }
 
+        gettempatPariwisata();
         getPariwisata();
 
         btnToko.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +124,7 @@ public class DetailKulinerFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<DetailPariwisata>> call = api.getpariwisata(random,idpariwisata);
+        Call<Value<DetailPariwisata>> call = api.getpariwisata(random, idpariwisata);
         call.enqueue(new Callback<Value<DetailPariwisata>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -169,6 +171,45 @@ public class DetailKulinerFragment extends Fragment {
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                         Snackbar.LENGTH_LONG).show();
                 rl.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    public void gettempatPariwisata() {
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<Value<TempatPariwisata>> call = api.gettempatpariwisata(random, idpariwisata);
+        call.enqueue(new Callback<Value<TempatPariwisata>>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NonNull Call<Value<TempatPariwisata>> call, @NonNull Response<Value<TempatPariwisata>> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        ArrayList mListtempatPariwisata = (ArrayList<TempatPariwisata>) Objects.requireNonNull(response.body()).getData();
+
+                        if (mListtempatPariwisata.size() != 0) {
+                            btnToko.setVisibility(View.VISIBLE);
+                        } else {
+                            btnToko.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<Value<TempatPariwisata>> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
             }
         });
     }

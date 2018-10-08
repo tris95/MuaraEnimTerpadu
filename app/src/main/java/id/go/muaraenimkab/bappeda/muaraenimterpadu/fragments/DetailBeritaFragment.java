@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -176,7 +177,7 @@ public class DetailBeritaFragment extends Fragment {
                         display.getMetrics(outMetrics);
                         int viewPagerWidth = Math.round(outMetrics.widthPixels);
                         int viewPagerHeight = viewPagerWidth / 2;
-
+                        int Width = Math.round(outMetrics.widthPixels);
                         imgDetaiBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
                         Picasso.with(getContext())
@@ -184,6 +185,7 @@ public class DetailBeritaFragment extends Fragment {
                                 .into(imgDetaiBerita);
 
                         lblIsiBerita.setText(mListBerita.get(0).getIsi_berita());
+                        //lblIsiBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/51);
 
                         rl.setVisibility(View.GONE);
                         lblLikeUnlike.setVisibility(View.VISIBLE);

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,8 +81,10 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
             display.getMetrics(outMetrics);
             int viewPagerWidth = Math.round(outMetrics.widthPixels)/3;
             int viewPagerHeight = Math.round(outMetrics.widthPixels)/4;
+            int Width = Math.round(outMetrics.widthPixels);
 
             rl.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+            content.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/44);
         }
     }
 }

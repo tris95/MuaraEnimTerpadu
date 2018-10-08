@@ -98,7 +98,7 @@
                         android:gravity="center"
                         app:selected_color="@color/colorPrimary"
                         app:unselected_color="#55333333"
-                        app:shape="rect"
+                        app:shape="oval"
                         app:selected_padding_left="5dp"
                         app:selected_padding_right="5dp"
                         app:unselected_padding_left="5dp"
@@ -125,13 +125,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorDivider" />
+                    android:background="@color/colorDivider"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:id="@+id/rlberita"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/lblBeritaterbaru"
@@ -142,28 +144,34 @@
                         android:layout_centerVertical="true"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/lblBeritaselengkapnya"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableTint="@color/colorPrimary"
-                        android:text="@string/berita_selengkapnya"
-                        android:textStyle="bold"
-                        android:layout_toLeftOf="@+id/tvArrow"
-                        tools:ignore="UnusedAttribute"
-                        android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/tvArrow" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvArrow"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/baseline_keyboard_arrow_right_24"
-                        android:tint="@color/colorPrimary"
+                        android:id="@+id/llkategoriberita"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"/>
+                        android:layout_alignParentRight="true"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginEnd="2dp"
+                        tools:ignore="RelativeOverlap">
+                        <TextView
+                            android:id="@+id/lblBeritaselengkapnya"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableTint="@color/colorPrimary"
+                            android:text="@string/berita_selengkapnya"
+                            android:textStyle="bold"
+                            tools:ignore="RelativeOverlap,UnusedAttribute" />
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tvArrow"
+                            android:src="@drawable/baseline_keyboard_arrow_right_24"
+                            android:tint="@color/colorPrimary"
+                            tools:ignore="ContentDescription" />
+
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView

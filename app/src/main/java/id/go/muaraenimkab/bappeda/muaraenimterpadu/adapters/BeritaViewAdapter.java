@@ -4,26 +4,35 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailBeritaFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
+
+import static java.security.AccessController.getContext;
 
 public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.DataObjectHolder> {
     private Context context;
@@ -42,6 +51,7 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
         return new DataObjectHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onBindViewHolder(@NonNull final DataObjectHolder holder, @SuppressLint("RecyclerView") final int position) {
         final String like,view;
@@ -90,7 +100,7 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
     }
 
     class DataObjectHolder extends RecyclerView.ViewHolder {
-        ImageView imgBerita;
+        ImageView imgBerita,imgtanggalBerita,imglikeBerita,imgviewBerita;
         TextView lblJudulBerita, lblIsiBerita, lbltanggalBerita, lbllikeBerita, lblviewBerita;
 
         DataObjectHolder(View itemView) {
@@ -101,14 +111,27 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
             lbltanggalBerita = itemView.findViewById(R.id.lbltanggalBerita);
             lbllikeBerita = itemView.findViewById(R.id.lblLikeBerita);
             lblviewBerita = itemView.findViewById(R.id.lblViewBerita);
+            imgtanggalBerita=itemView.findViewById(R.id.imgtanggalberita);
+            imglikeBerita=itemView.findViewById(R.id.imglikeberita);
+            imgviewBerita=itemView.findViewById(R.id.imgviewberita);
 
             Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
             final DisplayMetrics outMetrics = new DisplayMetrics();
             display.getMetrics(outMetrics);
             int viewPagerWidth = Math.round(outMetrics.widthPixels)/4;
             int viewPagerHeight = Math.round(outMetrics.widthPixels)/4;
+            int Width = Math.round(outMetrics.widthPixels);
 
             imgBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+            lblJudulBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/47);
+            lblIsiBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/51);
+            lbltanggalBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/53);
+            lbllikeBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/53);
+            lblviewBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/53);
+
+            imgtanggalBerita.setLayoutParams(new LinearLayout.LayoutParams(Width/21, Width/21));
+            imglikeBerita.setLayoutParams(new LinearLayout.LayoutParams(Width/21, Width/21));
+            imgviewBerita.setLayoutParams(new LinearLayout.LayoutParams(Width/21, Width/21));
         }
     }
 }

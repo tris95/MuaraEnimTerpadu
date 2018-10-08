@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
@@ -34,18 +36,19 @@ public class DetailWisataFragment extends Fragment {
     View bottomsheet;
     ImageView imgup,imgback,imgdetailwisata;
     MainActivity mainActivity =new MainActivity();
-    String idparawisata, namapariwisata;
-    private static final String ARG_idparawisata = "idparawisata",ARG_namapariwisata = "namapariwisata";
+    String idparawisata, namapariwisata,gambarpariwisata;
+    private static final String ARG_idparawisata = "idparawisata",ARG_namapariwisata = "namapariwisata",ARG_gambarpariwisata = "gambarpariwisata";
 
     public DetailWisataFragment() {
         // Required empty public constructor
     }
 
-    public static DetailWisataFragment newInstance(String idpariwisata,String namapariwisata) {
+    public static DetailWisataFragment newInstance(String idpariwisata,String namapariwisata,String gambarpariwisata) {
         DetailWisataFragment fragment = new DetailWisataFragment();
         Bundle args = new Bundle();
         args.putString(ARG_idparawisata, idpariwisata);
         args.putString(ARG_namapariwisata, namapariwisata);
+        args.putString(ARG_gambarpariwisata, gambarpariwisata);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,6 +59,7 @@ public class DetailWisataFragment extends Fragment {
         if (getArguments() != null) {
             idparawisata = getArguments().getString(ARG_idparawisata);
             namapariwisata = getArguments().getString(ARG_namapariwisata);
+            gambarpariwisata = getArguments().getString(ARG_gambarpariwisata);
          }
 
     }
@@ -82,6 +86,10 @@ public class DetailWisataFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(false);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(namapariwisata);
         }
+
+        Picasso.with(getContext())
+                .load(gambarpariwisata)
+                .into(imgdetailwisata);
 
         imgup.setOnClickListener(new View.OnClickListener() {
             @Override
