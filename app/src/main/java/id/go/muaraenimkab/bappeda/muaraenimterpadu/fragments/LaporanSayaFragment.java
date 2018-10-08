@@ -143,8 +143,8 @@ public class LaporanSayaFragment extends Fragment {
             public void onResponse(@NonNull Call<Value<Laporan>> call, @NonNull Response<Value<Laporan>> response) {
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
+                    swipeRefreshLayout.setRefreshing(false);
                     if (success == 1) {
-                        swipeRefreshLayout.setRefreshing(false);
                         mList = (ArrayList<Laporan>) Objects.requireNonNull(response.body()).getData();
                         MainActivity.laporans = mList;
 
@@ -171,6 +171,7 @@ public class LaporanSayaFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<Value<Laporan>> call, @NonNull Throwable t) {
                 System.out.println("Retrofit Error:" + t.getMessage());
+                swipeRefreshLayout.setRefreshing(false);
                 pDialog.dismiss();
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                         Snackbar.LENGTH_LONG).show();

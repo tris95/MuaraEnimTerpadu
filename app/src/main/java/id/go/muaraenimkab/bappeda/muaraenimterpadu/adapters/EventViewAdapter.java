@@ -1,15 +1,20 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bluejamesbond.text.DocumentView;
@@ -82,6 +87,15 @@ public class EventViewAdapter extends RecyclerView.Adapter<EventViewAdapter.Data
             tanggalevent = itemView.findViewById(R.id.tanggalevent);
             lblDesEvent = itemView.findViewById(R.id.lblDesEvent);
             btnLokasi = itemView.findViewById(R.id.btnLokasi);
+
+            Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
+            final DisplayMetrics outMetrics = new DisplayMetrics();
+            display.getMetrics(outMetrics);
+            int viewPagerWidth = Math.round(outMetrics.widthPixels);
+            int more = viewPagerWidth/4;
+            int viewPagerHeight = (Math.round(outMetrics.widthPixels)/2)+more;
+
+            imgEvent.setLayoutParams(new LinearLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
         }
     }
 }

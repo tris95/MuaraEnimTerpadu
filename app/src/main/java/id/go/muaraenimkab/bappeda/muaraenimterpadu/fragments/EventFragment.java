@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,6 +46,7 @@ public class EventFragment extends Fragment {
     ArrayList<Event> mListEvent;
     RelativeLayout relativeLayout;
     TextView tv_cobalagi;
+    SwipeRefreshLayout swipeRefresh;
 
     public EventFragment() {
         // Required empty public constructor
@@ -71,6 +73,7 @@ public class EventFragment extends Fragment {
         relativeLayout = v.findViewById(R.id.rl);
         rvEvent = v.findViewById(R.id.rvEvent);
         tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
+        swipeRefresh = v.findViewById(R.id.swipeRefresh);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -90,7 +93,22 @@ public class EventFragment extends Fragment {
             }
         });
 
-        getEvent();
+        if (MainActivity.events.size() != 0){
+            relativeLayout.setVisibility(View.GONE);
+            linearLayoutManager=new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            rvEvent.setLayoutManager(linearLayoutManager);
+            EventViewAdapter eventViewAdapter=new EventViewAdapter(getContext(), (ArrayList<Event>)MainActivity.events);
+            rvEvent.setAdapter(eventViewAdapter);
+        }else {
+            getEvent();
+        }
+
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getEvent();
+            }
+        });
 
         return v;
     }
@@ -130,6 +148,7 @@ public class EventFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<Value<Event>> call, @NonNull Response<Value<Event>> response) {
                 pDialog.dismiss();
+                swipeRefresh.setRefreshing(false);
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
@@ -157,6 +176,7 @@ public class EventFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<Value<Event>> call, @NonNull Throwable t) {
                 System.out.println("Retrofit Error:" + t.getMessage());
+                swipeRefresh.setRefreshing(false);
                 pDialog.dismiss();
                 relativeLayout.setVisibility(View.VISIBLE);
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",

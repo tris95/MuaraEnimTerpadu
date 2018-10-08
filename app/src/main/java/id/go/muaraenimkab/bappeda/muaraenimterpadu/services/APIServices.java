@@ -9,6 +9,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Event;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Opd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
@@ -67,6 +68,10 @@ public interface APIServices {
                                         @Field("foto") String foto);
 
     @FormUrlEncoded
+    @POST("getopd.php")
+    Call<Value<Opd>> getopd(@Field("xkey") String xkey);
+
+    @FormUrlEncoded
     @POST("getevent.php")
     Call<Value<Event>> getevent(@Field("xkey") String xkey);
 
@@ -102,9 +107,10 @@ public interface APIServices {
                                                   @Field("idkategori") String idkategori);
 
     @FormUrlEncoded
-    @POST("getKategoripariwisata.php")
+    @POST("kirimlaporan.php")
     Call<ValueAdd> kirimlaporan(@Field("xkey") String xkey,
                                 @Field("iduser") String iduser,
+                                @Field("idopd") String idopd,
                                 @Field("judul") String judul,
                                 @Field("isi") String isi,
                                 @Field("nohp") String nohp,

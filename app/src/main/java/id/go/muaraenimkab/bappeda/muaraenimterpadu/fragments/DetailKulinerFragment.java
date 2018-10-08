@@ -1,14 +1,18 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +46,7 @@ public class DetailKulinerFragment extends Fragment {
     Button btnToko;
     ArrayList<DetailPariwisata> mListPariwisata;
     String idpariwisata,namapariwisata,gambar;
-    RelativeLayout rl;
+    RelativeLayout rl, rLayout;
     TextView lbljudulpariwisata;
     DocumentView lbldeskripsipariwisata;
     ImageView imgDetaiKuliner;
@@ -83,13 +87,14 @@ public class DetailKulinerFragment extends Fragment {
         imgDetaiKuliner=v.findViewById(R.id.imgDetaiKuliner);
         lbljudulpariwisata=v.findViewById(R.id.lbljudulpariwisata);
         lbldeskripsipariwisata=v.findViewById(R.id.lbldeskripsipariwisata);
+        rLayout = v.findViewById(R.id.rLayout);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Detail Kuliner");
         }
 
         getPariwisata();
@@ -100,6 +105,22 @@ public class DetailKulinerFragment extends Fragment {
                 MainActivity.replaceFragment(TempatFragment.newInstance(idpariwisata), 7);
             }
         });
+
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getPariwisata();
+            }
+        });
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        final DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        int viewPagerWidth = Math.round(outMetrics.widthPixels);
+        int viewPagerHeight = Math.round(outMetrics.widthPixels)/2;
+
+        rLayout.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+
         return v;
     }
 

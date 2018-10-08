@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Dinas Tujuan"/>
+            android:text="Organisasi Perangkat Daerah Tujuan"/>
 
         <Spinner
             android:id="@+id/spOpd"
@@ -39,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button"
+            android:inputType="textAutoComplete"
             android:hint="Judul laporan Anda"
             android:padding="7dp"/>
 
@@ -57,6 +58,7 @@
             android:background="@drawable/custom_button"
             android:padding="7dp"
             android:minLines="5"
+            android:inputType="textAutoComplete"
             android:hint="Isi laporan Anda"
             android:textAlignment="textStart"
             android:layout_marginTop="@dimen/activity_margin"
@@ -76,6 +78,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/custom_button"
             android:padding="7dp"
+            android:inputType="number"
             android:hint="No. Hp yang dapat dihubungi"
             android:textAlignment="textStart"
             android:layout_marginTop="@dimen/activity_margin"
@@ -98,7 +101,8 @@
             android:background="@drawable/custom_button"
             android:padding="7dp"
             android:minLines="2"
-            android:hint="Detail lokasi kejadian (optional)"
+            android:inputType="textAutoComplete"
+            android:hint="Detail lokasi pengaduan (optional)"
             android:textAlignment="textStart"
             android:layout_marginTop="@dimen/activity_margin"
             android:gravity="start" />

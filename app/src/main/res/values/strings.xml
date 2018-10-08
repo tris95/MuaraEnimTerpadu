@@ -32,7 +32,7 @@
     <string name="tidak_terhubung_ke_server">Tidak terhubung ke server</string>
     <string name="coba_lagi">Coba lagi</string>
     <string name="suka">Suka </string>
-    <string name="tidak_ada_berita">Tidak Ada Berita</string>
-    <string name="content_kosong">Content Kosong</string>
+    <string name="tidak_ada_berita">Berita belum tersedia</string>
+    <string name="content_kosong">Konten belum tersedia</string>
     <string name="toko">Toko</string>
 </resources>

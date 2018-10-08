@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/activity_margin"
-    android:paddingLeft="@dimen/activity_margin"
-    android:paddingRight="@dimen/activity_margin">
+    android:paddingTop="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
 
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:id="@+id/imgkategori"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:siBorderColor="@color/white"
         android:scaleType="fitXY"
         app:siRadius="15dp"/>

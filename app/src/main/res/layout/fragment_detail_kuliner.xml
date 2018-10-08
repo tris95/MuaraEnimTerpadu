@@ -4,13 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".fragments.DetailBeritaFragment">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appbar"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"/>
+    </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/appbar"
         android:visibility="gone">
 
         <LinearLayout
@@ -53,23 +66,26 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnToko"
+        android:layout_below="@+id/appbar"
+        android:paddingBottom="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/rLayout">
                 <ImageView
                     android:id="@+id/imgDetaiKuliner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
                     tools:ignore="ContentDescription" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -81,7 +97,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
                     android:layout_marginLeft="@dimen/activity_margin"
-                    android:textSize="20sp"
+                    android:textSize="25sp"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:id="@+id/lbljudulpariwisata"
@@ -90,22 +106,24 @@
                     android:layout_marginBottom="@dimen/activity_margin"/>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/activity_margin">
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginTop="@dimen/activity_margin">-->
 
-                <com.bluejamesbond.text.DocumentView
-                    android:id="@+id/lbldeskripsipariwisata"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_margin="5dp"
-                    ext:documentView_textAlignment="justified" />
-            </RelativeLayout>
+            <com.bluejamesbond.text.DocumentView
+                android:id="@+id/lbldeskripsipariwisata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_margin="10dp"
+                ext:documentView_textAlignment="justified" />
+
+            <!--</RelativeLayout>-->
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -114,19 +132,8 @@
         android:text="@string/toko"
         android:id="@+id/btnToko"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginRight="5dp"/>
-    <!--<android.support.design.widget.AppBarLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.TransparentToolbar"/>
-    <!--</android.support.design.widget.AppBarLayout>-->
 
 </RelativeLayout>

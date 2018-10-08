@@ -34,6 +34,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Event;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Opd;
 
 public class MainActivity extends AppCompatActivity {
     Fragment fragment;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public static List<Berita> Beritas = new ArrayList<>();
     public static List<Laporan> laporans = new ArrayList<>();
     public static List<Event> events = new ArrayList<>();
+    public static List<Opd> opds = new ArrayList<>();
 
 //    private BroadcastReceiver broadcastRefresh = new BroadcastReceiver() {
 //        @Override

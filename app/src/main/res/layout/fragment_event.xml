@@ -65,11 +65,16 @@
         <!--android:paddingBottom="@dimen/activity_margin"-->
         <!--android:paddingLeft="@dimen/activity_margin">-->
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipeRefresh">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:id="@+id/rvEvent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <!--</RelativeLayout>-->
 

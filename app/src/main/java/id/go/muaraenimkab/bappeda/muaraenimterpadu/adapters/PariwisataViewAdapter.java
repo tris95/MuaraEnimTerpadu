@@ -1,13 +1,18 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -37,7 +42,7 @@ public class PariwisataViewAdapter extends RecyclerView.Adapter<PariwisataViewAd
     @NonNull
     @Override
     public PariwisataViewAdapter.DataObjectHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_pariwisata, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_kategori, parent, false);
         return new PariwisataViewAdapter.DataObjectHolder(view);
     }
 
@@ -74,6 +79,14 @@ public class PariwisataViewAdapter extends RecyclerView.Adapter<PariwisataViewAd
             super(itemView);
             imgkategoriBerita = itemView.findViewById(R.id.imgkategori);
             lbljudulkategori = itemView.findViewById(R.id.lbljudulkategori);
+
+            Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
+            final DisplayMetrics outMetrics = new DisplayMetrics();
+            display.getMetrics(outMetrics);
+            int viewPagerWidth = Math.round(outMetrics.widthPixels);
+            int viewPagerHeight = Math.round(outMetrics.widthPixels)/2;
+
+            imgkategoriBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
         }
     }
 }
