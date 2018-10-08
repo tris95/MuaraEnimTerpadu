@@ -21,6 +21,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bluejamesbond.text.DocumentView;
+import com.squareup.picasso.Picasso;
+
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
@@ -32,20 +35,24 @@ public class DetailWisataFragment extends Fragment {
     RelativeLayout rlup,rlback;
     private BottomSheetBehavior bottomSheetBehavior;
     View bottomsheet;
+    DocumentView lbldeskripsiwisata;
     ImageView imgup,imgback,imgdetailwisata;
     MainActivity mainActivity =new MainActivity();
-    String idparawisata, namapariwisata;
-    private static final String ARG_idparawisata = "idparawisata",ARG_namapariwisata = "namapariwisata";
+    String idparawisata, namapariwisata,gambarpariwisata,deskripsi;
+    private static final String ARG_idparawisata = "idparawisata",ARG_namapariwisata = "namapariwisata",
+            ARG_gambarpariwisata = "gambarpariwisata",ARG_deskripsi = "deskripsi";
 
     public DetailWisataFragment() {
         // Required empty public constructor
     }
 
-    public static DetailWisataFragment newInstance(String idpariwisata,String namapariwisata) {
+    public static DetailWisataFragment newInstance(String idpariwisata,String namapariwisata,String gambarpariwisata,String deskripsi) {
         DetailWisataFragment fragment = new DetailWisataFragment();
         Bundle args = new Bundle();
         args.putString(ARG_idparawisata, idpariwisata);
         args.putString(ARG_namapariwisata, namapariwisata);
+        args.putString(ARG_gambarpariwisata, gambarpariwisata);
+        args.putString(ARG_deskripsi, deskripsi);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,6 +63,8 @@ public class DetailWisataFragment extends Fragment {
         if (getArguments() != null) {
             idparawisata = getArguments().getString(ARG_idparawisata);
             namapariwisata = getArguments().getString(ARG_namapariwisata);
+            gambarpariwisata = getArguments().getString(ARG_gambarpariwisata);
+            deskripsi = getArguments().getString(ARG_deskripsi);
          }
 
     }
@@ -74,6 +83,7 @@ public class DetailWisataFragment extends Fragment {
         imgdetailwisata=v.findViewById(R.id.imgdetailwisata);
         rlup = v.findViewById(R.id.rlup);
         rlback=v.findViewById(R.id.rlback);
+        lbldeskripsiwisata=v.findViewById(R.id.lbldeskripsiwisata);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -82,6 +92,12 @@ public class DetailWisataFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(false);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(namapariwisata);
         }
+
+        Picasso.with(getContext())
+                .load(gambarpariwisata)
+                .into(imgdetailwisata);
+
+        lbldeskripsiwisata.setText(deskripsi);
 
         imgup.setOnClickListener(new View.OnClickListener() {
             @Override

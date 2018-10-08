@@ -13,10 +13,12 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,16 +53,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
     //Toolbar toolbar;
-    //View view;
+    View view;
     private SliderLayout mSlider;
     RelativeLayout rl, rlberita, rlslider;
-    TextView lblBeritaselengkapnya, tv_cobalagi;
+    TextView lblBeritaselengkapnya,lblBeritaterbaru, tv_cobalagi;
     RecyclerView rvContent, rvBerita;
     ArrayList<Content> mListContent;
     ArrayList<Berita> mListBerita;
     LinearLayoutManager linearLayoutManagercontent, linearLayoutManagerberita;
+    LinearLayout llkategoriberita;
     SwipeRefreshLayout swipeRefreshLayout;
     PagerIndicator indicator;
+    ImageView tvArrow;
 
     public HomeFragment() {
 
@@ -87,7 +91,7 @@ public class HomeFragment extends Fragment {
         //toolbar = v.findViewById(R.id.toolbar);
         rl = v.findViewById(R.id.rl);
         rlberita = v.findViewById(R.id.rlberita);
-        //view=v.findViewById(R.id.view);
+        view=v.findViewById(R.id.view);
         swipeRefreshLayout = v.findViewById(R.id.swipe);
         tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
         indicator = v.findViewById(R.id.custom_indicator);
@@ -108,6 +112,7 @@ public class HomeFragment extends Fragment {
         display.getMetrics(outMetrics);
         int viewPagerWidth = Math.round(outMetrics.widthPixels);
         int viewPagerHeight = viewPagerWidth / 2;
+        int Width = Math.round(outMetrics.widthPixels);
 
         rlslider.setLayoutParams(new LinearLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
@@ -149,7 +154,7 @@ public class HomeFragment extends Fragment {
             BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), (ArrayList<Berita>) MainActivity.Beritas);
             rvBerita.setAdapter(beritaViewAdapter);
 
-            //view.setVisibility(View.VISIBLE);
+            view.setVisibility(View.VISIBLE);
             rlberita.setVisibility(View.VISIBLE);
             rlslider.setVisibility(View.VISIBLE);
 
@@ -165,8 +170,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        llkategoriberita= v.findViewById(R.id.llkategoriberita);
         lblBeritaselengkapnya = v.findViewById(R.id.lblBeritaselengkapnya);
-        lblBeritaselengkapnya.setOnClickListener(new View.OnClickListener() {
+        lblBeritaterbaru= v.findViewById(R.id.lblBeritaterbaru);
+        tvArrow=v.findViewById(R.id.tvArrow);
+
+        lblBeritaselengkapnya.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/52);
+        lblBeritaterbaru.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/52);
+        tvArrow.setLayoutParams(new LinearLayout.LayoutParams(Width/19, Width/19));
+
+        llkategoriberita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity.replaceFragment(KategoriBeritaFragment.newInstance(), 5);
@@ -355,7 +368,7 @@ public class HomeFragment extends Fragment {
                         BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
                         rvBerita.setAdapter(beritaViewAdapter);
 
-                        //view.setVisibility(View.VISIBLE);
+                        view.setVisibility(View.VISIBLE);
                         rlberita.setVisibility(View.VISIBLE);
                         pDialog.dismiss();
 

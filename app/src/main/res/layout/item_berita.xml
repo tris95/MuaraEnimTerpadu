@@ -7,13 +7,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="10dp"
+        tools:ignore="UselessParent">
 
         <ImageView
             android:id="@+id/imgBerita"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/lblJudulBerita"
@@ -51,8 +53,9 @@
             android:layout_toEndOf="@+id/imgBerita">
 
             <ImageView
-                android:layout_width="13dp"
-                android:layout_height="13dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/imgtanggalberita"
                 android:src="@drawable/baseline_event_24"
                 android:tint="@color/colorPrimary"
                 android:layout_gravity="center"
@@ -66,8 +69,9 @@
                 tools:ignore="UnusedAttribute" />
 
             <ImageView
-                android:layout_width="13dp"
-                android:layout_height="13dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/imglikeberita"
                 android:src="@drawable/baseline_favorite_24"
                 android:layout_gravity="center"
                 android:tint="@color/colorPrimary"
@@ -83,8 +87,9 @@
                 tools:ignore="SmallSp,UnusedAttribute" />
 
             <ImageView
-                android:layout_width="13dp"
-                android:layout_height="13dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/imgviewberita"
                 android:src="@drawable/baseline_person_24"
                 android:layout_gravity="center"
                 tools:ignore="ContentDescription"
