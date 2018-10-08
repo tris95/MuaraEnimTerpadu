@@ -125,13 +125,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorDivider" />
+                    android:background="@color/colorDivider"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:id="@+id/rlberita"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/lblBeritaterbaru"
