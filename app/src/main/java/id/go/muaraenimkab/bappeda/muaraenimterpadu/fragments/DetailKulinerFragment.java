@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -119,7 +120,7 @@ public class DetailKulinerFragment extends Fragment {
         int viewPagerWidth = Math.round(outMetrics.widthPixels);
         int viewPagerHeight = Math.round(outMetrics.widthPixels)/2;
 
-        rLayout.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+        rLayout.setLayoutParams(new LinearLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
         return v;
     }

@@ -48,10 +48,11 @@
             android:scaleType="fitXY"
             tools:ignore="ContentDescription" />
 
-        <TextView
+        <com.bluejamesbond.text.DocumentView
             android:id="@+id/lbldeskripsiwisata"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="5dp"
             android:layout_marginTop="10dp" />
     </LinearLayout>
 </LinearLayout>
