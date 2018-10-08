@@ -154,7 +154,7 @@ public class KirimLaporanFragment extends Fragment {
         arr.add("Kejaksaan Negeri");
         arr.add("Badan Perencanaan Pembangunan Daerah");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arr);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, arr);
         spOpd.setAdapter(adapter);
 
         if (Utilities.isLogin(getContext())) {
