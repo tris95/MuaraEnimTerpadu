@@ -1,31 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <fragment
-        android:id="@+id/mapsWisata"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <include layout="@layout/sliding_detail_wisata" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:background="@color/colorPrimary"
-        android:id="@+id/rlback">
-        <ImageView
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/imgback"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/baseline_keyboard_backspace_24"
-            android:layout_marginStart="10dp"
-            tools:ignore="ContentDescription" />
-    </RelativeLayout>
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:fitsSystemWindows="true">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        </android.support.design.widget.AppBarLayout>
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapsWisata"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="58dp"-->
+            <!--android:background="@color/colorPrimary"-->
+            <!--android:id="@+id/rlback"-->
+            <!--android:visibility="gone">-->
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/imgback"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:background="@drawable/baseline_keyboard_backspace_24"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--tools:ignore="ContentDescription" />-->
+        <!--</RelativeLayout>-->
+    </LinearLayout>
+
+    <include
+        layout="@layout/sliding_detail_wisata"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

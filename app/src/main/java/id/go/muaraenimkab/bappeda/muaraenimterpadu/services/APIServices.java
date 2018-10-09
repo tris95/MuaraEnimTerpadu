@@ -104,7 +104,8 @@ public interface APIServices {
     @FormUrlEncoded
     @POST("getKategoripariwisata.php")
     Call<Value<Pariwisata>> getKategoripariwisata(@Field("xkey") String xkey,
-                                                  @Field("idkategori") String idkategori);
+                                                  @Field("idkategori") String idkategori,
+                                                  @Field("jumlahtempat") String jumlahtempat);
 
     @FormUrlEncoded
     @POST("kirimlaporan.php")

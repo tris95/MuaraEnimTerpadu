@@ -115,7 +115,7 @@ public class PariwisataFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<Pariwisata>> call = api.getKategoripariwisata(random, idkategoripariwisata);
+        Call<Value<Pariwisata>> call = api.getKategoripariwisata(random, idkategoripariwisata,jumlahtempat);
         call.enqueue(new Callback<Value<Pariwisata>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override

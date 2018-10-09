@@ -44,7 +44,7 @@ public class EventFragment extends Fragment {
     RecyclerView rvEvent;
     LinearLayoutManager linearLayoutManager;
     ArrayList<Event> mListEvent;
-    RelativeLayout relativeLayout;
+    RelativeLayout relativeLayout, rl_none;
     TextView tv_cobalagi;
     SwipeRefreshLayout swipeRefresh;
 
@@ -74,6 +74,7 @@ public class EventFragment extends Fragment {
         rvEvent = v.findViewById(R.id.rvEvent);
         tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
         swipeRefresh = v.findViewById(R.id.swipeRefresh);
+        rl_none = v.findViewById(R.id.rl_none);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -95,6 +96,7 @@ public class EventFragment extends Fragment {
 
         if (MainActivity.events.size() != 0){
             relativeLayout.setVisibility(View.GONE);
+            rl_none.setVisibility(View.GONE);
             linearLayoutManager=new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
             rvEvent.setLayoutManager(linearLayoutManager);
             EventViewAdapter eventViewAdapter=new EventViewAdapter(getContext(), (ArrayList<Event>)MainActivity.events);
@@ -152,20 +154,27 @@ public class EventFragment extends Fragment {
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
-                        relativeLayout.setVisibility(View.GONE);
                         mListEvent = (ArrayList<Event>) Objects.requireNonNull(response.body()).getData();
-                        MainActivity.events = mListEvent;
 
-                        linearLayoutManager=new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                        rvEvent.setLayoutManager(linearLayoutManager);
-                        EventViewAdapter eventViewAdapter=new EventViewAdapter(getContext(),mListEvent);
-                        rvEvent.setAdapter(eventViewAdapter);
+                        if (mListEvent.size() == 0){
+                            rl_none.setVisibility(View.VISIBLE);
+                        }else {
+                            relativeLayout.setVisibility(View.GONE);
+                            rl_none.setVisibility(View.GONE);
+                            MainActivity.events = mListEvent;
+                            linearLayoutManager=new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                            rvEvent.setLayoutManager(linearLayoutManager);
+                            EventViewAdapter eventViewAdapter=new EventViewAdapter(getContext(),mListEvent);
+                            rvEvent.setAdapter(eventViewAdapter);
+                        }
                     } else {
+                        rl_none.setVisibility(View.GONE);
                         relativeLayout.setVisibility(View.VISIBLE);
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
                     }
                 } else {
+                    rl_none.setVisibility(View.GONE);
                     relativeLayout.setVisibility(View.VISIBLE);
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                             Snackbar.LENGTH_LONG).show();
@@ -178,6 +187,7 @@ public class EventFragment extends Fragment {
                 System.out.println("Retrofit Error:" + t.getMessage());
                 swipeRefresh.setRefreshing(false);
                 pDialog.dismiss();
+                rl_none.setVisibility(View.GONE);
                 relativeLayout.setVisibility(View.VISIBLE);
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                         Snackbar.LENGTH_LONG).show();
