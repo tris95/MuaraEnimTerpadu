@@ -139,8 +139,21 @@ public interface APIServices {
                           @Field("idberita") String idberita);
 
     @FormUrlEncoded
+    @POST("ceklike.php")
+    Call<ValueAdd> ceklike(@Field("xkey") String xkey,
+                          @Field("iduser") String iduser,
+                          @Field("idberita") String idberita);
+
+    @FormUrlEncoded
     @POST("setdataview.php")
     Call<ValueAdd> setDataView(@Field("xkey") String xkey,
                                @Field("ime") String ime,
                                @Field("idberita") String idberita);
+
+    @FormUrlEncoded
+    @POST("setdatalike.php")
+    Call<ValueAdd> setDataLike(@Field("xkey") String xkey,
+                               @Field("iduser") String iduser,
+                               @Field("idberita") String idberita,
+                               @Field("like") String like);
 }
