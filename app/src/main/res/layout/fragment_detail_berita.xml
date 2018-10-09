@@ -180,6 +180,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center"
+                        android:id="@+id/llsuka"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         tools:ignore="RelativeOverlap,UseCompoundDrawables">
@@ -192,6 +193,7 @@
                             android:layout_marginRight="3dp"
                             android:layout_marginEnd="3dp" />
                         <ImageView
+                            android:id="@+id/imglikeunlike"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/baseline_thumb_up_24"

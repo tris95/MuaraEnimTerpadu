@@ -2,11 +2,13 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -31,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bluejamesbond.text.DocumentView;
 import com.squareup.picasso.Picasso;
@@ -60,10 +63,11 @@ public class DetailBeritaFragment extends Fragment {
     Toolbar toolbar;
     TextView tv_cobalagi, lblLikeUnlike, lblJudulBerita, lbltanggalBerita, lblLikeBerita, lblViewBerita;
     DocumentView lblIsiBerita;
-    ImageView imgDetaiBerita;
+    ImageView imgDetaiBerita,imglikeunlike;
     ArrayList<Berita> mListBerita;
     RelativeLayout rl, rlket;
-    String ime = "";
+    LinearLayout llsuka;
+    String ime = "", tanda = "0";
 
     public DetailBeritaFragment() {
         // Required empty public constructor
@@ -112,6 +116,9 @@ public class DetailBeritaFragment extends Fragment {
         imgDetaiBerita = v.findViewById(R.id.imgDetaiBerita);
         rl = v.findViewById(R.id.rl);
         rlket = v.findViewById(R.id.rlket);
+        llsuka= v.findViewById(R.id.llsuka);
+        lblLikeUnlike = v.findViewById(R.id.lblLikeUnlike);
+        imglikeunlike=v.findViewById(R.id.imglikeunlike);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -120,17 +127,31 @@ public class DetailBeritaFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Detail Berita");
         }
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED ) {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{
                     Manifest.permission.READ_PHONE_STATE}, 1);
         }
-        cekIME();
 
-        lblLikeUnlike = v.findViewById(R.id.lblLikeUnlike);
-        lblLikeUnlike.setOnClickListener(new View.OnClickListener() {
+        if (Utilities.getUser(getContext()).getId_user()!=null) {
+            cekLike();
+            cekIME();
+        }
+        else
+            cekIME();
+        llsuka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //lblLikeUnlike.setTextColor(Color.parseColor("#41c300"));
+                if (Utilities.getUser(getContext()).getId_user()!=null) {
+                    if (tanda.equals("0")) {
+                        setDataLike("1");
+                    } else if (tanda.equals("1")){
+                        setDataLike("0");
+                    }
+                } else {
+                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
+                            "Anda Belum Login",
+                            Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -229,6 +250,45 @@ public class DetailBeritaFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void cekLike() {
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<ValueAdd> call = api.ceklike(random, Utilities.getUser(getContext()).getId_user(), idberita);
+        call.enqueue(new Callback<ValueAdd>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        String data = Objects.requireNonNull(response.body()).getMessage();
+                        if (data.equals("like")) {
+                            lblLikeUnlike.setTextColor(Color.parseColor("#41c300"));
+                            tanda = "1";
+                            imglikeunlike.setColorFilter(Color.parseColor("#41c300"));
+                        }
+                    }
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<ValueAdd> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
+            }
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("HardwareIds")
     private void cekIME() {
         TelephonyManager telephonyManager = (TelephonyManager) Objects.requireNonNull(getContext()).getSystemService(Context.TELEPHONY_SERVICE);
@@ -244,7 +304,7 @@ public class DetailBeritaFragment extends Fragment {
             return;
         }
         //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
-        ime= Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
+        ime = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
 
         if (!ime.equals("")) {
 
@@ -274,7 +334,7 @@ public class DetailBeritaFragment extends Fragment {
                         int success = Objects.requireNonNull(response.body()).getSuccess();
                         if (success == 1) {
                             String data = Objects.requireNonNull(response.body()).getMessage();
-                             if (data.equals("kosong")) {
+                            if (data.equals("kosong")) {
                                 setDataView();
                             }
                             getisiBerita(pDialog);
@@ -332,6 +392,52 @@ public class DetailBeritaFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
 
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ValueAdd> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void setDataLike(final String like) {
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<ValueAdd> call = api.setDataLike(random, Utilities.getUser(getContext()).getId_user(), idberita, like);
+        call.enqueue(new Callback<ValueAdd>() {
+            @Override
+            public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        int lk;
+                        if (like.equals("1")) {
+                            lk=Integer.valueOf(lblLikeBerita.getText().toString());
+                            lk+=1;
+                            lblLikeBerita.setText(String.valueOf(lk));
+                            lblLikeUnlike.setTextColor(Color.parseColor("#41c300"));
+                            tanda="0";
+                        }
+                        else if (like.equals("0")) {
+                            lk=Integer.valueOf(lblLikeBerita.getText().toString());
+                            lk-=1;
+                            lblLikeBerita.setText(String.valueOf(lk));
+                            lblLikeUnlike.setTextColor(Color.parseColor("#000000"));
+                            tanda="1";
+                        }
+                    }
+                }
             }
 
             @Override
