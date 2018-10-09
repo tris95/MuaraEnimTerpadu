@@ -1,15 +1,33 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.models;
 
 public class Pariwisata {
-    private String id_pariwisata, id_kategori_pariwisata, nama_pariwisata, deskripsi_pariwisata, gambar_pariwisata;
+    private String id_pariwisata, id_kategori_pariwisata, nama_pariwisata, deskripsi_pariwisata, gambar_pariwisata, lat, lng;
 
     public Pariwisata(String id_pariwisata, String id_kategori_pariwisata, String nama_pariwisata,
-                      String deskripsi_pariwisata, String gambar_pariwisata) {
+                      String deskripsi_pariwisata, String gambar_pariwisata, String lat, String lng) {
         this.id_pariwisata = id_pariwisata;
         this.id_kategori_pariwisata = id_kategori_pariwisata;
         this.nama_pariwisata = nama_pariwisata;
         this.deskripsi_pariwisata = deskripsi_pariwisata;
         this.gambar_pariwisata = gambar_pariwisata;
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 
     public String getId_pariwisata() {
