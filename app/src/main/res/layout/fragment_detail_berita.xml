@@ -95,7 +95,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="25sp"
-                    android:textColor="#000000"
                     android:textStyle="bold" />
 
                 <RelativeLayout
@@ -191,13 +190,13 @@
                             android:layout_height="wrap_content"
                             android:textSize="20sp"
                             android:text="@string/suka"
-                            android:textColor="#000000"
                             android:layout_marginRight="3dp"
                             android:layout_marginEnd="3dp" />
                         <ImageView
                             android:id="@+id/imglikeunlike"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
+                            android:tint="#757575"
                             android:src="@drawable/baseline_thumb_up_24"
                             tools:ignore="ContentDescription" />
                     </LinearLayout>
@@ -217,6 +216,7 @@
                     android:layout_below="@+id/rlket"
                     android:id="@+id/lblIsiBerita"
                     ext:documentView_textSize="16sp"
+                    ext:documentView_textColor="#757575"
                     ext:documentView_textAlignment="justified" />
 
             </RelativeLayout>

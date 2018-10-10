@@ -43,6 +43,7 @@ import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignInActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
@@ -127,6 +128,7 @@ public class DetailBeritaFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Detail Berita");
         }
+
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{
                     Manifest.permission.READ_PHONE_STATE}, 1);
@@ -150,8 +152,9 @@ public class DetailBeritaFragment extends Fragment {
                     }
                 } else {
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content),
-                            "Anda Belum Login",
+                            "Silahkan signin aplikasi",
                             Snackbar.LENGTH_LONG).show();
+//                    getActivity().startActivity(new Intent(getActivity(), SignInActivity.class));
                 }
             }
         });
@@ -292,7 +295,7 @@ public class DetailBeritaFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("HardwareIds")
     private void cekIME() {
-        TelephonyManager telephonyManager = (TelephonyManager) Objects.requireNonNull(getContext()).getSystemService(Context.TELEPHONY_SERVICE);
+//        TelephonyManager telephonyManager = (TelephonyManager) Objects.requireNonNull(getContext()).getSystemService(Context.TELEPHONY_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -436,9 +439,9 @@ public class DetailBeritaFragment extends Fragment {
                             lk=Integer.valueOf(lblLikeBerita.getText().toString());
                             lk-=1;
                             lblLikeBerita.setText(String.valueOf(lk));
-                            lblLikeUnlike.setTextColor(Color.parseColor("#000000"));
+                            lblLikeUnlike.setTextColor(Color.parseColor("#757575"));
                             tanda="0";
-                            imglikeunlike.setColorFilter(Color.parseColor("#000000"));
+                            imglikeunlike.setColorFilter(Color.parseColor("#757575"));
                             llsuka.setEnabled(true);
                         }
                     }
@@ -460,25 +463,25 @@ public class DetailBeritaFragment extends Fragment {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
                             Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 2);
+                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
                     } else {
-                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 2);
+                        cekIME();
                     }
                 } else {
                     requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
                 }
                 return;
             }
-            case 2: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        Log.e("permission", "DENIED");
-                        cekIME();
-                    } else {
-                        Log.e("permission", "GRANTED");
-                    }
-                }
-            }
+//            case 2: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                        Log.e("permission", "DENIED");
+//                        cekIME();
+//                    } else {
+//                        Log.e("permission", "GRANTED");
+//                    }
+//                }
+//            }
         }
     }
 }
