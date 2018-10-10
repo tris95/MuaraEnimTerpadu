@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.PariwisataViewAdapter;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
@@ -88,7 +89,20 @@ public class PariwisataFragment extends Fragment {
         }
         rvPariwisata = v.findViewById(R.id.rvPariwisata);
 
-        getPariwisata();
+        if(MainActivity.pariwisatas.size() != 0){
+            if (MainActivity.pariwisatas.get(0).getId_kategori_pariwisata().equals(idkategoripariwisata)){
+                linearLayoutManager = new LinearLayoutManager(getContext());
+                rvPariwisata.setLayoutManager(linearLayoutManager);
+                PariwisataViewAdapter pariwisataViewAdapter = new PariwisataViewAdapter(getContext(), (ArrayList<Pariwisata>)MainActivity.pariwisatas, jumlahtempat);
+                rvPariwisata.setAdapter(pariwisataViewAdapter);
+                rlcontentkosong.setVisibility(View.GONE);
+                rvPariwisata.setVisibility(View.VISIBLE);
+            }else {
+                getPariwisata();
+            }
+        }else {
+            getPariwisata();
+        }
 
         tv_cobalagi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +129,7 @@ public class PariwisataFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<Pariwisata>> call = api.getKategoripariwisata(random, idkategoripariwisata,jumlahtempat);
+        Call<Value<Pariwisata>> call = api.getKategoripariwisata(random, idkategoripariwisata, jumlahtempat);
         call.enqueue(new Callback<Value<Pariwisata>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -124,7 +138,7 @@ public class PariwisataFragment extends Fragment {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         mListPariwisata = (ArrayList<Pariwisata>) Objects.requireNonNull(response.body()).getData();
-
+                        MainActivity.pariwisatas = mListPariwisata;
                         if (mListPariwisata.size() != 0) {
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             rvPariwisata.setLayoutManager(linearLayoutManager);
