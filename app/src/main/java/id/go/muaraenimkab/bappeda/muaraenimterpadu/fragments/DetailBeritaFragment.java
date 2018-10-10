@@ -142,6 +142,7 @@ public class DetailBeritaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (Utilities.getUser(getContext()).getId_user()!=null) {
+                    llsuka.setEnabled(false);
                     if (tanda.equals("0")) {
                         setDataLike("1");
                     } else if (tanda.equals("1")){
@@ -427,14 +428,18 @@ public class DetailBeritaFragment extends Fragment {
                             lk+=1;
                             lblLikeBerita.setText(String.valueOf(lk));
                             lblLikeUnlike.setTextColor(Color.parseColor("#41c300"));
-                            tanda="0";
+                            tanda="1";
+                            imglikeunlike.setColorFilter(Color.parseColor("#41c300"));
+                            llsuka.setEnabled(true);
                         }
                         else if (like.equals("0")) {
                             lk=Integer.valueOf(lblLikeBerita.getText().toString());
                             lk-=1;
                             lblLikeBerita.setText(String.valueOf(lk));
                             lblLikeUnlike.setTextColor(Color.parseColor("#000000"));
-                            tanda="1";
+                            tanda="0";
+                            imglikeunlike.setColorFilter(Color.parseColor("#000000"));
+                            llsuka.setEnabled(true);
                         }
                     }
                 }
