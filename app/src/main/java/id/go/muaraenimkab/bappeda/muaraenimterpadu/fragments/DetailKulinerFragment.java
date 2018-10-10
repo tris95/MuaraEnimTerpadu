@@ -46,22 +46,23 @@ public class DetailKulinerFragment extends Fragment {
     Toolbar toolbar;
     Button btnToko;
     ArrayList<DetailPariwisata> mListPariwisata;
-    String idpariwisata,namapariwisata,gambar;
+    String idpariwisata,namapariwisata,deskripsi,gambar;
     RelativeLayout rl, rLayout;
     TextView lbljudulpariwisata;
     DocumentView lbldeskripsipariwisata;
     ImageView imgDetaiKuliner;
-    private static final String ARG_idpariwisata = "idpariwisata",ARG_namapariwisata = "namapariwisata",ARG_gambar = "gambar";
+    private static final String ARG_idpariwisata = "idpariwisata",ARG_namapariwisata = "namapariwisata",ARG_deskripsi = "deskripsi",ARG_gambar = "gambar";
 
     public DetailKulinerFragment() {
         // Required empty public constructor
     }
 
-    public static DetailKulinerFragment newInstance(String idpariwisata, String namapariwisata,String gambar) {
+    public static DetailKulinerFragment newInstance(String idpariwisata, String namapariwisata, String deskripsi, String gambar) {
         DetailKulinerFragment fragment = new DetailKulinerFragment();
         Bundle args = new Bundle();
         args.putString(ARG_idpariwisata, idpariwisata);
         args.putString(ARG_namapariwisata, namapariwisata);
+        args.putString(ARG_deskripsi, deskripsi);
         args.putString(ARG_gambar, gambar);
         fragment.setArguments(args);
         return fragment;
@@ -73,6 +74,7 @@ public class DetailKulinerFragment extends Fragment {
         if (getArguments() != null) {
             idpariwisata = getArguments().getString(ARG_idpariwisata);
             namapariwisata = getArguments().getString(ARG_namapariwisata);
+            deskripsi = getArguments().getString(ARG_deskripsi);
             gambar = getArguments().getString(ARG_gambar);
         }
     }
@@ -98,7 +100,13 @@ public class DetailKulinerFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(namapariwisata);
         }
 
-        getPariwisata();
+//        getPariwisata();
+
+        lbljudulpariwisata.setText(namapariwisata);
+        Picasso.with(getContext())
+                .load(gambar)
+                .into(imgDetaiKuliner);
+        lbldeskripsipariwisata.setText(deskripsi);
 
         btnToko.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,15 +164,11 @@ public class DetailKulinerFragment extends Fragment {
                         mListPariwisata = (ArrayList<DetailPariwisata>) Objects.requireNonNull(response.body()).getData();
 
                         lbljudulpariwisata.setText(namapariwisata);
-
                         Picasso.with(getContext())
                                 .load(gambar)
                                 .into(imgDetaiKuliner);
-
                         lbldeskripsipariwisata.setText(mListPariwisata.get(0).getDeskripsi_pariwisata());
-
                         rl.setVisibility(View.GONE);
-
                         pDialog.dismiss();
 
                     } else {
