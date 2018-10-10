@@ -123,15 +123,15 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
             int Width = Math.round(outMetrics.widthPixels);
 
             imgBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
-            lblJudulBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/47);
-            lblIsiBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/51);
-            lbltanggalBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/53);
-            lbllikeBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/53);
-            lblviewBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/53);
-
-            imgtanggalBerita.setLayoutParams(new LinearLayout.LayoutParams(Width/21, Width/21));
-            imglikeBerita.setLayoutParams(new LinearLayout.LayoutParams(Width/21, Width/21));
-            imgviewBerita.setLayoutParams(new LinearLayout.LayoutParams(Width/21, Width/21));
+//            lblJudulBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/47);
+//            lblIsiBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/51);
+//            lbltanggalBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/53);
+//            lbllikeBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/53);
+//            lblviewBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/53);
+//
+//            imgtanggalBerita.setLayoutParams(new LinearLayout.LayoutParams(Width/21, Width/21));
+//            imglikeBerita.setLayoutParams(new LinearLayout.LayoutParams(Width/21, Width/21));
+//            imgviewBerita.setLayoutParams(new LinearLayout.LayoutParams(Width/21, Width/21));
         }
     }
 }

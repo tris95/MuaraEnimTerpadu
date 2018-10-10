@@ -85,7 +85,7 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
             int Width = Math.round(outMetrics.widthPixels);
 
             rl.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
-            content.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/44);
+            //content.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/44);
         }
     }
 }

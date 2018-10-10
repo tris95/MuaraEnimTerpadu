@@ -175,9 +175,9 @@ public class HomeFragment extends Fragment {
         lblBeritaterbaru= v.findViewById(R.id.lblBeritaterbaru);
         tvArrow=v.findViewById(R.id.tvArrow);
 
-        lblBeritaselengkapnya.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/52);
-        lblBeritaterbaru.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/52);
-        tvArrow.setLayoutParams(new LinearLayout.LayoutParams(Width/19, Width/19));
+        //lblBeritaselengkapnya.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/52);
+        //lblBeritaterbaru.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/52);
+        //tvArrow.setLayoutParams(new LinearLayout.LayoutParams(Width/19, Width/19));
 
         llkategoriberita.setOnClickListener(new View.OnClickListener() {
             @Override
