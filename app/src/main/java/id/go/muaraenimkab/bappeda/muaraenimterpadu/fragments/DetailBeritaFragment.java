@@ -198,8 +198,8 @@ public class DetailBeritaFragment extends Fragment {
                         final DisplayMetrics outMetrics = new DisplayMetrics();
                         display.getMetrics(outMetrics);
                         int viewPagerWidth = Math.round(outMetrics.widthPixels);
-                        int viewPagerHeight = viewPagerWidth / 2;
-                        int Width = Math.round(outMetrics.widthPixels);
+                        int more = viewPagerWidth/4;
+                        int viewPagerHeight = (viewPagerWidth / 2)+more;
                         imgDetaiBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
                         Picasso.with(getContext())

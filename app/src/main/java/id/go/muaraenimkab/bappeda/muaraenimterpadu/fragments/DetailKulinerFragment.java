@@ -95,7 +95,7 @@ public class DetailKulinerFragment extends Fragment {
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
-            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Detail Kuliner");
+            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(namapariwisata);
         }
 
         getPariwisata();
@@ -118,7 +118,8 @@ public class DetailKulinerFragment extends Fragment {
         final DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
         int viewPagerWidth = Math.round(outMetrics.widthPixels);
-        int viewPagerHeight = Math.round(outMetrics.widthPixels)/2;
+        int more = viewPagerWidth/4;
+        int viewPagerHeight = (Math.round(outMetrics.widthPixels)/2)+more;
 
         rLayout.setLayoutParams(new LinearLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 

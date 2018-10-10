@@ -15,6 +15,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -72,9 +73,9 @@ public class DetailKontakFragment extends Fragment {
     TextView lblnotlp, lblalamatkontak;
     ImageView imgKontak;
     CollapsingToolbarLayout collapsingKontak;
-    private GoogleMap mMap;
-    SupportMapFragment mapskontak;
     AppBarLayout appBar;
+
+    FloatingActionButton fab;
 
     MapView mapView;
     GoogleMap gMap;
@@ -123,6 +124,7 @@ public class DetailKontakFragment extends Fragment {
         lblnotlp = v.findViewById(R.id.lblnotlp);
         lblalamatkontak = v.findViewById(R.id.lblalamatkontak);
         appBar = v.findViewById(R.id.appBar);
+        fab = v.findViewById(R.id.fab);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
         if (((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar() != null) {
@@ -146,10 +148,12 @@ public class DetailKontakFragment extends Fragment {
                 .load(gambar)
                 .into(imgKontak);
 
-        if (!no_tlp.equals(""))
+        if (!no_tlp.equals("")) {
             lblnotlp.setText(no_tlp);
-        else
+        }else {
             lblnotlp.setVisibility(View.GONE);
+            fab.setVisibility(View.GONE);
+        }
 
         if (!alamat.equals(""))
             lblalamatkontak.setText(alamat);
@@ -160,9 +164,21 @@ public class DetailKontakFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!no_tlp.equals("")) {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.CALL_PHONE},
-                            0);
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", no_tlp, null));
+                    getActivity().startActivity(intent);
+                } else {
+                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak Ada Nomor",
+                            Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!no_tlp.equals("")) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", no_tlp, null));
+                    getActivity().startActivity(intent);
                 } else {
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak Ada Nomor",
                             Snackbar.LENGTH_LONG).show();
@@ -236,65 +252,52 @@ public class DetailKontakFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
-            case 0: {
-                if (grantResults[0] == 0) {
-                    String uri = "tel:" + no_tlp;
-                    Intent intent = new Intent(Intent.ACTION_CALL);
-                    intent.setData(Uri.parse(uri));
-                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
-                    startActivity(intent);
-                } else {
-                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Izinkan Aplikasi Mengakses Kontak",
-                            Snackbar.LENGTH_LONG).show();
-                }
-            }
-            case 1:{
+            case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+                    if (ContextCompat.checkSelfPermission(getActivity(),
                             android.Manifest.permission.ACCESS_COARSE_LOCATION)
                             != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
-                                new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
-                    } else {
-                        ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
-                                new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
+                        requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
                     }
-                } else {
-                    ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
-                            new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    else {
+                        requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
+                    }
+                }else {
+                    requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                             1);
                 }
+                return;
+            }
+            case 2: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        Log.e("permission", "DENIED");
+                        return;
+                    }else{
+                        Log.e("permission", "GRANTED");
+                    }
 
                     mFusedLocationClient.getLastLocation()
-                            .addOnSuccessListener(Objects.requireNonNull(getActivity()), new OnSuccessListener<Location>() {
+                            .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                                @SuppressLint("NewApi")
                                 @Override
                                 public void onSuccess(Location location) {
                                     if (location != null) {
                                         currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                                         gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
                                         gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
-//                                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
+//                                        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
 
                                         LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
                                         gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
-//                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+//                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
 
-//                                    if (currentLatLng != null && destlatLng != null) {
+//                                        if (currentLatLng != null && destlatLng != null) {
                                         String url = getUrl(currentLatLng, destlatLng);
                                         Log.e("url", url);
                                         DownloadTask FetchUrl = new DownloadTask();
                                         FetchUrl.execute(url);
-//                                    }
+//                                        }
                                     } else {
                                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
                                                 Snackbar.LENGTH_LONG).show();
@@ -305,10 +308,12 @@ public class DetailKontakFragment extends Fragment {
                                     }
                                 }
                             });
-                } else {
-                    ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()),
-                            new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
+//                      }
+//                    }
+                }else {
+                    requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
                 }
+                return;
             }
         }
     }
@@ -438,7 +443,7 @@ public class DetailKontakFragment extends Fragment {
             }
 
             try {
-                mMap.addPolyline(lineOptions);
+                gMap.addPolyline(lineOptions);
             } catch (Exception e) {
                 Log.e("polyline", e.toString());
             }
