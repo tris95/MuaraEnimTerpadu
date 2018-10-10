@@ -141,9 +141,9 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/berita_baru"
-                        android:textSize="16sp"
                         android:textColor="@color/red"
                         android:textStyle="bold"
+                        android:textSize="26sp"
                         tools:ignore="RelativeOverlap" />
 
                     <LinearLayout
@@ -159,15 +159,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawableTint="@color/colorPrimary"
+                            android:textSize="26sp"
                             android:text="@string/berita_selengkapnya"
-                            android:textSize="16sp"
                             android:textStyle="bold"
                             tools:ignore="RelativeOverlap,UnusedAttribute" />
 
                         <ImageView
                             android:id="@+id/tvArrow"
-                            android:layout_width="23dp"
-                            android:layout_height="23dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:src="@drawable/baseline_keyboard_arrow_right_24"
                             android:tint="@color/colorPrimary"
                             tools:ignore="ContentDescription" />
