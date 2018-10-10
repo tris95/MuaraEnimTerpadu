@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -116,11 +117,11 @@ public class TempatFragment extends Fragment {
                             rvTempat.setLayoutManager(linearLayoutManager);
                             TempatViewAdapter tempatViewAdapter = new TempatViewAdapter(getContext(), mListtempatPariwisata);
                             rvTempat.setAdapter(tempatViewAdapter);
-                            //rltidakadaberita.setVisibility(View.GONE);
+                            rl.setVisibility(View.GONE);
                             rvTempat.setVisibility(View.VISIBLE);
                         }
                         else {
-                            //rltidakadaberita.setVisibility(View.VISIBLE);
+                            rl.setVisibility(View.VISIBLE);
                             rvTempat.setVisibility(View.GONE);
                         }
                         rl.setVisibility(View.GONE);

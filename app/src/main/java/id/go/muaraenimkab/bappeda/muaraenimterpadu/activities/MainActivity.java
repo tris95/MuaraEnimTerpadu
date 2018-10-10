@@ -39,8 +39,8 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
 
 public class MainActivity extends AppCompatActivity {
     Fragment fragment;
-    public static int flag2;
-    static Fragment lastFragment, lastFragment2;
+    public static int flag2,flag3;
+    static Fragment lastFragment, lastFragment2,lastFragment3;
     static FragmentManager fragmentManager;
     @SuppressLint("StaticFieldLeak")
     BottomNavigationViewEx bottomNavigationView;
@@ -130,8 +130,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void replaceFragment(Fragment fragment, int flag) {
-        if (flag == 7) {
+        if (flag == 8) {
             nowFragment = flag;
+        }
+        else if (flag == 7) {
+            nowFragment = flag;
+            flag3 = flag;
+            lastFragment3 = fragment;
         } else if (flag == 6) {
             nowFragment = flag;
             flag2 = flag;
@@ -149,7 +154,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void Back() {
         if (nowFragment != currentFragment) {
-            if (nowFragment == 7) {
+            if (nowFragment == 8) {
+                fragmentManager.beginTransaction().replace(R.id.container, lastFragment3).commit();
+                nowFragment = 7;
+            }
+            else if (nowFragment == 7) {
 //                fragmentTransaction=fragmentManager.beginTransaction();
 //                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
 //                fragmentTransaction.replace(R.id.container, lastFragment2).commit();

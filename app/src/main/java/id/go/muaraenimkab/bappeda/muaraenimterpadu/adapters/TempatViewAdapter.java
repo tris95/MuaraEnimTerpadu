@@ -21,12 +21,15 @@ import java.util.ArrayList;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailKontakFragment;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailWisataFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
 public class TempatViewAdapter extends RecyclerView.Adapter<TempatViewAdapter.DataObjectHolder> {
     private Context context;
     private ArrayList<TempatPariwisata> mListtempatPariwisata;
+    String gambar;
 
 
     public TempatViewAdapter(Context context, ArrayList<TempatPariwisata> mListtempatPariwisata) {
@@ -44,15 +47,18 @@ public class TempatViewAdapter extends RecyclerView.Adapter<TempatViewAdapter.Da
     @Override
     public void onBindViewHolder(@NonNull final TempatViewAdapter.DataObjectHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.lblnamatempat.setText(mListtempatPariwisata.get(position).getNama_tempat_pariwisata());
+        gambar=Utilities.getBaseURLImageTempat() + mListtempatPariwisata.get(position).getGambar_lokasi();
 
         Picasso.with(context)
-                .load(Utilities.getBaseURLImageTempat() + mListtempatPariwisata.get(position).getGambar_lokasi())
+                .load(gambar)
                 .into(holder.imgtempat);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    //MainActivity.replaceFragment(DetailWisataFragment.newInstance(mListtemapatPariwisata.get(position).getId_pariwisata(), mListtempatPariwisata.get(position).getNama_pariwisata()), 8);
+                    MainActivity.replaceFragment(DetailKontakFragment.newInstance(mListtempatPariwisata.get(position).getNama_tempat_pariwisata(),
+                            mListtempatPariwisata.get(position).getLat(),mListtempatPariwisata.get(position).getLng(),
+                            mListtempatPariwisata.get(position).getAlamat(), mListtempatPariwisata.get(position).getNo_hp(), gambar), 8);
             }
         });
 
