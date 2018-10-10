@@ -73,9 +73,9 @@ public class DetailWisataFragment extends Fragment {
     DocumentView lbldeskripsiwisata;
     ImageView imgdetailwisata, imgup;
 //    MainActivity mainActivity =new MainActivity();
-    String idparawisata, namapariwisata, gambarpariwisata, deskripsi, lat, lng;
-    private static final String ARG_lat = "lat", ARG_lng = "lng", ARG_idparawisata = "idparawisata",ARG_namapariwisata = "namapariwisata",
-            ARG_gambarpariwisata = "gambarpariwisata",ARG_deskripsi = "deskripsi";
+    String idparawisata, namapariwisata, gambarpariwisata, deskripsi, lat, lng, alamat;
+    private static final String ARG_alamat = "alamat", ARG_lat = "lat", ARG_lng = "lng", ARG_idparawisata = "idparawisata",ARG_namapariwisata = "namapariwisata",
+            ARG_gambarpariwisata = "gambarpariwisata", ARG_deskripsi = "deskripsi";
     boolean flagSlide;
 
     MapView mapView;
@@ -87,9 +87,11 @@ public class DetailWisataFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DetailWisataFragment newInstance(String idpariwisata,String namapariwisata,String gambarpariwisata,String deskripsi,String lat,String lng) {
+    public static DetailWisataFragment newInstance(String idpariwisata,String namapariwisata,
+                                                   String gambarpariwisata,String deskripsi,String alamat,String lat,String lng) {
         DetailWisataFragment fragment = new DetailWisataFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_alamat, alamat);
         args.putString(ARG_lat, lat);
         args.putString(ARG_lng, lng);
         args.putString(ARG_idparawisata, idpariwisata);
@@ -104,6 +106,7 @@ public class DetailWisataFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            alamat = getArguments().getString(ARG_alamat);
             lat = getArguments().getString(ARG_lat);
             lng = getArguments().getString(ARG_lng);
             idparawisata = getArguments().getString(ARG_idparawisata);
@@ -120,7 +123,7 @@ public class DetailWisataFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_detail_wisata, container, false);
 
         toolbar = v.findViewById(R.id.toolbar);
-//        tb1 = v.findViewById(R.id.tb1);
+        tb1 = v.findViewById(R.id.tb1);
 //        tb2 = v.findViewById(R.id.tb2);
         bottomsheet = v.findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomsheet);
@@ -174,6 +177,12 @@ public class DetailWisataFragment extends Fragment {
 //            }
 //        });
 
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        mapView = v.findViewById(R.id.mapsWisata);
+        mapView.onCreate(savedInstanceState);
+        mapView.onResume();
+
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @SuppressLint("ResourceAsColor")
             @Override
@@ -192,20 +201,15 @@ public class DetailWisataFragment extends Fragment {
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-//                Log.e("Slide", ""+slideOffset);
-//                if (slideOffset < 0.7){
-//                    tb1.setVisibility(View.GONE);
-//                }else if (slideOffset > 0.3){
-//                    tb1.setVisibility(View.VISIBLE);
-//                }
+                if (slideOffset < 0.7){
+                    mapView.setAlpha((float) 1);
+                    tb1.setVisibility(View.GONE);
+                }else if (slideOffset > 0.3){
+                    mapView.setAlpha((float) 0.2);
+                    tb1.setVisibility(View.VISIBLE);
+                }
             }
         });
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        mapView = v.findViewById(R.id.mapsWisata);
-        mapView.onCreate(savedInstanceState);
-        mapView.onResume();
 
         try {
             MapsInitializer.initialize(Objects.requireNonNull(getActivity()).getApplicationContext());
@@ -238,11 +242,12 @@ public class DetailWisataFragment extends Fragment {
 //                                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
 
                                     LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                                    gMap.addMarker(new MarkerOptions().position(destlatLng).title(namapariwisata));
+                                    gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
 //                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
 
 //                                    if (currentLatLng != null && destlatLng != null) {
                                     String url = getUrl(currentLatLng, destlatLng);
+                                    Log.e("url", url);
                                     DownloadTask FetchUrl = new DownloadTask();
                                     FetchUrl.execute(url);
 //                                    }
@@ -251,7 +256,7 @@ public class DetailWisataFragment extends Fragment {
                                             Snackbar.LENGTH_LONG).show();
 
                                     LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                                    gMap.addMarker(new MarkerOptions().position(destlatLng).title(namapariwisata));
+                                    gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
                                     gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
                                 }
                             }
@@ -337,11 +342,12 @@ public class DetailWisataFragment extends Fragment {
 //                                        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
 
                                         LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(namapariwisata));
+                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
 //                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
 
 //                                        if (currentLatLng != null && destlatLng != null) {
                                         String url = getUrl(currentLatLng, destlatLng);
+                                        Log.e("url", url);
                                         DownloadTask FetchUrl = new DownloadTask();
                                         FetchUrl.execute(url);
 //                                        }
@@ -350,7 +356,7 @@ public class DetailWisataFragment extends Fragment {
                                                 Snackbar.LENGTH_LONG).show();
 
                                         LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(namapariwisata));
+                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
                                         gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
                                     }
                                 }

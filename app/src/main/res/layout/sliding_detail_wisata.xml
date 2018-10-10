@@ -30,7 +30,7 @@
         android:id="@+id/rlup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/custom_slide">
 
         <ImageView
@@ -39,7 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:src="@drawable/baseline_keyboard_arrow_up_24"
-            android:padding="7dp"/>
+            android:tint="@android:color/white"
+            android:padding="5dp"/>
     </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -49,7 +50,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff"
+            android:background="@drawable/custom_slide_down"
             android:orientation="vertical"
             android:paddingBottom="10dp">
 
@@ -65,6 +66,7 @@
                 android:id="@+id/lbldeskripsiwisata"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:documentView_textColor="@android:color/white"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"

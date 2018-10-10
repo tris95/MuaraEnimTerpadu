@@ -12,26 +12,35 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -55,7 +64,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.DirectionsJSONParser;
 
 
-public class DetailKontakFragment extends Fragment implements OnMapReadyCallback {
+public class DetailKontakFragment extends Fragment {
     Toolbar toolbar;
     private static final String ARG_kontak = "kontak",ARG_lat = "latitude",ARG_lng = "longitude",
             ARG_alamat = "alamat",ARG_notlp = "notlp",ARG_gambar = "gambar";
@@ -65,6 +74,10 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
     CollapsingToolbarLayout collapsingKontak;
     private GoogleMap mMap;
     SupportMapFragment mapskontak;
+    AppBarLayout appBar;
+
+    MapView mapView;
+    GoogleMap gMap;
     FusedLocationProviderClient mFusedLocationClient;
     LatLng currentLatLng;
 
@@ -105,54 +118,27 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_detail_kontak, container, false);
         toolbar = v.findViewById(R.id.toolbar);
-        //mapskontak = (SupportMapFragment) Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentById(R.id.mapsKontak);
         imgKontak = v.findViewById(R.id.imgkontak);
         collapsingKontak = v.findViewById(R.id.collapsingKontak);
         lblnotlp = v.findViewById(R.id.lblnotlp);
         lblalamatkontak = v.findViewById(R.id.lblalamatkontak);
-
-        //mapskontak.getMapAsync(this);
+        appBar = v.findViewById(R.id.appBar);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
-
-//        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
-//                android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getContext(),
-//                android.Manifest.permission.ACCESS_COARSE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED) {
-//
-//            ActivityCompat.requestPermissions(getActivity(), new String[]{
-//                    android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//        }
-//
-//        mFusedLocationClient.getLastLocation()
-//                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-//                    @Override
-//                    public void onSuccess(Location location) {
-//                        if (location != null) {
-//                            currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-//                            MarkerOptions options = new MarkerOptions();
-//                            options.position(currentLatLng);
-//                            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-//                            mMap.addMarker(options.title("Saya")).showInfoWindow();
-//                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
-//
-//                        } else {
-//                            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
-//                                    Snackbar.LENGTH_LONG).show();
-//
-//                            currentLatLng = new LatLng(-2.9852218, 104.7538641);
-//                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
-//
-//                        }
-//                    }
-//                });
         if (((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("");
         }
 
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        final DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        int viewPagerWidth = Math.round(outMetrics.widthPixels);
+        int more = viewPagerWidth/6;
+        int viewPagerHeight = (Math.round(outMetrics.widthPixels)/2)+more;
+
+        appBar.setLayoutParams(new CoordinatorLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
         collapsingKontak.setTitle(kontak);
 
@@ -176,61 +162,81 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
                 if (!no_tlp.equals("")) {
                     ActivityCompat.requestPermissions(getActivity(),
                             new String[]{Manifest.permission.CALL_PHONE},
-                            1);
+                            0);
                 } else {
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak Ada Nomor",
                             Snackbar.LENGTH_LONG).show();
                 }
             }
         });
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        mapView = v.findViewById(R.id.mapsKontak);
+        mapView.onCreate(savedInstanceState);
+        mapView.onResume();
+
+        try {
+            MapsInitializer.initialize(Objects.requireNonNull(getActivity()).getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                gMap = googleMap;
+
+                if (ContextCompat.checkSelfPermission(getActivity(),
+                        android.Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getContext(),
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    requestPermissions(new String[]{
+                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                }
+                mFusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                if (location != null) {
+                                    currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                    gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
+                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
+//                                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
+
+                                    LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+                                    gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
+//                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+
+//                                    if (currentLatLng != null && destlatLng != null) {
+                                    String url = getUrl(currentLatLng, destlatLng);
+                                    Log.e("url", url);
+                                    DownloadTask FetchUrl = new DownloadTask();
+                                    FetchUrl.execute(url);
+//                                    }
+                                } else {
+                                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
+                                            Snackbar.LENGTH_LONG).show();
+
+                                    LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+                                    gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
+                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+                                }
+                            }
+                        });
+            }
+        });
+
         return v;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(Objects.requireNonNull(getActivity()), new OnSuccessListener<Location>() {
-                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            MarkerOptions options = new MarkerOptions();
-                            options.position(currentLatLng);
-//                                            getAddress(currentLatLng.latitude, currentLatLng.longitude);
-                            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                            mMap.addMarker(options.title("Saya")).showInfoWindow();
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
-//                                            Utilities.showAsToast(MapsActivity.this, "Tekan dan tahan pada peta untuk menetapkan lokasi", Toast.LENGTH_LONG);
-                        } else {
-                            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
-                                    Snackbar.LENGTH_LONG).show();
-                            currentLatLng = new LatLng(-2.9852218, 104.7538641);
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
-
-                        }
-                    }
-                });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @SuppressLint("NewApi")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
-            case 1: {
+            case 0: {
                 if (grantResults[0] == 0) {
                     String uri = "tel:" + no_tlp;
                     Intent intent = new Intent(Intent.ACTION_CALL);
@@ -251,7 +257,7 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
                             Snackbar.LENGTH_LONG).show();
                 }
             }
-            case 2:{
+            case 1:{
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
                             android.Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -275,19 +281,27 @@ public class DetailKontakFragment extends Fragment implements OnMapReadyCallback
                                 public void onSuccess(Location location) {
                                     if (location != null) {
                                         currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                                        MarkerOptions options = new MarkerOptions();
-                                        options.position(currentLatLng);
-//                                            getAddress(currentLatLng.latitude, currentLatLng.longitude);
-                                        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                                        mMap.addMarker(options.title("Saya")).showInfoWindow();
-                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
+                                        gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
+                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
+//                                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
 
+                                        LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
+//                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+
+//                                    if (currentLatLng != null && destlatLng != null) {
+                                        String url = getUrl(currentLatLng, destlatLng);
+                                        Log.e("url", url);
+                                        DownloadTask FetchUrl = new DownloadTask();
+                                        FetchUrl.execute(url);
+//                                    }
                                     } else {
                                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
                                                 Snackbar.LENGTH_LONG).show();
-                                        currentLatLng = new LatLng(-2.9852218, 104.7538641);
-                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
 
+                                        LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
+                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
                                     }
                                 }
                             });

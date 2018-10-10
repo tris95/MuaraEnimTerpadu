@@ -26,6 +26,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/cover"-->
+            <!--android:background="@color/colorDivider"/>-->
+
         <!--<RelativeLayout-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="58dp"-->
@@ -45,7 +51,6 @@
     </LinearLayout>
 
     <include
-        layout="@layout/sliding_detail_wisata"
-        />
+        layout="@layout/sliding_detail_wisata" />
 
 </android.support.design.widget.CoordinatorLayout>
