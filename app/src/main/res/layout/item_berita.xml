@@ -53,8 +53,8 @@
             android:layout_toEndOf="@+id/imgBerita">
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
                 android:id="@+id/imgtanggalberita"
                 android:src="@drawable/baseline_event_24"
                 android:tint="@color/colorPrimary"
@@ -69,8 +69,8 @@
                 tools:ignore="UnusedAttribute" />
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
                 android:id="@+id/imglikeberita"
                 android:src="@drawable/baseline_favorite_24"
                 android:layout_gravity="center"
@@ -87,8 +87,8 @@
                 tools:ignore="SmallSp,UnusedAttribute" />
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
                 android:id="@+id/imgviewberita"
                 android:src="@drawable/baseline_person_24"
                 android:layout_gravity="center"
