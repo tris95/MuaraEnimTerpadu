@@ -13,7 +13,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,12 +59,13 @@ public class HomeFragment extends Fragment {
     RecyclerView rvContent, rvBerita;
     ArrayList<Content> mListContent;
     ArrayList<Berita> mListBerita;
+    public static List<Berita> mListisiBerita = new ArrayList<>();
     LinearLayoutManager linearLayoutManagercontent, linearLayoutManagerberita;
     LinearLayout llkategoriberita;
     SwipeRefreshLayout swipeRefreshLayout;
     PagerIndicator indicator;
     ImageView tvArrow;
-
+    public static boolean flag=false;
     public HomeFragment() {
 
     }
@@ -112,12 +112,15 @@ public class HomeFragment extends Fragment {
         display.getMetrics(outMetrics);
         int viewPagerWidth = Math.round(outMetrics.widthPixels);
         int viewPagerHeight = viewPagerWidth / 2;
-        int Width = Math.round(outMetrics.widthPixels);
 
         rlslider.setLayoutParams(new LinearLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
         rvBerita.addItemDecoration(new DividerItemDecoration(rvBerita.getContext(), DividerItemDecoration.VERTICAL));
 
+        if (flag){
+            getBerita1();
+            flag=false;
+        }
         if (MainActivity.ads.size() != 0 && MainActivity.contents.size() != 0) {
             List<Ad> listDataAd = MainActivity.ads;
             HashMap<String, String> url_maps = new HashMap<>();
@@ -394,6 +397,49 @@ public class HomeFragment extends Fragment {
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                         Snackbar.LENGTH_LONG).show();
                 rl.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void getBerita1() {
+
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<Value<Berita>> call = api.getBerita(random);
+        call.enqueue(new Callback<Value<Berita>>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NonNull Call<Value<Berita>> call, @NonNull Response<Value<Berita>> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        mListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.Beritas = mListBerita;
+
+                        linearLayoutManagerberita = new LinearLayoutManager(getContext());
+                        rvBerita.setLayoutManager(linearLayoutManagerberita);
+                        BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
+                        rvBerita.setAdapter(beritaViewAdapter);
+
+                        view.setVisibility(View.VISIBLE);
+                        rlberita.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<Value<Berita>> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
             }
         });
     }

@@ -29,6 +29,7 @@ import java.util.Objects;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailBeritaFragment;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.HomeFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
@@ -88,6 +89,7 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
                             mListBerita.get(position).getJudul_berita(),mListBerita.get(position).getTanggal_post(),
                             like,view,Utilities.getURLImageBerita() + mListBerita.get(position).getGambar_berita()), 5);
 
+                HomeFragment.flag=true;
 
             }
         });

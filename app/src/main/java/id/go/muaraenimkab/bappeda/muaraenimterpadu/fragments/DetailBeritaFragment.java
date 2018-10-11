@@ -2,10 +2,8 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -21,10 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bluejamesbond.text.DocumentView;
 import com.squareup.picasso.Picasso;
@@ -42,8 +36,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignInActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
@@ -64,7 +56,7 @@ public class DetailBeritaFragment extends Fragment {
     Toolbar toolbar;
     TextView tv_cobalagi, lblLikeUnlike, lblJudulBerita, lbltanggalBerita, lblLikeBerita, lblViewBerita;
     DocumentView lblIsiBerita;
-    ImageView imgDetaiBerita,imglikeunlike;
+    ImageView imgDetaiBerita, imglikeunlike;
     ArrayList<Berita> mListBerita;
     RelativeLayout rl, rlket;
     LinearLayout llsuka;
@@ -117,9 +109,9 @@ public class DetailBeritaFragment extends Fragment {
         imgDetaiBerita = v.findViewById(R.id.imgDetaiBerita);
         rl = v.findViewById(R.id.rl);
         rlket = v.findViewById(R.id.rlket);
-        llsuka= v.findViewById(R.id.llsuka);
+        llsuka = v.findViewById(R.id.llsuka);
         lblLikeUnlike = v.findViewById(R.id.lblLikeUnlike);
-        imglikeunlike=v.findViewById(R.id.imglikeunlike);
+        imglikeunlike = v.findViewById(R.id.imglikeunlike);
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -129,25 +121,51 @@ public class DetailBeritaFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Detail Berita");
         }
 
+        Display display = ((Activity) Objects.requireNonNull(getContext())).getWindowManager().getDefaultDisplay();
+        final DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+        int viewPagerWidth = Math.round(outMetrics.widthPixels);
+        int more = viewPagerWidth / 4;
+        int viewPagerHeight = (viewPagerWidth / 2) + more;
+        imgDetaiBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{
                     Manifest.permission.READ_PHONE_STATE}, 1);
         }
-
-        if (Utilities.getUser(getContext()).getId_user()!=null) {
+        if (HomeFragment.mListisiBerita.size() != 0) {
             cekLike();
             cekIME();
+
+            lblJudulBerita.setText(judulberita);
+            lbltanggalBerita.setText(tanggalberita);
+            lblLikeBerita.setText(likeberita);
+            lblViewBerita.setText(viewberita);
+
+            Picasso.with(getContext())
+                    .load(gambar)
+                    .into(imgDetaiBerita);
+
+            lblIsiBerita.setText(HomeFragment.mListisiBerita.get(0).getIsi_berita());
+
+            lblLikeUnlike.setVisibility(View.VISIBLE);
+            rlket.setVisibility(View.VISIBLE);
+        } else {
+            if (Utilities.getUser(getContext()).getId_user() != null) {
+                cekLike();
+                cekIME();
+            } else
+                cekIME();
+            getisiBerita();
         }
-        else
-            cekIME();
         llsuka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Utilities.getUser(getContext()).getId_user()!=null) {
+                if (Utilities.getUser(getContext()).getId_user() != null) {
                     llsuka.setEnabled(false);
                     if (tanda.equals("0")) {
                         setDataLike("1");
-                    } else if (tanda.equals("1")){
+                    } else if (tanda.equals("1")) {
                         setDataLike("0");
                     }
                 } else {
@@ -170,7 +188,12 @@ public class DetailBeritaFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void getisiBerita(final ProgressDialog pDialog) {
+    public void getisiBerita() {
+        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Loading...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
         String random = Utilities.getRandom(5);
 
         OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
@@ -191,19 +214,12 @@ public class DetailBeritaFragment extends Fragment {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         mListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
+                        HomeFragment.mListisiBerita=mListBerita;
 
                         lblJudulBerita.setText(judulberita);
                         lbltanggalBerita.setText(tanggalberita);
                         lblLikeBerita.setText(likeberita);
                         lblViewBerita.setText(viewberita);
-
-                        Display display = ((Activity) Objects.requireNonNull(getContext())).getWindowManager().getDefaultDisplay();
-                        final DisplayMetrics outMetrics = new DisplayMetrics();
-                        display.getMetrics(outMetrics);
-                        int viewPagerWidth = Math.round(outMetrics.widthPixels);
-                        int more = viewPagerWidth/4;
-                        int viewPagerHeight = (viewPagerWidth / 2)+more;
-                        imgDetaiBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
                         Picasso.with(getContext())
                                 .load(gambar)
@@ -297,7 +313,7 @@ public class DetailBeritaFragment extends Fragment {
     private void cekIME() {
 //        TelephonyManager telephonyManager = (TelephonyManager) Objects.requireNonNull(getContext()).getSystemService(Context.TELEPHONY_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -311,13 +327,6 @@ public class DetailBeritaFragment extends Fragment {
         ime = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
 
         if (!ime.equals("")) {
-
-            final ProgressDialog pDialog = new ProgressDialog(getActivity());
-            pDialog.setMessage("Loading...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-
             String random = Utilities.getRandom(5);
 
             OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
@@ -341,12 +350,10 @@ public class DetailBeritaFragment extends Fragment {
                             if (data.equals("kosong")) {
                                 setDataView();
                             }
-                            getisiBerita(pDialog);
                         } else {
                             rl.setVisibility(View.VISIBLE);
                             lblLikeUnlike.setVisibility(View.GONE);
                             rlket.setVisibility(View.GONE);
-                            pDialog.dismiss();
                             Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                                     Snackbar.LENGTH_LONG).show();
                             rl.setVisibility(View.VISIBLE);
@@ -355,7 +362,6 @@ public class DetailBeritaFragment extends Fragment {
                         rl.setVisibility(View.VISIBLE);
                         lblLikeUnlike.setVisibility(View.GONE);
                         rlket.setVisibility(View.GONE);
-                        pDialog.dismiss();
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
                         rl.setVisibility(View.VISIBLE);
@@ -369,7 +375,6 @@ public class DetailBeritaFragment extends Fragment {
                     rl.setVisibility(View.VISIBLE);
                     lblLikeUnlike.setVisibility(View.GONE);
                     rlket.setVisibility(View.GONE);
-                    pDialog.dismiss();
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                             Snackbar.LENGTH_LONG).show();
                     rl.setVisibility(View.VISIBLE);
@@ -395,7 +400,13 @@ public class DetailBeritaFragment extends Fragment {
         call.enqueue(new Callback<ValueAdd>() {
             @Override
             public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
-
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        Intent intent = new Intent("refresh");
+                        Objects.requireNonNull(getContext()).sendBroadcast(intent);
+                    }
+                }
             }
 
             @Override
@@ -427,23 +438,24 @@ public class DetailBeritaFragment extends Fragment {
                     if (success == 1) {
                         int lk;
                         if (like.equals("1")) {
-                            lk=Integer.valueOf(lblLikeBerita.getText().toString());
-                            lk+=1;
+                            lk = Integer.valueOf(lblLikeBerita.getText().toString());
+                            lk += 1;
                             lblLikeBerita.setText(String.valueOf(lk));
                             lblLikeUnlike.setTextColor(Color.parseColor("#41c300"));
-                            tanda="1";
+                            tanda = "1";
                             imglikeunlike.setColorFilter(Color.parseColor("#41c300"));
                             llsuka.setEnabled(true);
-                        }
-                        else if (like.equals("0")) {
-                            lk=Integer.valueOf(lblLikeBerita.getText().toString());
-                            lk-=1;
+                        } else if (like.equals("0")) {
+                            lk = Integer.valueOf(lblLikeBerita.getText().toString());
+                            lk -= 1;
                             lblLikeBerita.setText(String.valueOf(lk));
                             lblLikeUnlike.setTextColor(Color.parseColor("#757575"));
-                            tanda="0";
+                            tanda = "0";
                             imglikeunlike.setColorFilter(Color.parseColor("#757575"));
                             llsuka.setEnabled(true);
                         }
+                        Intent intent = new Intent("refresh");
+                        LocalBroadcastManager.getInstance(Objects.requireNonNull(getContext())).sendBroadcast(intent);
                     }
                 }
             }
@@ -470,18 +482,7 @@ public class DetailBeritaFragment extends Fragment {
                 } else {
                     requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
                 }
-                return;
             }
-//            case 2: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                        Log.e("permission", "DENIED");
-//                        cekIME();
-//                    } else {
-//                        Log.e("permission", "GRANTED");
-//                    }
-//                }
-//            }
         }
     }
 }
