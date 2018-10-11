@@ -44,8 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tidak_terhubung_ke_server"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="13sp" />
+                android:textColor="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/tv_cobalagi"
@@ -81,9 +80,7 @@
                     android:layout_height="0dp"
                     android:scaleType="fitXY"
                     tools:ignore="ContentDescription" />
-
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:layout_width="match_parent"

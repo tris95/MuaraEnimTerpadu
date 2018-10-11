@@ -133,7 +133,7 @@ public class KirimLaporanFragment extends Fragment {
                     txtNoHp.setError("Silahkan isi No. Hp Anda");
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan isi No. Hp Anda",
                             Snackbar.LENGTH_LONG).show();
-                }else if (spOpd.getSelectedItemPosition() == 0){
+                }else if (spOpd.getSelectedItemPosition() == 0 || idOpd.size() == 0){
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan pilih Organisasi Perangkat Daerah Tujuan",
                             Snackbar.LENGTH_LONG).show();
                 }else {
