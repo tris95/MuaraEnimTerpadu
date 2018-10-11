@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -49,6 +51,8 @@ public class LaporanSayaFragment extends Fragment {
     LinearLayoutManager linearLayoutManager;
     ArrayList<Laporan> mList;
     SwipeRefreshLayout swipeRefreshLayout;
+    RelativeLayout rl_none, rl_conn;
+    TextView tv_cobalagi;
 
     public LaporanSayaFragment() {
         // Required empty public constructor
@@ -72,6 +76,9 @@ public class LaporanSayaFragment extends Fragment {
         View v=inflater.inflate(R.layout.fragment_laporan_saya, container, false);
         rView = v.findViewById(R.id.rView);
         swipeRefreshLayout = v.findViewById(R.id.swipeRefresh);
+        rl_none = v.findViewById(R.id.rl_none);
+        rl_conn = v.findViewById(R.id.rl);
+        tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
         rView.addItemDecoration(new DividerItemDecoration(rView.getContext(), DividerItemDecoration.VERTICAL));
 
         if (MainActivity.laporans.size() != 0){
@@ -92,6 +99,14 @@ public class LaporanSayaFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                User user = Utilities.getUser(getContext());
+                getLaporan(user.getId_user());
+            }
+        });
+
+        tv_cobalagi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 User user = Utilities.getUser(getContext());
                 getLaporan(user.getId_user());
             }
@@ -146,21 +161,29 @@ public class LaporanSayaFragment extends Fragment {
                     swipeRefreshLayout.setRefreshing(false);
                     if (success == 1) {
                         mList = (ArrayList<Laporan>) Objects.requireNonNull(response.body()).getData();
-                        MainActivity.laporans = mList;
-
-                        linearLayoutManager = new LinearLayoutManager(getContext());
-                        rView.setLayoutManager(linearLayoutManager);
-                        LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), mList);
-                        rView.setAdapter(laporanViewAdapter);
-
+                        if(mList.size() == 0){
+                            rl_none.setVisibility(View.VISIBLE);
+                            rl_conn.setVisibility(View.GONE);
+                        }else {
+                            rl_none.setVisibility(View.GONE);
+                            rl_conn.setVisibility(View.GONE);
+                            MainActivity.laporans = mList;
+                            linearLayoutManager = new LinearLayoutManager(getContext());
+                            rView.setLayoutManager(linearLayoutManager);
+                            LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), mList);
+                            rView.setAdapter(laporanViewAdapter);
+                        }
                         pDialog.dismiss();
-
                     } else {
+                        rl_none.setVisibility(View.GONE);
+                        rl_conn.setVisibility(View.VISIBLE);
                         pDialog.dismiss();
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
                     }
                 } else {
+                    rl_none.setVisibility(View.GONE);
+                    rl_conn.setVisibility(View.VISIBLE);
                     pDialog.dismiss();
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                             Snackbar.LENGTH_LONG).show();
@@ -171,6 +194,8 @@ public class LaporanSayaFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<Value<Laporan>> call, @NonNull Throwable t) {
                 System.out.println("Retrofit Error:" + t.getMessage());
+                rl_none.setVisibility(View.GONE);
+                rl_conn.setVisibility(View.VISIBLE);
                 swipeRefreshLayout.setRefreshing(false);
                 pDialog.dismiss();
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",

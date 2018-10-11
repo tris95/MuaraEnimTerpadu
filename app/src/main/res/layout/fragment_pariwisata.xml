@@ -43,8 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tidak_terhubung_ke_server"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="13sp" />
+                android:textColor="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/tv_cobalagi"
@@ -87,8 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/content_kosong"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="13sp" />
+                android:textColor="@android:color/darker_gray"/>
         </LinearLayout>
     </RelativeLayout>
 
