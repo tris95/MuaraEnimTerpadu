@@ -43,7 +43,7 @@ import okhttp3.OkHttpClient;
 
 public class Utilities {
     private static Toast mToast;
-    private static String server = "http://www.freshyummy.co.id/mance/";
+    private static String server = "http://www.mance.muaraenimkab.go.id/";
     private static String alphabet = "0123456789abcdefghijklmnopqrstuvwqyz";
 
     public static String getBaseURLUser() {
