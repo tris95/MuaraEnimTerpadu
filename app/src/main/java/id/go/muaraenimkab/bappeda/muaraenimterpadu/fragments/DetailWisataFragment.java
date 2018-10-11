@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -123,7 +124,7 @@ public class DetailWisataFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_detail_wisata, container, false);
 
         toolbar = v.findViewById(R.id.toolbar);
-        tb1 = v.findViewById(R.id.tb1);
+        //tb1 = v.findViewById(R.id.tb1);
 //        tb2 = v.findViewById(R.id.tb2);
         bottomsheet = v.findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomsheet);
@@ -151,6 +152,7 @@ public class DetailWisataFragment extends Fragment {
 
         imgdetailwisata.setLayoutParams(new LinearLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
+
         Picasso.with(getContext())
                 .load(gambarpariwisata)
                 .into(imgdetailwisata);
@@ -158,6 +160,8 @@ public class DetailWisataFragment extends Fragment {
         lbldeskripsiwisata.setText(deskripsi);
 
         flagSlide = false;
+
+        setslide(bottomsheet);
 
         imgup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,10 +207,10 @@ public class DetailWisataFragment extends Fragment {
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 if (slideOffset < 0.7){
                     mapView.setAlpha((float) 1);
-                    tb1.setVisibility(View.GONE);
+                //    tb1.setVisibility(View.GONE);
                 }else if (slideOffset > 0.3){
                     mapView.setAlpha((float) 0.2);
-                    tb1.setVisibility(View.VISIBLE);
+                //    tb1.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -265,6 +269,16 @@ public class DetailWisataFragment extends Fragment {
         });
 
         return v;
+    }
+
+    public void setslide(View view){
+        TranslateAnimation animation=new TranslateAnimation(
+                0, 0, 0, 0,
+                Animation.ABSOLUTE,0,Animation.ABSOLUTE,view.getHeight()
+        );
+        animation.setDuration(500);
+        animation.setFillAfter(true);
+        view.startAnimation(animation);
     }
 
     @Override

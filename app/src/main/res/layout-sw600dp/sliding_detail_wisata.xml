@@ -76,7 +76,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    ext:documentView_textSize="16sp"
+                    ext:documentView_textSize="26sp"
                     app:documentView_textColor="@android:color/white"
                     ext:documentView_textAlignment="justified" />
             </LinearLayout>
