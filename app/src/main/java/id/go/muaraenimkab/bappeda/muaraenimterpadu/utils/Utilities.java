@@ -10,9 +10,11 @@ import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
@@ -155,14 +157,14 @@ public class Utilities {
         prefsEditor.apply();
     }
 
-//    public static String getToken() {
-//        String token = FirebaseInstanceId.getInstance().getToken();
-//        Log.e("token", token);
-//        if (token == null) {
-//            token = "";
-//        }
-//        return token;
-//    }
+    public static String getToken() {
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.e("token", token);
+        if (token == null) {
+            token = "";
+        }
+        return token;
+    }
 
     public static boolean isValidEmail(String email) {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();

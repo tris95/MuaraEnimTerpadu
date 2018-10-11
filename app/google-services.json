@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "490980118161-kufi7s99hvmnr434mhca19lvon5jvtj8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.go.muaraenimkab.bappeda.muaraenimterpadu",
+            "certificate_hash": "edb771d62425eca009685d1448012978a7ab5df5"
+          }
+        },
+        {
           "client_id": "490980118161-ik44fka2uovnaqdgva54fgmer4o8pnla.apps.googleusercontent.com",
           "client_type": 3
         }

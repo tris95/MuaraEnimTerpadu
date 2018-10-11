@@ -27,67 +27,65 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Tris on 4/5/2018.
  */
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-//    private static final String TAG = "MyFirebaseMsgService";
-//    //public static ArrayList<OrderDetil> dataDetil = new ArrayList<>();
-//    Utilities util = new Utilities();
-//    public static int total;
-//
-//    public static String title, message;
-//    MyNotificationManager mNotificationManager;
-//
-//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//    @Override
-//    public void onMessageReceived(RemoteMessage remoteMessage) {
-//        if (remoteMessage.getData().size() > 0) {
-//            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
-//            try {
-//                JSONObject json = new JSONObject(remoteMessage.getData().toString());
-//                sendPushNotification(json);
-//            } catch (Exception e) {
-//                Log.e(TAG, "Exception: " + e.getMessage());
-//            }
-//        }
-//    }
-//
-//    //this method will display the notification
-//    //We are passing the JSONObject that is received from
-//    //firebase cloud messaging
-//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//    private void sendPushNotification(JSONObject json) {
-//        //optionally we can display the json into log
-//        Log.e(TAG, "Notification JSON " + json.toString());
-//        try {
-//            //getting the json data
-//            JSONObject data = json.getJSONObject("data");
-//            Long tsLong = System.currentTimeMillis();
-//
-//            //parsing json data
-//            title = data.getString("title");
-//            message = data.getString("message");
-//            Log.e("title", title);
-//
-//            //creating MyNotificationManager object
-//            mNotificationManager = new MyNotificationManager(getApplicationContext());
-//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+    private static final String TAG = "MyFirebaseMsgService";
+    public static String title, message, imageurl;
+    MyNotificationManager mNotificationManager;
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        if (remoteMessage.getData().size() > 0) {
+            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
+            try {
+                JSONObject json = new JSONObject(remoteMessage.getData().toString());
+                sendPushNotification(json);
+            } catch (Exception e) {
+                Log.e(TAG, "Exception: " + e.getMessage());
+            }
+        }
+    }
+
+    //this method will display the notification
+    //We are passing the JSONObject that is received from
+    //firebase cloud messaging
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void sendPushNotification(JSONObject json) {
+        //optionally we can display the json into log
+        Log.e(TAG, "Notification JSON " + json.toString());
+        try {
+            //getting the json data
+            JSONObject data = json.getJSONObject("data");
+            Long tsLong = System.currentTimeMillis();
+
+            //parsing json data
+            title = data.getString("title");
+            message = data.getString("message");
+            imageurl = data.getString("imageurl");
+            Log.e("title", title);
+
+            //creating MyNotificationManager object
+            mNotificationManager = new MyNotificationManager(getApplicationContext());
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 //            mNotificationManager.showSmallNotification(title, message, tsLong, intent);
-//
-//            //creating an intent for the notification --> bottom
-//
-////            if there is no imageerror
-//            //if(imageUrl.equals("null")){
-//            //              displaying small notification
-////            mNotificationManager.showSmallNotification(title, message, intent);
-//            //}
-//            //else{
-//            //if there is an imageerror
-//            //displaying a big notification
-//            //mNotificationManager.showBigNotification(title, message, imageUrl, intent);
-//            //}
-//        } catch (JSONException e) {
-//            Log.e(TAG, "Json Exception: " + e.getMessage());
-//        } catch (Exception e) {
-//            Log.e(TAG, "Exception: " + e.getMessage());
-//        }
-//    }
+            mNotificationManager.showBigNotification(title, message, Utilities.getURLImageBerita()+imageurl, intent);
+
+            //creating an intent for the notification --> bottom
+
+//            if there is no imageerror
+            //if(imageUrl.equals("null")){
+            //              displaying small notification
+//            mNotificationManager.showSmallNotification(title, message, intent);
+            //}
+            //else{
+            //if there is an imageerror
+            //displaying a big notification
+            //mNotificationManager.showBigNotification(title, message, imageUrl, intent);
+            //}
+        } catch (JSONException e) {
+            Log.e(TAG, "Json Exception: " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "Exception: " + e.getMessage());
+        }
+    }
 
 }

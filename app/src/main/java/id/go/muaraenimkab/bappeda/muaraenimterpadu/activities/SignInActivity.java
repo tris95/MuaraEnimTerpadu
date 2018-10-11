@@ -95,7 +95,7 @@ public class SignInActivity extends AppCompatActivity {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<User>> call = api.signin(random, etEmail.getText().toString().trim(), etPass.getText().toString().trim(), "55");
+        Call<Value<User>> call = api.signin(random, etEmail.getText().toString().trim(), etPass.getText().toString().trim(), Utilities.getToken());
         call.enqueue(new Callback<Value<User>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
