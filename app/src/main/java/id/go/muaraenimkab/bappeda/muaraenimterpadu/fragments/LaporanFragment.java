@@ -1,6 +1,7 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,9 @@ import android.view.ViewGroup;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignInActivity;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
 
 public class LaporanFragment extends Fragment {
@@ -70,6 +74,10 @@ public class LaporanFragment extends Fragment {
             }
         });
 
+        if (Utilities.isLogin(getContext())) {
+            startActivity(new Intent(getContext(), SignInActivity.class));
+            getActivity().finish();
+        }
         return v;
     }
 

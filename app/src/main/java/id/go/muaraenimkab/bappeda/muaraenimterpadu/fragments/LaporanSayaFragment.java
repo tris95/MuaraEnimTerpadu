@@ -86,14 +86,6 @@ public class LaporanSayaFragment extends Fragment {
             rView.setLayoutManager(linearLayoutManager);
             LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<Laporan>) MainActivity.laporans);
             rView.setAdapter(laporanViewAdapter);
-        }else {
-            if (Utilities.isLogin(getContext())) {
-                User user = Utilities.getUser(getContext());
-                getLaporan(user.getId_user());
-            }else {
-                startActivity(new Intent(getContext(), SignInActivity.class));
-                getActivity().finish();
-            }
         }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
