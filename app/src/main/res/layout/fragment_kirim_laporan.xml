@@ -20,10 +20,8 @@
 
         <Spinner
             android:id="@+id/spOpd"
-            android:layout_marginTop="@dimen/activity_margin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_button"/>
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/lblJudul"
@@ -35,13 +33,10 @@
 
         <EditText
             android:id="@+id/txtJudul"
-            android:layout_marginTop="@dimen/activity_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_button"
             android:inputType="textAutoComplete"
-            android:hint="Judul laporan Anda"
-            android:padding="7dp"/>
+            android:hint="Judul laporan Anda"/>
 
         <TextView
             android:id="@+id/lblIsi"
@@ -55,13 +50,10 @@
             android:id="@+id/txtIsi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/custom_button"
-            android:padding="7dp"
             android:minLines="5"
             android:inputType="textAutoComplete"
             android:hint="Isi laporan Anda"
             android:textAlignment="textStart"
-            android:layout_marginTop="@dimen/activity_margin"
             android:gravity="start" />
 
         <TextView
@@ -76,15 +68,14 @@
             android:id="@+id/txtNoHp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/custom_button"
-            android:padding="7dp"
             android:inputType="number"
             android:hint="No. Hp yang dapat dihubungi"
             android:textAlignment="textStart"
-            android:layout_marginTop="@dimen/activity_margin"
             android:gravity="start"
-            android:drawableRight="@drawable/baseline_edit_24"
-            android:drawableEnd="@drawable/baseline_edit_24" />
+            android:drawableRight="@drawable/baseline_file_copy_black_24dp"
+            android:drawableEnd="@drawable/baseline_file_copy_black_24dp"
+            android:drawableTint="@color/colorDefault"
+            android:backgroundTint="@color/colorDefault"/>
 
         <TextView
             android:id="@+id/lblLokasi"
@@ -98,13 +89,10 @@
             android:id="@+id/txtLokasi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/custom_button"
-            android:padding="7dp"
             android:minLines="2"
             android:inputType="textAutoComplete"
             android:hint="Detail lokasi pengaduan (optional)"
             android:textAlignment="textStart"
-            android:layout_marginTop="@dimen/activity_margin"
             android:gravity="start" />
 
         <!--<ImageView-->
@@ -124,20 +112,20 @@
             android:layout_marginTop="@dimen/activity_margin"
             android:text="Foto Laporan" />
 
-        <com.github.siyamed.shapeimageview.CircularImageView
+        <ImageView
             android:id="@+id/imgLaporan"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
-            android:src="@drawable/add_image"/>
+            android:src="@drawable/defaultimage"/>
 
         <Button
             android:id="@+id/btnKirim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/button_background"
             android:text="Kirim"

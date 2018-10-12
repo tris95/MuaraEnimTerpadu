@@ -36,6 +36,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -81,7 +82,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class KirimLaporanFragment extends Fragment {
     EditText txtJudul, txtIsi, txtLokasi, txtNoHp;
     Button btnKirim;
-    CircularImageView imgLaporan;
+    ImageView imgLaporan;
     String foto;
     Spinner spOpd;
     List<String> idOpd = new ArrayList<>();
@@ -320,7 +321,7 @@ public class KirimLaporanFragment extends Fragment {
                     if (success == 1) {
                         txtIsi.setText("");
                         txtJudul.setText("");
-                        imgLaporan.setImageDrawable(getResources().getDrawable(R.drawable.add_image));
+                        imgLaporan.setImageDrawable(getResources().getDrawable(R.drawable.defaultimage));
                         txtLokasi.setText("");
                         txtNoHp.setText("");
                         foto="";

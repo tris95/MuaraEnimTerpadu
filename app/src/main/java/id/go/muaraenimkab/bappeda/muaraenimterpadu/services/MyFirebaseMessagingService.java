@@ -61,13 +61,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             title = data.getString("title");
             message = data.getString("message");
             imageurl = data.getString("imageurl");
-            Log.e("title", title);
+            Log.e("image", imageurl);
 
             //creating MyNotificationManager object
             mNotificationManager = new MyNotificationManager(getApplicationContext());
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//            mNotificationManager.showSmallNotification(title, message, tsLong, intent);
-            mNotificationManager.showBigNotification(title, message, Utilities.getURLImageBerita()+imageurl, intent);
+            if (imageurl.isEmpty()) {
+                mNotificationManager.showSmallNotification(title, message, tsLong, intent);
+            } else{
+                mNotificationManager.showBigNotification(title, message, imageurl, intent);
+            }
 
             //creating an intent for the notification --> bottom
 

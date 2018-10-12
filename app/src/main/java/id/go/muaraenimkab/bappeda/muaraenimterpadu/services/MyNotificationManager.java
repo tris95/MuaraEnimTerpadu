@@ -54,13 +54,13 @@ public class MyNotificationManager {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx);
         Notification notification;
-        notification = mBuilder.setSmallIcon(R.drawable.logomance).setTicker("Muara Enim Center").setWhen(0)
+        notification = mBuilder.setSmallIcon(R.drawable.mance).setTicker("Muara Enim Center").setWhen(0)
                 .setAutoCancel(true)
                 .setContentIntent(resultPendingIntent)
                 .setContentTitle("Muara Enim Center")
                 .setWhen(time)
-                .setSmallIcon(R.drawable.logomance)
-                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.logomance))
+                .setSmallIcon(R.drawable.mance)
+                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.mance))
                 .setContentText("Muara Enim Center")
                 .setSound(defaultSoundUri)
                 .build();
@@ -88,13 +88,13 @@ public class MyNotificationManager {
         bigPictureStyle.bigPicture(getBitmapFromURL(url));
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx);
         Notification notification;
-        notification = mBuilder.setSmallIcon(R.drawable.logomance).setTicker(title).setWhen(0)
+        notification = mBuilder.setSmallIcon(R.drawable.mance).setTicker(title).setWhen(0)
                 .setAutoCancel(true)
                 .setContentIntent(resultPendingIntent)
                 .setContentTitle(title)
                 .setStyle(bigPictureStyle)
-                .setSmallIcon(R.drawable.logomance)
-                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.logomance))
+                .setSmallIcon(R.drawable.mance)
+                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.mance))
                 .setContentText(message)
                 .build();
 

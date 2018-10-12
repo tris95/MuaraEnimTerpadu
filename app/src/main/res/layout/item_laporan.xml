@@ -23,21 +23,25 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvJudul"
             android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:textSize="16sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:textColor="@android:color/white"
             android:id="@+id/tvIsi"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13sp"
+            android:textColor="@android:color/white"
             android:id="@+id/tvTgl"/>
     </LinearLayout>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/baseline_keyboard_arrow_right_24"
+        android:tint="@android:color/white"
         android:layout_margin="10dp"/>
 </LinearLayout>

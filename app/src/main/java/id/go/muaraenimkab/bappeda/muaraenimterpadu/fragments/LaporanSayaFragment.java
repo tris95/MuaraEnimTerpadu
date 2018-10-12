@@ -86,6 +86,9 @@ public class LaporanSayaFragment extends Fragment {
             rView.setLayoutManager(linearLayoutManager);
             LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<Laporan>) MainActivity.laporans);
             rView.setAdapter(laporanViewAdapter);
+        }else {
+            User user = Utilities.getUser(getContext());
+            getLaporan(user.getId_user());
         }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -103,9 +106,6 @@ public class LaporanSayaFragment extends Fragment {
                 getLaporan(user.getId_user());
             }
         });
-
-        User user = Utilities.getUser(getActivity());
-        getLaporan(user.getId_user());
 
         return v;
     }
@@ -159,9 +159,11 @@ public class LaporanSayaFragment extends Fragment {
                         if(mList.size() == 0){
                             rl_none.setVisibility(View.VISIBLE);
                             rl_conn.setVisibility(View.GONE);
+                            rView.setVisibility(View.GONE);
                         }else {
                             rl_none.setVisibility(View.GONE);
                             rl_conn.setVisibility(View.GONE);
+                            rView.setVisibility(View.VISIBLE);
                             MainActivity.laporans = mList;
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             rView.setLayoutManager(linearLayoutManager);
@@ -172,6 +174,7 @@ public class LaporanSayaFragment extends Fragment {
                     } else {
                         rl_none.setVisibility(View.GONE);
                         rl_conn.setVisibility(View.VISIBLE);
+                        rView.setVisibility(View.GONE);
                         pDialog.dismiss();
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
@@ -179,6 +182,7 @@ public class LaporanSayaFragment extends Fragment {
                 } else {
                     rl_none.setVisibility(View.GONE);
                     rl_conn.setVisibility(View.VISIBLE);
+                    rView.setVisibility(View.GONE);
                     pDialog.dismiss();
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
                             Snackbar.LENGTH_LONG).show();
@@ -191,6 +195,7 @@ public class LaporanSayaFragment extends Fragment {
                 System.out.println("Retrofit Error:" + t.getMessage());
                 rl_none.setVisibility(View.GONE);
                 rl_conn.setVisibility(View.VISIBLE);
+                rView.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
                 pDialog.dismiss();
                 Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",

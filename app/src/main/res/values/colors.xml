@@ -10,8 +10,10 @@
     <color name="colorOrange">#ff6040</color>
     
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorYellow">#FFFF66</color>
-    <color name="colorRed">#ff6670</color>
-    <color name="colorGreen">#74B72E</color>
+    <color name="colorYellow">#d9cb00</color>
+    <color name="colorRed">#c7000a</color>
+    <color name="colorGreen">#00c600</color>
+
+    <color name="colorDefault">#757575</color>
 
 </resources>

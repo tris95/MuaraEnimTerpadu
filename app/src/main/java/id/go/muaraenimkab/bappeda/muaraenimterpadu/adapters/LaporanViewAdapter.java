@@ -59,7 +59,7 @@ public class LaporanViewAdapter extends RecyclerView.Adapter<LaporanViewAdapter.
 
         switch (mList.get(position).getStatus_tanggapan()) {
             case "0":
-                holder.ll.setBackgroundResource(R.color.colorWhite);
+                holder.ll.setBackgroundResource(R.color.colorYellow);
                 break;
             case "1":
                 holder.ll.setBackgroundResource(R.color.colorGreen);
