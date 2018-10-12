@@ -70,7 +70,7 @@ public class ProfilFragment extends Fragment {
     Toolbar toolbar;
     Button btnAction;
     CircularImageView imgProfil;
-    ImageView imgEdit;
+    LinearLayout imgEdit;
     EditText etNama, etNoKtp, etEmail, etNoHp, etAlamat, etPassword;
     public static boolean flagback;
     boolean editmode;
@@ -288,6 +288,7 @@ public class ProfilFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.e("Login", Utilities.isLogin(getActivity())+"");
         if (!flagback) {
             if (Utilities.isLogin(getActivity())) {
                 btnAction.setText("SignOut");

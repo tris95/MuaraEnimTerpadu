@@ -9,6 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -26,50 +27,95 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_margin">
+            android:paddingBottom="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imgEdit"
-                android:src="@drawable/baseline_edit_24"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:padding="10dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/ll"
+                android:src="@drawable/adipura"
+                android:scaleType="fitXY"
+                android:layout_alignParentTop="true"
+                tools:ignore="ContentDescription"/>
 
-            <com.github.siyamed.shapeimageview.CircularImageView
-                android:id="@+id/imgProfil"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/ll"
+                android:alpha="0.3"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/black"
+                tools:ignore="ContentDescription"/>
 
             <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rl"
+                android:paddingTop="50dp"
+                android:background="@android:color/transparent"
+                android:paddingRight="@dimen/activity_margin"
+                android:paddingLeft="@dimen/activity_margin"
+                android:paddingBottom="50dp">
 
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/imgProfil"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp" />
+
+                <RelativeLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="4dp"
+                        android:tint="@android:color/white"
+                        android:src="@drawable/baseline_photo_camera_24"
+                        tools:ignore="UnusedAttribute"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/imgEdit"
+                android:layout_margin="10dp"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Profil"
+                    android:textColor="@android:color/white"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp" />
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="4dp"
-                    android:backgroundTint="@android:color/darker_gray"
-                    android:background="@drawable/baseline_photo_camera_24"
-                    tools:ignore="UnusedAttribute"
-                    android:layout_alignParentEnd="true" />
-            </RelativeLayout>
-
+                    android:src="@drawable/baseline_edit_24"
+                    android:tint="@android:color/white"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgProfil"
+                android:layout_below="@+id/rl"
                 android:id="@+id/ll"
                 android:orientation="vertical"
-                android:paddingTop="10dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,6 +124,7 @@
                     android:text="Data Akun"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp"
+                    android:visibility="gone"
                     android:textStyle="bold" />
 
                 <RelativeLayout
@@ -193,8 +240,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btnAction"
                 android:layout_below="@+id/ll"
-                android:layout_marginTop="15dp"
                 android:layout_alignParentBottom="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:background="@drawable/button_background"
                 android:textColor="@android:color/white" />
         </RelativeLayout>

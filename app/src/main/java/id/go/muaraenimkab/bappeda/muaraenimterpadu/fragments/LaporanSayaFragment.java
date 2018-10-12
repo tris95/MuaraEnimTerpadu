@@ -104,6 +104,9 @@ public class LaporanSayaFragment extends Fragment {
             }
         });
 
+        User user = Utilities.getUser(getActivity());
+        getLaporan(user.getId_user());
+
         return v;
     }
 

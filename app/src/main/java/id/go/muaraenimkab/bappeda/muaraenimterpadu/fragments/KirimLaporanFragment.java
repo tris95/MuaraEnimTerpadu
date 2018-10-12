@@ -140,9 +140,11 @@ public class KirimLaporanFragment extends Fragment {
                     if (Utilities.isLogin(getContext())) {
                         User users = Utilities.getUser(getContext());
                         laporan(users.getId_user(), idOpd.get(spOpd.getSelectedItemPosition()), txtNoHp.getText().toString().trim(), txtJudul.getText().toString().trim(), txtIsi.getText().toString().trim(), txtLokasi.getText().toString());
-                    }else {
-                        startActivity(new Intent(getContext(), SignInActivity.class));
                     }
+//                    else {
+//                        startActivity(new Intent(getContext(), SignInActivity.class));
+//                        getActivity().finish();
+//                    }
                 }
             }
         });
@@ -181,7 +183,7 @@ public class KirimLaporanFragment extends Fragment {
 //            }
 //        });
 
-        if (Utilities.isLogin(getContext())) {
+//        if (Utilities.isLogin(getActivity())) {
             if (MainActivity.opds.size() != 0){
                 idOpd.clear();
                 List<String> arr = new ArrayList<>();
@@ -199,10 +201,10 @@ public class KirimLaporanFragment extends Fragment {
             }else {
                 getOpd();
             }
-        }else {
-            startActivity(new Intent(getContext(), SignInActivity.class));
-            getActivity().finish();
-        }
+//        }else {
+//            startActivity(new Intent(getContext(), SignInActivity.class));
+//            getActivity().finish();
+//        }
 
         return v;
     }

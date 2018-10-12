@@ -74,10 +74,11 @@ public class LaporanFragment extends Fragment {
             }
         });
 
-        if (Utilities.isLogin(getContext())) {
+        if (!Utilities.isLogin(getContext())) {
             startActivity(new Intent(getContext(), SignInActivity.class));
             getActivity().finish();
         }
+
         return v;
     }
 
