@@ -157,4 +157,14 @@ public interface APIServices {
                                @Field("iduser") String iduser,
                                @Field("idberita") String idberita,
                                @Field("like") String like);
+
+    @FormUrlEncoded
+    @POST("logout.php")
+    Call<ValueAdd> signout(@Field("xkey") String xkey,
+                          @Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("setlogin.php")
+    Call<ValueAdd> setlogindb(@Field("xkey") String xkey,
+                           @Field("email") String email);
 }

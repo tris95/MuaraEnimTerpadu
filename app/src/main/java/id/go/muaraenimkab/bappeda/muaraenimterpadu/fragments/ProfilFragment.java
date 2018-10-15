@@ -51,6 +51,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignInActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignUpActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
@@ -127,31 +128,21 @@ public class ProfilFragment extends Fragment {
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Profile");
         }
-
+        Utilities.setLogin(getActivity(),Utilities.getUser(getActivity()).getEmail());
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (btnAction.getText().toString().equals("SignIn")){
                     startActivity(new Intent(getContext(), SignInActivity.class));
                 }else if (btnAction.getText().toString().equals("SignOut")){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
                     builder.setCancelable(true)
                             .setTitle("Konfirmasi")
                             .setMessage("Keluar dari akun ?")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    btnAction.setText("SignIn");
-                                    Picasso.with(getActivity()).load(Utilities.getBaseURLImageUser()+"default.png");
-                                    etAlamat.setText("");
-                                    etEmail.setText("");
-                                    etNoHp.setText("");
-                                    etNama.setText("");
-                                    etNoKtp.setText("");
-                                    Utilities.signOutUser(getContext());
-                                    Intent mIntent = new Intent(getContext(), SignInActivity.class);
-                                    startActivity(mIntent);
-                                    getActivity().finish();
+                                    signout();
                                 }
                             })
                             .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -162,7 +153,7 @@ public class ProfilFragment extends Fragment {
                             })
                             .show();
                 }else if(btnAction.getText().toString().equals("Update Akun")){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
                     builder.setCancelable(true)
                             .setTitle("Konfirmasi")
                             .setMessage("Update data akun ?")
@@ -208,6 +199,7 @@ public class ProfilFragment extends Fragment {
                         btnAction.setText("Update Akun");
                     }else {
                         startActivity(new Intent(getContext(), SignInActivity.class));
+                        getActivity().finish();
                     }
                 }else {
                     imgProfil.setEnabled(false);
@@ -268,6 +260,7 @@ public class ProfilFragment extends Fragment {
                         alertDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     }else {
                         startActivity(new Intent(getContext(), SignInActivity.class));
+                        getActivity().finish();
                     }
                     return true;
                 }
@@ -285,11 +278,14 @@ public class ProfilFragment extends Fragment {
         return v;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onResume() {
         super.onResume();
+
         Log.e("Login", Utilities.isLogin(getActivity())+"");
         if (!flagback) {
+
             if (Utilities.isLogin(getActivity())) {
                 btnAction.setText("SignOut");
                 User users = Utilities.getUser(getActivity());
@@ -303,7 +299,7 @@ public class ProfilFragment extends Fragment {
                 btnAction.setText("SignIn");
                 Picasso.with(getActivity()).load(Utilities.getBaseURLImageUser() + "default.png").into(imgProfil);
                 startActivity(new Intent(getContext(), SignInActivity.class));
-                getActivity().finish();
+                Objects.requireNonNull(getActivity()).finish();
             }
         }else {
             if (SignInActivity.flagsignin){
@@ -686,6 +682,61 @@ public class ProfilFragment extends Fragment {
                     } else{
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal menyimpan data. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
+                    }
+                } else {
+                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+                            Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<ValueAdd> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
+                pDialog.dismiss();
+                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
+                        Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+    private void signout() {
+        final ProgressDialog pDialog = new ProgressDialog(getContext());
+        pDialog.setMessage("Loading...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<ValueAdd> call = api.signout(random, etEmail.getText().toString().trim());
+        call.enqueue(new Callback<ValueAdd>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
+                pDialog.dismiss();
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        btnAction.setText("SignIn");
+                        Picasso.with(getActivity()).load(Utilities.getBaseURLImageUser()+"default.png");
+                        etAlamat.setText("");
+                        etEmail.setText("");
+                        etNoHp.setText("");
+                        etNama.setText("");
+                        etNoKtp.setText("");
+                        Utilities.signOutUser(getContext());
+                        Intent mIntent = new Intent(getContext(), SignInActivity.class);
+                        startActivity(mIntent);
+                        Objects.requireNonNull(getActivity()).finish();
                     }
                 } else {
                     Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",

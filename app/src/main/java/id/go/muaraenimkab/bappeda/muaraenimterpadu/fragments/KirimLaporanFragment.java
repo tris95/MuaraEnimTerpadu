@@ -122,30 +122,36 @@ public class KirimLaporanFragment extends Fragment {
             @SuppressLint("NewApi")
             @Override
             public void onClick(View view) {
-                if (txtJudul.getText().toString().isEmpty()){
-                    txtJudul.setError("Silahkan isi judul laporan Anda");
-                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan isi judul laporan Anda",
-                            Snackbar.LENGTH_LONG).show();
-                }else if (txtIsi.getText().toString().isEmpty()){
-                    txtIsi.setError("Silahkan isi laporan Anda");
-                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan isi laporan Anda",
-                            Snackbar.LENGTH_LONG).show();
-                }else if (txtNoHp.getText().toString().isEmpty()){
-                    txtNoHp.setError("Silahkan isi No. Hp Anda");
-                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan isi No. Hp Anda",
-                            Snackbar.LENGTH_LONG).show();
-                }else if (spOpd.getSelectedItemPosition() == 0 || idOpd.size() == 0){
-                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan pilih Organisasi Perangkat Daerah Tujuan",
-                            Snackbar.LENGTH_LONG).show();
-                }else {
-                    if (Utilities.isLogin(getContext())) {
-                        User users = Utilities.getUser(getContext());
-                        laporan(users.getId_user(), idOpd.get(spOpd.getSelectedItemPosition()), txtNoHp.getText().toString().trim(), txtJudul.getText().toString().trim(), txtIsi.getText().toString().trim(), txtLokasi.getText().toString());
-                    }
+                if (Utilities.isLogin(getContext())) {
+                    if (txtJudul.getText().toString().isEmpty()) {
+                        txtJudul.setError("Silahkan isi judul laporan Anda");
+                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan isi judul laporan Anda",
+                                Snackbar.LENGTH_LONG).show();
+                    } else if (txtIsi.getText().toString().isEmpty()) {
+                        txtIsi.setError("Silahkan isi laporan Anda");
+                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan isi laporan Anda",
+                                Snackbar.LENGTH_LONG).show();
+                    } else if (txtNoHp.getText().toString().isEmpty()) {
+                        txtNoHp.setError("Silahkan isi No. Hp Anda");
+                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan isi No. Hp Anda",
+                                Snackbar.LENGTH_LONG).show();
+                    } else if (spOpd.getSelectedItemPosition() == 0 || idOpd.size() == 0) {
+                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan pilih Organisasi Perangkat Daerah Tujuan",
+                                Snackbar.LENGTH_LONG).show();
+                    } else {
+                        if (Utilities.isLogin(getContext())) {
+                            User users = Utilities.getUser(getContext());
+                            laporan(users.getId_user(), idOpd.get(spOpd.getSelectedItemPosition()), txtNoHp.getText().toString().trim(), txtJudul.getText().toString().trim(), txtIsi.getText().toString().trim(), txtLokasi.getText().toString());
+                        }
 //                    else {
 //                        startActivity(new Intent(getContext(), SignInActivity.class));
 //                        getActivity().finish();
 //                    }
+                    }
+                }
+                else {
+                    startActivity(new Intent(getContext(), SignInActivity.class));
+                    Objects.requireNonNull(getActivity()).finish();
                 }
             }
         });

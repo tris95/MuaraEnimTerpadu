@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.TempatViewAdapter;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
@@ -79,8 +80,17 @@ public class TempatFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Daftar Toko");
         }
+        if(MainActivity.tempatPariwisatas.size() != 0){
+            linearLayoutManager = new LinearLayoutManager(getContext());
+            rvTempat.setLayoutManager(linearLayoutManager);
+            TempatViewAdapter tempatViewAdapter = new TempatViewAdapter(getContext(), (ArrayList<TempatPariwisata>)MainActivity.tempatPariwisatas);
+            rvTempat.setAdapter(tempatViewAdapter);
+            rl.setVisibility(View.GONE);
+            rvTempat.setVisibility(View.VISIBLE);
+        }
+        else
+            gettempatPariwisata();
 
-        gettempatPariwisata();
         return v;
     }
 
@@ -111,6 +121,7 @@ public class TempatFragment extends Fragment {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         mListtempatPariwisata = (ArrayList<TempatPariwisata>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.tempatPariwisatas=mListtempatPariwisata;
 
                         if (mListtempatPariwisata.size()!=0) {
                             linearLayoutManager = new LinearLayoutManager(getContext());

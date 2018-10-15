@@ -73,7 +73,7 @@ public class LaporanFragment extends Fragment {
                 tabLayout.setupWithViewPager(mViewPager);
             }
         });
-
+        Utilities.setLogin(getActivity(),Utilities.getUser(getActivity()).getEmail());
         if (!Utilities.isLogin(getContext())) {
             startActivity(new Intent(getContext(), SignInActivity.class));
             getActivity().finish();
@@ -135,5 +135,10 @@ public class LaporanFragment extends Fragment {
             }
             return null;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

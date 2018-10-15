@@ -36,6 +36,8 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Opd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
 public class MainActivity extends AppCompatActivity {
     Fragment fragment;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     public static List<Event> events = new ArrayList<>();
     public static List<Opd> opds = new ArrayList<>();
     public static List<Pariwisata> pariwisatas = new ArrayList<>();
+    public static List<TempatPariwisata> tempatPariwisatas = new ArrayList<>();
 
 //    private BroadcastReceiver broadcastRefresh = new BroadcastReceiver() {
 //        @Override

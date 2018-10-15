@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class SignInActivity extends AppCompatActivity {
     EditText etEmail, etPass;
     Button button;
     TextView tvDaftar;
+    RelativeLayout lysignin;
     public static boolean flagsignin;
 
     public static String BROADCAST_ACTION = "id.go.muaraenimkab.bappeda.muaraenimterpadu.activities";
@@ -52,6 +54,7 @@ public class SignInActivity extends AppCompatActivity {
         etPass = findViewById(R.id.etPass);
         button = findViewById(R.id.button);
         tvDaftar = findViewById(R.id.textView4);
+        lysignin=findViewById(R.id.lysignin);
 
         ProfilFragment.flagback = true;
         flagsignin = false;
@@ -73,6 +76,12 @@ public class SignInActivity extends AppCompatActivity {
                 }else {
                     signin();
                 }
+            }
+        });
+        lysignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.hideKeyboard(SignInActivity.this);
             }
         });
     }
@@ -105,10 +114,10 @@ public class SignInActivity extends AppCompatActivity {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         flagsignin = true;
-                        Utilities.setLogin(SignInActivity.this);
                         for (User user : Objects.requireNonNull(response.body()).getData()) {
                             Utilities.setUser(SignInActivity.this, user);
                         }
+                        Utilities.setLogin(SignInActivity.this,etEmail.getText().toString().trim());
                         Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "SignIn Success",
                                 2000).show();
                         new Timer().schedule(new TimerTask() {
@@ -123,7 +132,11 @@ public class SignInActivity extends AppCompatActivity {
                     } else  if (success == 3) {
                         Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Alamat email tidak terdaftar",
                                 Snackbar.LENGTH_LONG).show();
-                    }else{
+                    }else  if (success == 4) {
+                        Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Akun di Banned",
+                                Snackbar.LENGTH_LONG).show();
+                    }
+                    else{
                         Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal masuk aplikasi. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
                     }

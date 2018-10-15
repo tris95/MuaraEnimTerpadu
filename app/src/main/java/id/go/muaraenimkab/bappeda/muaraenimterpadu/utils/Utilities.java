@@ -1,5 +1,6 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,7 +8,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -29,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Random;
 
 import javax.net.ssl.HostnameVerifier;
@@ -38,8 +44,16 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Utilities {
     private static Toast mToast;
@@ -65,6 +79,7 @@ public class Utilities {
     public static String getURLImageKategoriBerita() {
         return server + "wp/gambar_kategori_berita/";
     }
+
     public static String getURLImageBerita() {
         return server + "wp/gambar_berita/";
     }
@@ -98,14 +113,14 @@ public class Utilities {
     }
 
     public static String formatDatabaseTimeStamp(String tanggalKonfirmasi) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         Date testDate = null;
         try {
             testDate = sdf.parse(tanggalKonfirmasi);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         return formatter.format(testDate);
     }
 
@@ -149,12 +164,49 @@ public class Utilities {
         return sp.getBoolean("xLogin", false);
     }
 
-    public static void setLogin(Context context) {
+    public static void setLogin(Context context, String email) {
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        final SharedPreferences.Editor prefsEditor = mPrefs.edit();
 
-        prefsEditor.putBoolean("xLogin", true);
-        prefsEditor.apply();
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<ValueAdd> call = api.setlogindb(random, email);
+        call.enqueue(new Callback<ValueAdd>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 0) {
+                        prefsEditor.putBoolean("xLogin", false);
+                        prefsEditor.apply();
+                        Log.e("as","0");
+                    } else if (success == 1) {
+                        prefsEditor.putBoolean("xLogin", true);
+                        prefsEditor.apply();
+                    } else {
+                        prefsEditor.putBoolean("xLogin", false);
+                        prefsEditor.apply();
+                        Log.e("login","1");
+                    }
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<ValueAdd> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
+            }
+        });
     }
 
     public static String getToken() {
@@ -173,6 +225,7 @@ public class Utilities {
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert connectivityManager != null;
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
@@ -247,19 +300,19 @@ public class Utilities {
     }
 
 
-    public static String getRandom(int x){
+    public static String getRandom(int x) {
         final int N = alphabet.length();
         Random r = new Random();
-        String alpha="";
+        String alpha = "";
         for (int i = 0; i < x; i++) {
-            alpha = alpha+alphabet.charAt(r.nextInt(N));
+            alpha = alpha + alphabet.charAt(r.nextInt(N));
         }
         return alpha;
     }
 
     public static OkHttpClient getUnsafeOkHttpClient() {
         try {
-            final TrustManager[] trustAllCerts = new TrustManager[] {
+            final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
                         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
@@ -282,7 +335,7 @@ public class Utilities {
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager)trustAllCerts[0]);
+            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
             builder.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
