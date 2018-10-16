@@ -171,7 +171,12 @@ class MyNotificationManager {
             builder = new NotificationCompat.Builder(context, id);
             Intent intent = new Intent(context, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            pendingIntent = PendingIntent.getActivity(
+                    context,
+                    ID_SMALL_NOTIFICATION,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+            );
             builder.setContentTitle(title)
                     .setSmallIcon(R.drawable.mance)
                     .setContentText(message)
