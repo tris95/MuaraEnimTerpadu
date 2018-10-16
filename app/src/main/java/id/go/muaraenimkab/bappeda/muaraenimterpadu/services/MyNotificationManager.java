@@ -46,101 +46,70 @@ class MyNotificationManager {
     //parameters are title for message title, message for message text and an intent that will open
     //when you will tap on the notification
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    void showSmallNotification(String title, String message, Long time, Intent intent) {
-        PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        mCtx,
-                        ID_SMALL_NOTIFICATION,
-                        intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-
-        if (notifManager == null) {
-            notifManager = (NotificationManager)mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            assert notifManager != null;
-            NotificationChannel mChannel = notifManager.getNotificationChannel("1");
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            if (mChannel == null) {
-                mChannel = new NotificationChannel("1", title, importance);
-                mChannel.enableVibration(true);
-                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                notifManager.createNotificationChannel(mChannel);
-            }
-        }
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx, "1");
-        Notification notification;
-        notification = mBuilder.setSmallIcon(R.drawable.mance).setTicker(title).setWhen(0)
-                .setAutoCancel(true)
-                .setContentIntent(resultPendingIntent)
-                .setContentTitle(title)
-                .setWhen(time)
-                .setSmallIcon(R.drawable.mance)
-                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.mance))
-                .setContentText(message)
-                .setSound(defaultSoundUri)
-                .build();
-
-        notifManager.notify(ID_SMALL_NOTIFICATION, notification);
-
+    void showSmallNotification(String title, String message, Long time) {
+//        PendingIntent resultPendingIntent =
+//                PendingIntent.getActivity(
+//                        mCtx,
+//                        ID_SMALL_NOTIFICATION,
+//                        intent,
+//                        PendingIntent.FLAG_UPDATE_CURRENT
+//                );
+//
+//        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx);
+//        Notification notification;
+//        notification = mBuilder.setSmallIcon(R.drawable.mance).setTicker("Muara Enim Center").setWhen(0)
+//                .setAutoCancel(true)
+//                .setContentIntent(resultPendingIntent)
+//                .setContentTitle("Muara Enim Center")
+//                .setWhen(time)
+//                .setSmallIcon(R.drawable.mance)
+//                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.mance))
+//                .setContentText("Muara Enim Center")
+//                .setSound(defaultSoundUri)
+//                .build();
+//
 //        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 //
 //        NotificationManager notificationManager = (NotificationManager) mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
 //        Objects.requireNonNull(notificationManager).notify(ID_SMALL_NOTIFICATION, notification);
 
+        createNotificationSmall(mCtx, title, message, time);
     }
 
     //the method will show a big notification with an imageerror
     //parameters are title for message title, message for message text, url of the big imageerror and an intent that will open
     //when you will tap on the notification
-    void showBigNotification(String title, String message, String url, Intent intent) {
-        PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        mCtx,
-                        ID_BIG_NOTIFICATION,
-                        intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-
-        if (notifManager == null) {
-            notifManager = (NotificationManager)mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            assert notifManager != null;
-            NotificationChannel mChannel = notifManager.getNotificationChannel("2");
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            if (mChannel == null) {
-                mChannel = new NotificationChannel("2", title, importance);
-                mChannel.enableVibration(true);
-                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                notifManager.createNotificationChannel(mChannel);
-            }
-        }
-
-        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
-        bigPictureStyle.setBigContentTitle(title);
-        bigPictureStyle.setSummaryText(Html.fromHtml(message).toString());
-        bigPictureStyle.bigPicture(getBitmapFromURL(url));
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx, "2");
-        Notification notification;
-        notification = mBuilder.setSmallIcon(R.drawable.mance).setTicker(title).setWhen(0)
-                .setAutoCancel(true)
-                .setContentIntent(resultPendingIntent)
-                .setContentTitle(title)
-                .setStyle(bigPictureStyle)
-                .setSmallIcon(R.drawable.mance)
-                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.mance))
-                .setContentText(message)
-                .build();
-
-        notifManager.notify(ID_BIG_NOTIFICATION, notification);
-
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    void showBigNotification(String title, String message, String url) {
+//        PendingIntent resultPendingIntent =
+//                PendingIntent.getActivity(
+//                        mCtx,
+//                        ID_BIG_NOTIFICATION,
+//                        intent,
+//                        PendingIntent.FLAG_UPDATE_CURRENT
+//                );
+//        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+//        bigPictureStyle.setBigContentTitle(title);
+//        bigPictureStyle.setSummaryText(Html.fromHtml(message).toString());
+//        bigPictureStyle.bigPicture(getBitmapFromURL(url));
+//        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx);
+//        Notification notification;
+//        notification = mBuilder.setSmallIcon(R.drawable.mance).setTicker(title).setWhen(0)
+//                .setAutoCancel(true)
+//                .setContentIntent(resultPendingIntent)
+//                .setContentTitle(title)
+//                .setStyle(bigPictureStyle)
+//                .setSmallIcon(R.drawable.mance)
+//                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.mance))
+//                .setContentText(message)
+//                .build();
+//
 //        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 //
 //        NotificationManager notificationManager = (NotificationManager) mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
 //        notificationManager.notify(ID_BIG_NOTIFICATION, notification);
+        createNotificationbig(mCtx, title, message, url);
     }
 
     //The method will return Bitmap from an imageerror URL
@@ -151,11 +120,140 @@ class MyNotificationManager {
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
+            return BitmapFactory.decodeStream(input);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void createNotificationSmall(Context context, String title, String message, Long time) {
+        final int NOTIFY_ID = 0;
+        String id = "1";
+        PendingIntent pendingIntent;
+        NotificationCompat.Builder builder;
+        if (notifManager == null) {
+            notifManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = Objects.requireNonNull(notifManager).getNotificationChannel(id);
+            if (mChannel == null) {
+                mChannel = new NotificationChannel(id, title, importance);
+                mChannel.enableVibration(true);
+                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                notifManager.createNotificationChannel(mChannel);
+            }
+            builder = new NotificationCompat.Builder(context, id);
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(
+                    context,
+                    ID_SMALL_NOTIFICATION,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            builder.setContentTitle(title)
+                    .setSmallIcon(R.drawable.mance)
+                    .setContentText(message)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setSound(defaultSoundUri)
+                    .setAutoCancel(true)
+                    .setWhen(time)
+                    .setContentIntent(pendingIntent)
+                    .setTicker(message)
+                    .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.mance))
+                    .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+
+        } else {
+            builder = new NotificationCompat.Builder(context, id);
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+            builder.setContentTitle(title)
+                    .setSmallIcon(R.drawable.mance)
+                    .setContentText(message)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setSound(defaultSoundUri)
+                    .setAutoCancel(true)
+                    .setWhen(time)
+                    .setContentIntent(pendingIntent)
+                    .setTicker(message)
+                    .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
+                    .setPriority(Notification.PRIORITY_HIGH);
+        }
+        Notification notification = builder.build();
+        notifManager.notify(NOTIFY_ID, notification);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void createNotificationbig(Context context, String title, String message, String url) {
+        final int NOTIFY_ID = 0;
+        String id = "1";
+        PendingIntent pendingIntent;
+        NotificationCompat.Builder builder;
+        if (notifManager == null) {
+            notifManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+        bigPictureStyle.setBigContentTitle(title);
+        bigPictureStyle.setSummaryText(Html.fromHtml(message).toString());
+        bigPictureStyle.bigPicture(getBitmapFromURL(url));
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = Objects.requireNonNull(notifManager).getNotificationChannel(id);
+            if (mChannel == null) {
+                mChannel = new NotificationChannel(id, title, importance);
+                mChannel.enableVibration(true);
+                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                notifManager.createNotificationChannel(mChannel);
+            }
+            builder = new NotificationCompat.Builder(context, id);
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(
+                    context,
+                    ID_BIG_NOTIFICATION,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            builder.setContentTitle(title)
+                    .setSmallIcon(R.drawable.mance)
+                    .setContentText(message)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setSound(defaultSoundUri)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setTicker(message)
+                    .setStyle(bigPictureStyle)
+                    .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.mance))
+                    .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+        } else {
+            builder = new NotificationCompat.Builder(context, id);
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            pendingIntent = PendingIntent.getActivity(
+                    context,
+                    ID_BIG_NOTIFICATION,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            builder.setContentTitle(title)
+                    .setSmallIcon(R.drawable.mance)
+                    .setContentText(message)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setSound(defaultSoundUri)
+                    .setAutoCancel(true)
+                    .setContentIntent(pendingIntent)
+                    .setTicker(message)
+                    .setStyle(bigPictureStyle)
+                    .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
+                    .setPriority(Notification.PRIORITY_HIGH);
+        }
+        Notification notification = builder.build();
+        notifManager.notify(NOTIFY_ID, notification);
     }
 }
