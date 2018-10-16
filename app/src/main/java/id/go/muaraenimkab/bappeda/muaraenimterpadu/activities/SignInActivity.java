@@ -54,7 +54,7 @@ public class SignInActivity extends AppCompatActivity {
         etPass = findViewById(R.id.etPass);
         button = findViewById(R.id.button);
         tvDaftar = findViewById(R.id.textView4);
-        lupakatasandi= findViewById(R.id.lupakatasandi);
+//        lupakatasandi= findViewById(R.id.lupakatasandi);
         lysignin=findViewById(R.id.lysignin);
 
         ProfilFragment.flagback = true;
@@ -85,12 +85,12 @@ public class SignInActivity extends AppCompatActivity {
                 Utilities.hideKeyboard(SignInActivity.this);
             }
         });
-        lupakatasandi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        lupakatasandi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
     }
 
     private void signin() {
