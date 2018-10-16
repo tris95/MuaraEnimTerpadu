@@ -40,7 +40,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SignInActivity extends AppCompatActivity {
     EditText etEmail, etPass;
     Button button;
-    TextView tvDaftar;
+    TextView tvDaftar,lupakatasandi;
     RelativeLayout lysignin;
     public static boolean flagsignin;
 
@@ -54,6 +54,7 @@ public class SignInActivity extends AppCompatActivity {
         etPass = findViewById(R.id.etPass);
         button = findViewById(R.id.button);
         tvDaftar = findViewById(R.id.textView4);
+        lupakatasandi= findViewById(R.id.lupakatasandi);
         lysignin=findViewById(R.id.lysignin);
 
         ProfilFragment.flagback = true;
@@ -82,6 +83,12 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Utilities.hideKeyboard(SignInActivity.this);
+            }
+        });
+        lupakatasandi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

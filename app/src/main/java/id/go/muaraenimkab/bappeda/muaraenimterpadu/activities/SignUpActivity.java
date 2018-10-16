@@ -11,14 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
@@ -32,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SignUpActivity extends AppCompatActivity {
     Button btnDaftar;
     EditText etNama, etNoKtp, etNoHp, etEmail, etAlamat, etPassword;
+    RelativeLayout lysignup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,27 +44,82 @@ public class SignUpActivity extends AppCompatActivity {
         etNoHp = findViewById(R.id.etNoHp);
         etNoKtp = findViewById(R.id.etNoKtp);
         etPassword = findViewById(R.id.etPass);
+        lysignup= findViewById(R.id.lysignup);
 
         btnDaftar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
-                if (etEmail.getText().toString().isEmpty()){
+                if (etEmail.getText().toString().isEmpty()) {
                     etEmail.setError("Silahkan isi alamat email Anda");
-                }else if (etPassword.getText().toString().isEmpty()){
+                } else if (etPassword.getText().toString().isEmpty()) {
                     etPassword.setError("Silahkan isi password Anda");
-                }else if (etNama.getText().toString().isEmpty()){
+                } else if (etNama.getText().toString().isEmpty()) {
                     etNama.setError("Silahkan isi nama Anda");
-                }else if (etNoKtp.getText().toString().isEmpty()){
+                } else if (etNoKtp.getText().toString().isEmpty()) {
                     etNoKtp.setError("Silahkan isi nomor KTP Anda");
-                }else if (etNoHp.getText().toString().isEmpty()){
+                } else if (etNoHp.getText().toString().isEmpty()) {
                     etNoHp.setError("Silahkan isi nomor HP Anda");
-                }else if (etAlamat.getText().toString().isEmpty()){
+                } else if (etAlamat.getText().toString().isEmpty()) {
                     etAlamat.setError("Silahkan isi alamat Anda");
-                }else {
-                    signup();
+                } else {
+                    ceknik();
                 }
             }
         });
+        lysignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utilities.hideKeyboard(SignUpActivity.this);
+            }
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void ceknik() {
+        if(etNoKtp.getText().length()==16) {
+            String random = Utilities.getRandom(5);
+
+            OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Utilities.getBaseURLUser())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(okHttpClient)
+                    .build();
+
+            APIServices api = retrofit.create(APIServices.class);
+            Call<ValueAdd> call = api.ceknik(random, etNoKtp.getText().toString().trim());
+            call.enqueue(new Callback<ValueAdd>() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
+                    if (response.body() != null) {
+                        int success = Objects.requireNonNull(response.body()).getSuccess();
+                        if (success == 1) {
+                            signup();
+                        } else if (success == 2) {
+                            Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "NIK Sudah terdaftar",
+                                    Snackbar.LENGTH_LONG).show();
+                        } else {
+                            Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal menyimpan data. Silahkan coba lagi",
+                                    Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onFailure(@NonNull Call<ValueAdd> call, @NonNull Throwable t) {
+                    System.out.println("Retrofit Error:" + t.getMessage());
+                    Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
+                            Snackbar.LENGTH_LONG).show();
+                }
+            });
+        }else {
+            Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "NIK Tidak Sesuai",
+                    Snackbar.LENGTH_LONG).show();
+        }
     }
 
     private void signup() {
@@ -103,10 +158,10 @@ public class SignUpActivity extends AppCompatActivity {
                                 finish();
                             }
                         }, 3500);
-                    } else  if (success == 2) {
+                    } else if (success == 2) {
                         Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Alamat email sudah terdaftar. Silahkan masuk aplikasi",
                                 Snackbar.LENGTH_LONG).show();
-                    } else{
+                    } else {
                         Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal menyimpan data. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
                     }

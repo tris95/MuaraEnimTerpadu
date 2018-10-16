@@ -7,11 +7,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        tools:ignore="UselessParent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="30dp">
+            android:padding="30dp"
+            android:id="@+id/lysignup">
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="180dp"
@@ -20,7 +22,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/mance" />
+                android:src="@drawable/mance"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -135,6 +138,7 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
+                            android:maxLength="16"
                             android:backgroundTint="@color/colorDefault"
                             android:hint="Nomor KTP"
                             android:inputType="number"

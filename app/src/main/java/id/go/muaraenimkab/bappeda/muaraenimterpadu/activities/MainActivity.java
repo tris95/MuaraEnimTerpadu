@@ -1,25 +1,34 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.EventFragment;
@@ -37,11 +46,20 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Opd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     Fragment fragment;
     public static int flag2,flag3;
+    String idp;
     static Fragment lastFragment, lastFragment2,lastFragment3;
     static FragmentManager fragmentManager;
     @SuppressLint("StaticFieldLeak")
@@ -67,12 +85,18 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    };
 
+    @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{
+                    Manifest.permission.READ_PHONE_STATE}, 1);
+        }
+        cekIDP();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
 
@@ -196,5 +220,70 @@ public class MainActivity extends AppCompatActivity {
         Back();
         return true;
     }
+    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(MainActivity.this),
+                            Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+                    } else {
+                        cekIDP();
+                    }
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+                }
+            }
+        }
+    }
 
+    @SuppressLint("HardwareIds")
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void cekIDP() {
+//        TelephonyManager telephonyManager = (TelephonyManager) Objects.requireNonNull(getContext()).getSystemService(Context.TELEPHONY_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(MainActivity.this), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
+        idp = Settings.Secure.getString(Objects.requireNonNull(MainActivity.this).getContentResolver(), Settings.Secure.ANDROID_ID);
+
+        if (!idp.equals("")) {
+            String random = Utilities.getRandom(5);
+
+            OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Utilities.getBaseURLUser())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(okHttpClient)
+                    .build();
+
+            APIServices api = retrofit.create(APIServices.class);
+            Call<ValueAdd> call = api.setperangkat(random, idp, Utilities.getToken());
+            call.enqueue(new Callback<ValueAdd>() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
+
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onFailure(@NonNull Call<ValueAdd> call, @NonNull Throwable t) {
+                    System.out.println("Retrofit Error:" + t.getMessage());
+                }
+            });
+        }
+    }
 }

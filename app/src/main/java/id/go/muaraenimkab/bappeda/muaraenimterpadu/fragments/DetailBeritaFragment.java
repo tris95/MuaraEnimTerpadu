@@ -60,7 +60,7 @@ public class DetailBeritaFragment extends Fragment {
     ArrayList<Berita> mListBerita;
     RelativeLayout rl, rlket;
     LinearLayout llsuka;
-    String ime = "", tanda = "0";
+    String idp = "", tanda = "0";
 
     public DetailBeritaFragment() {
         // Required empty public constructor
@@ -135,7 +135,7 @@ public class DetailBeritaFragment extends Fragment {
         }
         if (HomeFragment.mListisiBerita.size() != 0) {
             cekLike();
-            cekIME();
+            cekIDP();
 
             lblJudulBerita.setText(judulberita);
             lbltanggalBerita.setText(tanggalberita);
@@ -153,9 +153,9 @@ public class DetailBeritaFragment extends Fragment {
         } else {
             if (Utilities.getUser(getContext()).getId_user() != null) {
                 cekLike();
-                cekIME();
+                cekIDP();
             } else
-                cekIME();
+                cekIDP();
             getisiBerita();
         }
         llsuka.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +180,7 @@ public class DetailBeritaFragment extends Fragment {
         tv_cobalagi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cekIME();
+                cekIDP();
             }
         });
 
@@ -310,7 +310,7 @@ public class DetailBeritaFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("HardwareIds")
-    private void cekIME() {
+    private void cekIDP() {
 //        TelephonyManager telephonyManager = (TelephonyManager) Objects.requireNonNull(getContext()).getSystemService(Context.TELEPHONY_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
@@ -324,9 +324,9 @@ public class DetailBeritaFragment extends Fragment {
             return;
         }
         //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
-        ime = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
+        idp = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        if (!ime.equals("")) {
+        if (!idp.equals("")) {
             String random = Utilities.getRandom(5);
 
             OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
@@ -338,7 +338,7 @@ public class DetailBeritaFragment extends Fragment {
                     .build();
 
             APIServices api = retrofit.create(APIServices.class);
-            Call<ValueAdd> call = api.cekime(random, ime, idberita);
+            Call<ValueAdd> call = api.cekime(random, idp, idberita);
             call.enqueue(new Callback<ValueAdd>() {
                 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
@@ -396,7 +396,7 @@ public class DetailBeritaFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<ValueAdd> call = api.setDataView(random, ime, idberita);
+        Call<ValueAdd> call = api.setDataView(random, idp, idberita);
         call.enqueue(new Callback<ValueAdd>() {
             @Override
             public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
@@ -477,7 +477,7 @@ public class DetailBeritaFragment extends Fragment {
                             Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                         requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
                     } else {
-                        cekIME();
+                        cekIDP();
                     }
                 } else {
                     requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);

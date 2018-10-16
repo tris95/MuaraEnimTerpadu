@@ -101,6 +101,13 @@
                     android:textColor="@android:color/white"
                     android:textAllCaps="false"
                     android:background="@drawable/button_background" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/lupakatasandi"
+                    android:text="Lupa Kata Sandi ? "
+                    android:textColor="@android:color/holo_red_dark" />
             </LinearLayout>
         </RelativeLayout>
 

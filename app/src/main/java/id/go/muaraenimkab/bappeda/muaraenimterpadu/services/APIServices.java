@@ -142,8 +142,8 @@ public interface APIServices {
     @FormUrlEncoded
     @POST("ceklike.php")
     Call<ValueAdd> ceklike(@Field("xkey") String xkey,
-                          @Field("iduser") String iduser,
-                          @Field("idberita") String idberita);
+                           @Field("iduser") String iduser,
+                           @Field("idberita") String idberita);
 
     @FormUrlEncoded
     @POST("setdataview.php")
@@ -161,10 +161,21 @@ public interface APIServices {
     @FormUrlEncoded
     @POST("logout.php")
     Call<ValueAdd> signout(@Field("xkey") String xkey,
-                          @Field("email") String email);
+                           @Field("email") String email);
 
     @FormUrlEncoded
     @POST("setlogin.php")
     Call<ValueAdd> setlogindb(@Field("xkey") String xkey,
-                           @Field("email") String email);
+                              @Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("ceknik.php")
+    Call<ValueAdd> ceknik(@Field("xkey") String xkey,
+                          @Field("nik") String nik);
+
+    @FormUrlEncoded
+    @POST("setperangkat.php")
+    Call<ValueAdd> setperangkat(@Field("xkey") String xkey,
+                                @Field("perangkat") String perangkat,
+                                @Field("token") String token);
 }
