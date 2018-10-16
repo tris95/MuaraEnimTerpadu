@@ -28,9 +28,9 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 /**
  * Created by Tris on 4/5/2018.
  */
-public class MyNotificationManager {
+class MyNotificationManager {
 
-    public static final int ID_BIG_NOTIFICATION = 234;
+    private static final int ID_BIG_NOTIFICATION = 234;
 
     private static final int ID_SMALL_NOTIFICATION = 235;
 
@@ -46,41 +46,56 @@ public class MyNotificationManager {
     //parameters are title for message title, message for message text and an intent that will open
     //when you will tap on the notification
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void showSmallNotification(String title, String message, Long time, Intent intent) {
-//        PendingIntent resultPendingIntent =
-//                PendingIntent.getActivity(
-//                        mCtx,
-//                        ID_SMALL_NOTIFICATION,
-//                        intent,
-//                        PendingIntent.FLAG_UPDATE_CURRENT
-//                );
-//
-//        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx);
-//        Notification notification;
-//        notification = mBuilder.setSmallIcon(R.drawable.mance).setTicker("Muara Enim Center").setWhen(0)
-//                .setAutoCancel(true)
-//                .setContentIntent(resultPendingIntent)
-//                .setContentTitle("Muara Enim Center")
-//                .setWhen(time)
-//                .setSmallIcon(R.drawable.mance)
-//                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.mance))
-//                .setContentText("Muara Enim Center")
-//                .setSound(defaultSoundUri)
-//                .build();
-//
+    void showSmallNotification(String title, String message, Long time, Intent intent) {
+        PendingIntent resultPendingIntent =
+                PendingIntent.getActivity(
+                        mCtx,
+                        ID_SMALL_NOTIFICATION,
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+
+        if (notifManager == null) {
+            notifManager = (NotificationManager)mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            assert notifManager != null;
+            NotificationChannel mChannel = notifManager.getNotificationChannel("1");
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            if (mChannel == null) {
+                mChannel = new NotificationChannel("1", title, importance);
+                mChannel.enableVibration(true);
+                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                notifManager.createNotificationChannel(mChannel);
+            }
+        }
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx, "1");
+        Notification notification;
+        notification = mBuilder.setSmallIcon(R.drawable.mance).setTicker(title).setWhen(0)
+                .setAutoCancel(true)
+                .setContentIntent(resultPendingIntent)
+                .setContentTitle(title)
+                .setWhen(time)
+                .setSmallIcon(R.drawable.mance)
+                .setLargeIcon(BitmapFactory.decodeResource(mCtx.getResources(), R.drawable.mance))
+                .setContentText(message)
+                .setSound(defaultSoundUri)
+                .build();
+
+        notifManager.notify(ID_SMALL_NOTIFICATION, notification);
+
 //        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 //
 //        NotificationManager notificationManager = (NotificationManager) mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
 //        Objects.requireNonNull(notificationManager).notify(ID_SMALL_NOTIFICATION, notification);
 
-        createNotification(message, mCtx);
     }
 
     //the method will show a big notification with an imageerror
     //parameters are title for message title, message for message text, url of the big imageerror and an intent that will open
     //when you will tap on the notification
-    public void showBigNotification(String title, String message, String url, Intent intent) {
+    void showBigNotification(String title, String message, String url, Intent intent) {
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
                         mCtx,
@@ -88,11 +103,27 @@ public class MyNotificationManager {
                         intent,
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
+
+        if (notifManager == null) {
+            notifManager = (NotificationManager)mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            assert notifManager != null;
+            NotificationChannel mChannel = notifManager.getNotificationChannel("2");
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            if (mChannel == null) {
+                mChannel = new NotificationChannel("2", title, importance);
+                mChannel.enableVibration(true);
+                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                notifManager.createNotificationChannel(mChannel);
+            }
+        }
+
         NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
         bigPictureStyle.setBigContentTitle(title);
         bigPictureStyle.setSummaryText(Html.fromHtml(message).toString());
         bigPictureStyle.bigPicture(getBitmapFromURL(url));
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mCtx, "2");
         Notification notification;
         notification = mBuilder.setSmallIcon(R.drawable.mance).setTicker(title).setWhen(0)
                 .setAutoCancel(true)
@@ -104,10 +135,12 @@ public class MyNotificationManager {
                 .setContentText(message)
                 .build();
 
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notifManager.notify(ID_BIG_NOTIFICATION, notification);
 
-        NotificationManager notificationManager = (NotificationManager) mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(ID_BIG_NOTIFICATION, notification);
+//        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+//
+//        NotificationManager notificationManager = (NotificationManager) mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify(ID_BIG_NOTIFICATION, notification);
     }
 
     //The method will return Bitmap from an imageerror URL
@@ -124,56 +157,5 @@ public class MyNotificationManager {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public void createNotification(String aMessage, Context context) {
-        final int NOTIFY_ID = 0; // ID of notification
-        String id = "Boo"; // default_channel_id
-        String title = "Tes"; // Default Channel
-        Intent intent;
-        PendingIntent pendingIntent;
-        NotificationCompat.Builder builder;
-        if (notifManager == null) {
-            notifManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel mChannel = notifManager.getNotificationChannel(id);
-            if (mChannel == null) {
-                mChannel = new NotificationChannel(id, title, importance);
-                mChannel.enableVibration(true);
-                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                notifManager.createNotificationChannel(mChannel);
-            }
-            builder = new NotificationCompat.Builder(context, id);
-            intent = new Intent(context, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            builder.setContentTitle(aMessage)                            // required
-                    .setSmallIcon(android.R.drawable.ic_popup_reminder)   // required
-                    .setContentText(context.getString(R.string.app_name)) // required
-                    .setDefaults(Notification.DEFAULT_ALL)
-                    .setAutoCancel(true)
-                    .setContentIntent(pendingIntent)
-                    .setTicker(aMessage)
-                    .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-        }
-        else {
-            builder = new NotificationCompat.Builder(context, id);
-            intent = new Intent(context, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            builder.setContentTitle(aMessage)                            // required
-                    .setSmallIcon(android.R.drawable.ic_popup_reminder)   // required
-                    .setContentText(context.getString(R.string.app_name)) // required
-                    .setDefaults(Notification.DEFAULT_ALL)
-                    .setAutoCancel(true)
-                    .setContentIntent(pendingIntent)
-                    .setTicker(aMessage)
-                    .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
-                    .setPriority(Notification.PRIORITY_HIGH);
-        }
-        Notification notification = builder.build();
-        notifManager.notify(NOTIFY_ID, notification);
     }
 }

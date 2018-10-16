@@ -35,7 +35,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if (remoteMessage.getData().size() > 0) {
-            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
+//            Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
             try {
                 JSONObject json = new JSONObject(remoteMessage.getData().toString());
                 sendPushNotification(json);
@@ -61,7 +61,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             title = data.getString("title");
             message = data.getString("message");
             imageurl = data.getString("imageurl");
-            Log.e("image", imageurl);
+//            Log.e("image", imageurl);
 
             //creating MyNotificationManager object
             mNotificationManager = new MyNotificationManager(getApplicationContext());
