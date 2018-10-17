@@ -25,9 +25,7 @@ import java.util.Objects;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.EventViewAdapter;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.KontakViewAdapter;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Event;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
@@ -40,6 +38,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class EventFragment extends Fragment {
+    private static final String ARG_idevent = "idevent", ARG_flag = "flag";
+    String idevent, flag;
     Toolbar toolbar;
     RecyclerView rvEvent;
     LinearLayoutManager linearLayoutManager;
@@ -48,10 +48,6 @@ public class EventFragment extends Fragment {
     TextView tv_cobalagi;
     SwipeRefreshLayout swipeRefresh;
 
-    public EventFragment() {
-        // Required empty public constructor
-    }
-
     public static EventFragment newInstance() {
         EventFragment fragment = new EventFragment();
         Bundle args = new Bundle();
@@ -59,9 +55,22 @@ public class EventFragment extends Fragment {
         return fragment;
     }
 
+    public static EventFragment newInstance(String idevent, String flag) {
+        EventFragment fragment = new EventFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_idevent, idevent);
+        args.putString(ARG_flag, flag);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            idevent = getArguments().getString(ARG_idevent);
+            flag = getArguments().getString(ARG_flag);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

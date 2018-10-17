@@ -81,15 +81,15 @@ public class LaporanSayaFragment extends Fragment {
         tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
         rView.addItemDecoration(new DividerItemDecoration(rView.getContext(), DividerItemDecoration.VERTICAL));
 
-        if (MainActivity.laporans.size() != 0){
-            linearLayoutManager = new LinearLayoutManager(getContext());
-            rView.setLayoutManager(linearLayoutManager);
-            LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<Laporan>) MainActivity.laporans);
-            rView.setAdapter(laporanViewAdapter);
-        }else {
+//        if (MainActivity.laporans.size() != 0){
+//            linearLayoutManager = new LinearLayoutManager(getContext());
+//            rView.setLayoutManager(linearLayoutManager);
+//            LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<Laporan>) MainActivity.laporans);
+//            rView.setAdapter(laporanViewAdapter);
+//        }else {
             User user = Utilities.getUser(getContext());
             getLaporan(user.getId_user());
-        }
+//        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

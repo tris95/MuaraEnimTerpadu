@@ -40,14 +40,14 @@
         android:gravity="center"
         android:background="@color/colorDivider">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="2dp">
+            android:padding="5dp">
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:visibility="gone"
                 android:background="@color/colorYellow"/>
@@ -62,14 +62,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:gravity="center"
-            android:padding="2dp">
+            android:orientation="vertical"
+            android:padding="5dp">
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@color/colorGreen"
                 android:visibility="gone"/>
@@ -84,14 +84,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:gravity="center"
-            android:padding="2dp">
+            android:orientation="vertical"
+            android:padding="5dp">
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@color/colorRed"
                 android:visibility="gone"/>

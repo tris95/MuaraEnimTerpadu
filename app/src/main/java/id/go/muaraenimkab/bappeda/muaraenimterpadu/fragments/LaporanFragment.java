@@ -29,13 +29,11 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 
 
 public class LaporanFragment extends Fragment {
+    private static final String ARG_idlaporan = "idlaporan", ARG_flag = "flag";
+    String idlaporan, flag;
     TabLayout tabLayout;
     ViewPager mViewPager;
     Toolbar toolbar;
-
-    public LaporanFragment() {
-        // Required empty public constructor
-    }
 
     public static LaporanFragment newInstance() {
         LaporanFragment fragment = new LaporanFragment();
@@ -44,10 +42,22 @@ public class LaporanFragment extends Fragment {
         return fragment;
     }
 
+    public static LaporanFragment newInstance(String idlaporan, String flag) {
+        LaporanFragment fragment = new LaporanFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_idlaporan, idlaporan);
+        args.putString(ARG_flag, flag);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null) {
+            idlaporan = getArguments().getString(ARG_idlaporan);
+            flag = getArguments().getString(ARG_flag);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -63,6 +73,7 @@ public class LaporanFragment extends Fragment {
         }
         tabLayout = v.findViewById(R.id.tabs);
         mViewPager = v.findViewById(R.id.container);
+
         tabLayout.setTabTextColors(Color.parseColor("#E0E0E0"), Color.parseColor("#FFFFFF"));
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         mViewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
@@ -73,6 +84,11 @@ public class LaporanFragment extends Fragment {
                 tabLayout.setupWithViewPager(mViewPager);
             }
         });
+        if (flag != null) {
+            if (flag.equals("3")) {
+                mViewPager.setCurrentItem(1);
+            }
+        }
         Utilities.setLogin(getActivity(),Utilities.getUser(getActivity()).getEmail());
         if (!Utilities.isLogin(getContext())) {
             startActivity(new Intent(getContext(), SignInActivity.class));

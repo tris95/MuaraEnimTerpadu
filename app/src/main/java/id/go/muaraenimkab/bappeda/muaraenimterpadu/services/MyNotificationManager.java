@@ -46,7 +46,7 @@ class MyNotificationManager {
     //parameters are title for message title, message for message text and an intent that will open
     //when you will tap on the notification
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    void showSmallNotification(String title, String message, Long time) {
+    void showSmallNotification(String title, String message, Long time,String flag,String id) {
 //        PendingIntent resultPendingIntent =
 //                PendingIntent.getActivity(
 //                        mCtx,
@@ -74,14 +74,14 @@ class MyNotificationManager {
 //        NotificationManager notificationManager = (NotificationManager) mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
 //        Objects.requireNonNull(notificationManager).notify(ID_SMALL_NOTIFICATION, notification);
 
-        createNotificationSmall(mCtx, title, message, time);
+        createNotificationSmall(mCtx, title, message, time,flag,id);
     }
 
     //the method will show a big notification with an imageerror
     //parameters are title for message title, message for message text, url of the big imageerror and an intent that will open
     //when you will tap on the notification
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    void showBigNotification(String title, String message, String url) {
+    void showBigNotification(String title, String message, String url,String flag,String id) {
 //        PendingIntent resultPendingIntent =
 //                PendingIntent.getActivity(
 //                        mCtx,
@@ -109,7 +109,7 @@ class MyNotificationManager {
 //
 //        NotificationManager notificationManager = (NotificationManager) mCtx.getSystemService(Context.NOTIFICATION_SERVICE);
 //        notificationManager.notify(ID_BIG_NOTIFICATION, notification);
-        createNotificationbig(mCtx, title, message, url);
+        createNotificationbig(mCtx, title, message, url,flag,id);
     }
 
     //The method will return Bitmap from an imageerror URL
@@ -128,11 +128,16 @@ class MyNotificationManager {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void createNotificationSmall(Context context, String title, String message, Long time) {
+    private void createNotificationSmall(Context context, String title, String message, Long time,String flag,String idberita) {
         final int NOTIFY_ID = 0;
         String id = "1";
         PendingIntent pendingIntent;
         NotificationCompat.Builder builder;
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("flag",flag);
+        intent.putExtra("id",idberita);
+
         if (notifManager == null) {
             notifManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         }
@@ -147,8 +152,7 @@ class MyNotificationManager {
                 notifManager.createNotificationChannel(mChannel);
             }
             builder = new NotificationCompat.Builder(context, id);
-            Intent intent = new Intent(context, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             pendingIntent = PendingIntent.getActivity(
                     context,
                     ID_SMALL_NOTIFICATION,
@@ -169,8 +173,7 @@ class MyNotificationManager {
 
         } else {
             builder = new NotificationCompat.Builder(context, id);
-            Intent intent = new Intent(context, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             pendingIntent = PendingIntent.getActivity(
                     context,
                     ID_SMALL_NOTIFICATION,
@@ -194,11 +197,16 @@ class MyNotificationManager {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void createNotificationbig(Context context, String title, String message, String url) {
+    private void createNotificationbig(Context context, String title, String message, String url,String flag,String idberita) {
         final int NOTIFY_ID = 0;
         String id = "1";
         PendingIntent pendingIntent;
         NotificationCompat.Builder builder;
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("flag",flag);
+        intent.putExtra("id",idberita);
+
         if (notifManager == null) {
             notifManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         }
@@ -217,8 +225,7 @@ class MyNotificationManager {
                 notifManager.createNotificationChannel(mChannel);
             }
             builder = new NotificationCompat.Builder(context, id);
-            Intent intent = new Intent(context, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             pendingIntent = PendingIntent.getActivity(
                     context,
                     ID_BIG_NOTIFICATION,
@@ -238,8 +245,7 @@ class MyNotificationManager {
                     .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
         } else {
             builder = new NotificationCompat.Builder(context, id);
-            Intent intent = new Intent(context, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             pendingIntent = PendingIntent.getActivity(
                     context,
                     ID_BIG_NOTIFICATION,

@@ -178,4 +178,9 @@ public interface APIServices {
     Call<ValueAdd> setperangkat(@Field("xkey") String xkey,
                                 @Field("perangkat") String perangkat,
                                 @Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("getberitanotif.php")
+    Call<Value<Berita>> getBeritanotif(@Field("xkey") String xkey,
+                                       @Field("idberita") String idberita);
 }

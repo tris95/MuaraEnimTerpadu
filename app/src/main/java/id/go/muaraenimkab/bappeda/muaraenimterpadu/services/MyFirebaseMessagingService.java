@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
-    public static String title, message, imageurl;
+    public static String title, message, imageurl,flag,id;
     MyNotificationManager mNotificationManager;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -61,14 +61,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             title = data.getString("title");
             message = data.getString("message");
             imageurl = data.getString("imageurl");
+            flag = data.getString("flag");
+            id = data.getString("id");
 //            Log.e("image", imageurl);
 
             //creating MyNotificationManager object
             mNotificationManager = new MyNotificationManager(getApplicationContext());
             if (imageurl.isEmpty()) {
-                mNotificationManager.showSmallNotification(title, message, tsLong);
+                mNotificationManager.showSmallNotification(title, message, tsLong,flag,id);
             } else{
-                mNotificationManager.showBigNotification(title, message, imageurl);
+                mNotificationManager.showBigNotification(title, message, imageurl,flag,id);
             }
 
             //creating an intent for the notification --> bottom

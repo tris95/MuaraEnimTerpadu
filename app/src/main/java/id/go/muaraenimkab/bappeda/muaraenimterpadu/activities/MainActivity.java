@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.DetailBeritaFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.EventFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.HomeFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.KontakFragment;
@@ -96,14 +97,36 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(new String[]{
                     Manifest.permission.READ_PHONE_STATE}, 1);
         }
-        cekIDP();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
 
-        fragment = HomeFragment.newInstance();
-        currentFragment = 0;
-        nowFragment = 0;
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        cekIDP();
+
+        if (getIntent().getStringExtra("flag")!=null){
+            if (getIntent().getStringExtra("flag").equals("5")){
+                fragment = DetailBeritaFragment.newInstance(getIntent().getStringExtra("id"),"5");
+                currentFragment = 0;
+                nowFragment = 0;
+                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+            }
+            else if (getIntent().getStringExtra("flag").equals("2")){
+                fragment = EventFragment.newInstance(getIntent().getStringExtra("id"),"2");
+                currentFragment = 0;
+                nowFragment = 0;
+                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+            }
+            else if (getIntent().getStringExtra("flag").equals("3")){
+                fragment = LaporanFragment.newInstance(getIntent().getStringExtra("id"),"3");
+                currentFragment = 0;
+                nowFragment = 0;
+                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+            }
+        }else {
+            fragment = HomeFragment.newInstance();
+            currentFragment = 0;
+            nowFragment = 0;
+            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        }
 
         bottomNavigationView.enableAnimation(true);
         bottomNavigationView.enableShiftingMode(false);

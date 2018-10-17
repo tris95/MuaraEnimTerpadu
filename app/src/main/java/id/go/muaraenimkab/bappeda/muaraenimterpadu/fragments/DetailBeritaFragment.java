@@ -51,13 +51,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailBeritaFragment extends Fragment {
     private static final String ARG_idberita = "idberita", ARG_judulberita = "judulberita", ARG_tanggalberita = "tanggalberita",
-            ARG_likeberita = "likeberita", ARG_viewberita = "viewberita", ARG_gambar = "gambar";
-    String idberita, judulberita, tanggalberita, likeberita, viewberita, gambar;
+            ARG_likeberita = "likeberita", ARG_viewberita = "viewberita", ARG_gambar = "gambar", ARG_flag = "flag";
+    String idberita, judulberita, tanggalberita, likeberita, viewberita, gambar, flag;
     Toolbar toolbar;
     TextView tv_cobalagi, lblLikeUnlike, lblJudulBerita, lbltanggalBerita, lblLikeBerita, lblViewBerita;
     DocumentView lblIsiBerita;
     ImageView imgDetaiBerita, imglikeunlike;
     ArrayList<Berita> mListBerita;
+    ArrayList<Berita> mListBerita1;
     RelativeLayout rl, rlket;
     LinearLayout llsuka;
     String idp = "", tanda = "0";
@@ -80,6 +81,15 @@ public class DetailBeritaFragment extends Fragment {
         return fragment;
     }
 
+    public static DetailBeritaFragment newInstance(String idberita, String flag) {
+        DetailBeritaFragment fragment = new DetailBeritaFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_idberita, idberita);
+        args.putString(ARG_flag, flag);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +100,7 @@ public class DetailBeritaFragment extends Fragment {
             likeberita = getArguments().getString(ARG_likeberita);
             viewberita = getArguments().getString(ARG_viewberita);
             gambar = getArguments().getString(ARG_gambar);
+            flag = getArguments().getString(ARG_flag);
         }
     }
 
@@ -133,30 +144,41 @@ public class DetailBeritaFragment extends Fragment {
             requestPermissions(new String[]{
                     Manifest.permission.READ_PHONE_STATE}, 1);
         }
-        if (HomeFragment.mListisiBerita.size() != 0) {
-            cekLike();
-            cekIDP();
 
-            lblJudulBerita.setText(judulberita);
-            lbltanggalBerita.setText(tanggalberita);
-            lblLikeBerita.setText(likeberita);
-            lblViewBerita.setText(viewberita);
-
-            Picasso.with(getContext())
-                    .load(gambar)
-                    .into(imgDetaiBerita);
-
-            lblIsiBerita.setText(HomeFragment.mListisiBerita.get(0).getIsi_berita());
-
-            lblLikeUnlike.setVisibility(View.VISIBLE);
-            rlket.setVisibility(View.VISIBLE);
-        } else {
-            if (Utilities.getUser(getContext()).getId_user() != null) {
+        if (flag != null) {
+            if (flag.equals("5")) {
                 cekLike();
                 cekIDP();
-            } else
+                getBerita();
+                getisiBerita();
+            }
+        }
+        else {
+            if (HomeFragment.mListisiBerita.size() != 0) {
+                cekLike();
                 cekIDP();
-            getisiBerita();
+
+                lblJudulBerita.setText(judulberita);
+                lbltanggalBerita.setText(tanggalberita);
+                lblLikeBerita.setText(likeberita);
+                lblViewBerita.setText(viewberita);
+
+                Picasso.with(getContext())
+                        .load(gambar)
+                        .into(imgDetaiBerita);
+
+                lblIsiBerita.setText(HomeFragment.mListisiBerita.get(0).getIsi_berita());
+
+                lblLikeUnlike.setVisibility(View.VISIBLE);
+                rlket.setVisibility(View.VISIBLE);
+            } else {
+                if (Utilities.getUser(getContext()).getId_user() != null) {
+                    cekLike();
+                    cekIDP();
+                } else
+                    cekIDP();
+                getisiBerita();
+            }
         }
         llsuka.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,8 +235,8 @@ public class DetailBeritaFragment extends Fragment {
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
-                        mListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
-                        HomeFragment.mListisiBerita=mListBerita;
+                        mListBerita1 = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
+                        HomeFragment.mListisiBerita = mListBerita1;
 
                         lblJudulBerita.setText(judulberita);
                         lbltanggalBerita.setText(tanggalberita);
@@ -225,8 +247,7 @@ public class DetailBeritaFragment extends Fragment {
                                 .load(gambar)
                                 .into(imgDetaiBerita);
 
-                        lblIsiBerita.setText(mListBerita.get(0).getIsi_berita());
-                        //lblIsiBerita.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/51);
+                        lblIsiBerita.setText(mListBerita1.get(0).getIsi_berita());
 
                         rl.setVisibility(View.GONE);
                         lblLikeUnlike.setVisibility(View.VISIBLE);
@@ -484,6 +505,58 @@ public class DetailBeritaFragment extends Fragment {
                 }
             }
         }
+    }
+
+    private void getBerita() {
+
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<Value<Berita>> call = api.getBeritanotif(random,idberita);
+        call.enqueue(new Callback<Value<Berita>>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NonNull Call<Value<Berita>> call, @NonNull Response<Value<Berita>> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        mListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
+
+                        judulberita = mListBerita.get(0).getJudul_berita();
+                        tanggalberita = mListBerita.get(0).getTanggal_post();
+                        likeberita = mListBerita.get(0).getJumlahlike();
+                        viewberita = mListBerita.get(0).getJumlahview();
+                        gambar = Utilities.getURLImageBerita() + mListBerita.get(0).getGambar_berita();
+
+                    } else {
+                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+                                Snackbar.LENGTH_LONG).show();
+                        rl.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+                            Snackbar.LENGTH_LONG).show();
+                    rl.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<Value<Berita>> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
+                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
+                        Snackbar.LENGTH_LONG).show();
+                rl.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }
 
