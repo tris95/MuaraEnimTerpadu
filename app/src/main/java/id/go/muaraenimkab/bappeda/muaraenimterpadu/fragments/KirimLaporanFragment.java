@@ -2,9 +2,9 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,35 +17,22 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import com.github.siyamed.shapeimageview.CircularImageView;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.ui.PlacePicker;
-import com.gun0912.tedpermission.TedPermissionResult;
-import com.tedpark.tedpermission.rx2.TedRx2Permission;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -61,16 +48,12 @@ import java.util.Objects;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignInActivity;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters.EventViewAdapter;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Event;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Opd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
-import io.reactivex.disposables.Disposable;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,10 +70,6 @@ public class KirimLaporanFragment extends Fragment {
     Spinner spOpd;
     List<String> idOpd = new ArrayList<>();
 
-    public KirimLaporanFragment() {
-        // Required empty public constructor
-    }
-
     public static KirimLaporanFragment newInstance() {
         KirimLaporanFragment fragment = new KirimLaporanFragment();
         Bundle args = new Bundle();
@@ -103,9 +82,10 @@ public class KirimLaporanFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_kirim_laporan, container, false);
         txtIsi = v.findViewById(R.id.txtIsi);
@@ -194,16 +174,16 @@ public class KirimLaporanFragment extends Fragment {
             if (MainActivity.opds.size() != 0){
                 idOpd.clear();
                 List<String> arr = new ArrayList<>();
-                for (int a=0; a<MainActivity.opds.size(); a++){
+                for (int a=0; a<MainActivity.opds.size()+1; a++){
                     if(a==0){
                         idOpd.add("-");
-                        arr.add("Silahkan pilih Organisasi Perangkat Daerah");
+                        arr.add("Silahkan pilih OPD");
                     }else {
                         idOpd.add(MainActivity.opds.get(a-1).getId_opd());
                         arr.add(MainActivity.opds.get(a-1).getNama_opd());
                     }
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, arr);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
                 spOpd.setAdapter(adapter);
             }else {
                 getOpd();
@@ -216,10 +196,6 @@ public class KirimLaporanFragment extends Fragment {
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -228,11 +204,6 @@ public class KirimLaporanFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 
     private void getOpd() {
@@ -265,16 +236,16 @@ public class KirimLaporanFragment extends Fragment {
                         idOpd.clear();
                         List<String> arr = new ArrayList<>();
                         MainActivity.opds = response.body().getData();
-                        for (int a=0; a<response.body().getData().size(); a++){
+                        for (int a=0; a<response.body().getData().size()+1; a++){
                             if(a==0){
                                 idOpd.add("-");
-                                arr.add("Silahkan pilih Organisasi Perangkat Daerah");
+                                arr.add("Silahkan pilih OPD");
                             }else {
                                 idOpd.add(response.body().getData().get(a-1).getId_opd());
                                 arr.add(response.body().getData().get(a-1).getNama_opd());
                             }
                         }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, arr);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
                         spOpd.setAdapter(adapter);
                     } else {
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
@@ -353,17 +324,18 @@ public class KirimLaporanFragment extends Fragment {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void dialogAmbilGambar() {
         final CharSequence[] options = { "Camera", "Gallery" };
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         builder.setTitle("Ambil foto dari ?");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Camera"))
                 {
-                    if (ContextCompat.checkSelfPermission(getContext(),
+                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
                             android.Manifest.permission.CAMERA)
                             != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(),
                             android.Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -401,12 +373,14 @@ public class KirimLaporanFragment extends Fragment {
         builder.show();
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(getContext(),
+                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
                             android.Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED) {
 

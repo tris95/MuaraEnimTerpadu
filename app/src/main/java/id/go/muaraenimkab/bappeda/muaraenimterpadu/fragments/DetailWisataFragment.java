@@ -242,12 +242,12 @@ public class DetailWisataFragment extends Fragment {
                                 if (location != null) {
                                     currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                                     gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
-                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
+                                    //gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
 //                                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
 
                                     LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
                                     gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
-//                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
 
 //                                    if (currentLatLng != null && destlatLng != null) {
                                     String url = getUrl(currentLatLng, destlatLng);
