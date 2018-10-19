@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
@@ -46,7 +47,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.gun0912.tedpermission.TedPermissionResult;
 import com.squareup.picasso.Picasso;
+import com.tedpark.tedpermission.rx2.TedRx2Permission;
 
 import org.json.JSONObject;
 
@@ -63,12 +66,14 @@ import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.DirectionsJSONParser;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 
 public class DetailKontakFragment extends Fragment {
     Toolbar toolbar;
-    private static final String ARG_kontak = "kontak",ARG_lat = "latitude",ARG_lng = "longitude",
-            ARG_alamat = "alamat",ARG_notlp = "notlp",ARG_gambar = "gambar";
+    private static final String ARG_kontak = "kontak", ARG_lat = "latitude", ARG_lng = "longitude",
+            ARG_alamat = "alamat", ARG_notlp = "notlp", ARG_gambar = "gambar";
     String kontak, no_tlp, alamat, gambar, lat, lng;
     TextView lblnotlp, lblalamatkontak;
     ImageView imgKontak;
@@ -86,8 +91,8 @@ public class DetailKontakFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DetailKontakFragment newInstance(String kontak,String lat,String lng,
-                                                   String alamat,String no_tlp,String gambar) {
+    public static DetailKontakFragment newInstance(String kontak, String lat, String lng,
+                                                   String alamat, String no_tlp, String gambar) {
         DetailKontakFragment fragment = new DetailKontakFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -137,8 +142,8 @@ public class DetailKontakFragment extends Fragment {
         final DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
         int viewPagerWidth = Math.round(outMetrics.widthPixels);
-        int more = viewPagerWidth/6;
-        int viewPagerHeight = (Math.round(outMetrics.widthPixels)/2)+more;
+        int more = viewPagerWidth / 6;
+        int viewPagerHeight = (Math.round(outMetrics.widthPixels) / 2) + more;
 
         appBar.setLayoutParams(new CoordinatorLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
@@ -150,7 +155,7 @@ public class DetailKontakFragment extends Fragment {
 
         if (!no_tlp.equals("")) {
             lblnotlp.setText(no_tlp);
-        }else {
+        } else {
             lblnotlp.setVisibility(View.GONE);
             fab.setVisibility(View.GONE);
         }
@@ -209,95 +214,123 @@ public class DetailKontakFragment extends Fragment {
                         android.Manifest.permission.ACCESS_COARSE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
 
-                    requestPermissions(new String[]{
-                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                }
-                mFusedLocationClient.getLastLocation()
-                        .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                if (location != null) {
-                                    currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                                    gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
-                                    //gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
+                    TedRx2Permission.with(Objects.requireNonNull(getContext()))
+                            .setRationaleTitle("Izin Akses")
+                            .setRationaleMessage("Untuk mengakses Lokasi harap izinkan Lokasi")
+                            .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                            .request()
+                            .subscribe(new Observer<TedPermissionResult>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onNext(TedPermissionResult tedPermissionResult) {
+                                    if (tedPermissionResult.isGranted()) {
+                                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                                                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                            // TODO: Consider calling
+                                            //    ActivityCompat#requestPermissions
+                                            // here to request the missing permissions, and then overriding
+                                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                            //                                          int[] grantResults)
+                                            // to handle the case where the user grants the permission. See the documentation
+                                            // for ActivityCompat#requestPermissions for more details.
+                                            return;
+                                        }
+                                        mFusedLocationClient.getLastLocation()
+                                                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                                                    @Override
+                                                    public void onSuccess(Location location) {
+                                                        if (location != null) {
+                                                            currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                                            gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
+                                                            //gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
 //                                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
 
-                                    LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                                    gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
-                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+                                                            LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+                                                            gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
+                                                            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
 
 //                                    if (currentLatLng != null && destlatLng != null) {
-                                    String url = getUrl(currentLatLng, destlatLng);
-                                    Log.e("url", url);
-                                    DownloadTask FetchUrl = new DownloadTask();
-                                    FetchUrl.execute(url);
+                                                            String url = getUrl(currentLatLng, destlatLng);
+                                                            Log.e("url", url);
+                                                            DownloadTask FetchUrl = new DownloadTask();
+                                                            FetchUrl.execute(url);
 //                                    }
-                                } else {
-                                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
-                                            Snackbar.LENGTH_LONG).show();
+                                                        } else {
+                                                            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
+                                                                    Snackbar.LENGTH_LONG).show();
 
-                                    LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                                    gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
-                                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+                                                            LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+                                                            gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
+                                                            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+                                                        }
+                                                    }
+                                                });
+                                    } else {
+                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+                                                "Harap mengaktifkan izin Lokasi",
+                                                Snackbar.LENGTH_INDEFINITE)
+                                                .setAction("OK", new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        Intent intent = new Intent();
+                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                                                        intent.setData(uri);
+                                                        startActivity(intent);
+                                                    }
+                                                })
+                                                .show();
+                                    }
                                 }
-                            }
-                        });
-            }
-        });
 
-        return v;
-    }
+                                @Override
+                                public void onError(Throwable e) {
 
-    @SuppressLint("NewApi")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(getActivity(),
-                            android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
-                    }
-                    else {
-                        requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
-                    }
+                                }
+
+                                @Override
+                                public void onComplete() {
+
+                                }
+                            });
+//                    requestPermissions(new String[]{
+//                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                 }else {
-                    requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                            1);
-                }
-                return;
-            }
-            case 2: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        Log.e("permission", "DENIED");
+                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
                         return;
-                    }else{
-                        Log.e("permission", "GRANTED");
                     }
-
                     mFusedLocationClient.getLastLocation()
                             .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                                @SuppressLint("NewApi")
                                 @Override
                                 public void onSuccess(Location location) {
                                     if (location != null) {
                                         currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                                         gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
-                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
-//                                        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
+                                        //gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
+//                                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
 
                                         LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
                                         gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
-//                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
 
-//                                        if (currentLatLng != null && destlatLng != null) {
+//                                    if (currentLatLng != null && destlatLng != null) {
                                         String url = getUrl(currentLatLng, destlatLng);
                                         Log.e("url", url);
                                         DownloadTask FetchUrl = new DownloadTask();
                                         FetchUrl.execute(url);
-//                                        }
+//                                    }
                                     } else {
                                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
                                                 Snackbar.LENGTH_LONG).show();
@@ -308,15 +341,81 @@ public class DetailKontakFragment extends Fragment {
                                     }
                                 }
                             });
-//                      }
-//                    }
-                }else {
-                    requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
                 }
-                return;
             }
-        }
+        });
+
+        return v;
     }
+
+//    @SuppressLint("NewApi")
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case 1: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (ContextCompat.checkSelfPermission(getActivity(),
+//                            android.Manifest.permission.ACCESS_COARSE_LOCATION)
+//                            != PackageManager.PERMISSION_GRANTED) {
+//                        requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
+//                    } else {
+//                        requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
+//                    }
+//                } else {
+//                    requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+//                            1);
+//                }
+//                return;
+//            }
+//            case 2: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                        Log.e("permission", "DENIED");
+//                        return;
+//                    } else {
+//                        Log.e("permission", "GRANTED");
+//                    }
+//
+//                    mFusedLocationClient.getLastLocation()
+//                            .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+//                                @SuppressLint("NewApi")
+//                                @Override
+//                                public void onSuccess(Location location) {
+//                                    if (location != null) {
+//                                        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+//                                        gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
+//                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
+////                                        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
+//
+//                                        LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+//                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
+////                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+//
+////                                        if (currentLatLng != null && destlatLng != null) {
+//                                        String url = getUrl(currentLatLng, destlatLng);
+//                                        Log.e("url", url);
+//                                        DownloadTask FetchUrl = new DownloadTask();
+//                                        FetchUrl.execute(url);
+////                                        }
+//                                    } else {
+//                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
+//                                                Snackbar.LENGTH_LONG).show();
+//
+//                                        LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+//                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
+//                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+//                                    }
+//                                }
+//                            });
+////                      }
+////                    }
+//                } else {
+//                    requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
+//                }
+//                return;
+//            }
+//        }
+//    }
 
     private String getUrl(LatLng origin, LatLng dest) {
         // Origin of route

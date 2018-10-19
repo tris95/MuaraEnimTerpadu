@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -30,17 +31,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bluejamesbond.text.DocumentView;
+import com.gun0912.tedpermission.TedPermissionResult;
 import com.squareup.picasso.Picasso;
+import com.tedpark.tedpermission.rx2.TedRx2Permission;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -140,10 +146,10 @@ public class DetailBeritaFragment extends Fragment {
         int viewPagerHeight = (viewPagerWidth / 2) + more;
         imgDetaiBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
 
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{
-                    Manifest.permission.READ_PHONE_STATE}, 1);
-        }
+//        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            requestPermissions(new String[]{
+//                    Manifest.permission.READ_PHONE_STATE}, 1);
+//        }
 
         if (flag != null) {
             if (flag.equals("5")) {
@@ -152,8 +158,7 @@ public class DetailBeritaFragment extends Fragment {
                 getBerita();
                 getisiBerita();
             }
-        }
-        else {
+        } else {
             if (HomeFragment.mListisiBerita.size() != 0) {
                 cekLike();
                 cekIDP();
@@ -334,14 +339,51 @@ public class DetailBeritaFragment extends Fragment {
     private void cekIDP() {
 //        TelephonyManager telephonyManager = (TelephonyManager) Objects.requireNonNull(getContext()).getSystemService(Context.TELEPHONY_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+                Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            TedRx2Permission.with(Objects.requireNonNull(getContext()))
+                    .setRationaleTitle("Izin Akses")
+                    .setRationaleMessage("Untuk mengakses Aplikasi harap izinkan Telepon")
+                    .setPermissions(Manifest.permission.READ_PHONE_STATE)
+                    .request()
+                    .subscribe(new Observer<TedPermissionResult>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(TedPermissionResult tedPermissionResult) {
+                            if (tedPermissionResult.isGranted()) {
+                                cekIDP();
+                            } else {
+                                Snackbar.make(Objects.requireNonNull(getActivity()).getWindow().getDecorView().getRootView(),
+                                        "Harap mengaktifkan izin Telepon",
+                                        Snackbar.LENGTH_INDEFINITE)
+                                        .setAction("OK", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent();
+                                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                                Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                                                intent.setData(uri);
+                                                startActivity(intent);
+                                            }
+                                        })
+                                        .show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
             return;
         }
         //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
@@ -488,24 +530,24 @@ public class DetailBeritaFragment extends Fragment {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
-                            Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-                    } else {
-                        cekIDP();
-                    }
-                } else {
-                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-                }
-            }
-        }
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case 1: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
+//                            Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+//                    } else {
+//                        cekIDP();
+//                    }
+//                } else {
+//                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+//                }
+//            }
+//        }
+//    }
 
     private void getBerita() {
 
@@ -520,7 +562,7 @@ public class DetailBeritaFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<Berita>> call = api.getBeritanotif(random,idberita);
+        Call<Value<Berita>> call = api.getBeritanotif(random, idberita);
         call.enqueue(new Callback<Value<Berita>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override

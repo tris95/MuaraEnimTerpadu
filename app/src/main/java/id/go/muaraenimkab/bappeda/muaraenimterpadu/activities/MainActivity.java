@@ -3,11 +3,9 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -18,13 +16,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.gun0912.tedpermission.TedPermissionResult;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.tedpark.tedpermission.rx2.TedRx2Permission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +48,8 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,11 +57,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
 public class MainActivity extends AppCompatActivity {
     Fragment fragment;
-    public static int flag2,flag3;
+    public static int flag2, flag3;
     String idp;
-    static Fragment lastFragment, lastFragment2,lastFragment3;
+    static Fragment lastFragment, lastFragment2, lastFragment3;
     static FragmentManager fragmentManager;
     @SuppressLint("StaticFieldLeak")
     BottomNavigationViewEx bottomNavigationView;
@@ -93,35 +94,80 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{
-                    Manifest.permission.READ_PHONE_STATE}, 1);
-        }
+//        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            requestPermissions(new String[]{
+//                    Manifest.permission.READ_PHONE_STATE}, 1);
+//        }
+
+        TedRx2Permission.with(Objects.requireNonNull(MainActivity.this))
+                .setRationaleTitle("Izin Akses")
+                .setRationaleMessage("Untuk mengakses Aplikasi harap izinkan Telepon")
+                .setPermissions(Manifest.permission.READ_PHONE_STATE)
+                .request()
+                .subscribe(new Observer<TedPermissionResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(TedPermissionResult tedPermissionResult) {
+                        if (tedPermissionResult.isGranted()) {
+                            cekIDP();
+                        } else {
+                            Snackbar.make(getWindow().getDecorView().getRootView(),
+                                    "Harap mengaktifkan izin Telepon",
+                                    Snackbar.LENGTH_INDEFINITE)
+                                    .setAction("OK", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent();
+                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                            intent.setData(uri);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
 
-        cekIDP();
-
-        if (getIntent().getStringExtra("flag")!=null){
-            if (getIntent().getStringExtra("flag").equals("5")){
-                fragment = DetailBeritaFragment.newInstance(getIntent().getStringExtra("id"),"5");
-                currentFragment = 0;
-                nowFragment = 0;
-                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        if (getIntent().getStringExtra("flag") != null) {
+            switch (getIntent().getStringExtra("flag")) {
+                case "5":
+                    fragment = DetailBeritaFragment.newInstance(getIntent().getStringExtra("id"), "5");
+                    currentFragment = 0;
+                    nowFragment = 0;
+                    fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case "2":
+                    fragment = EventFragment.newInstance(getIntent().getStringExtra("id"), "2");
+                    currentFragment = 0;
+                    nowFragment = 0;
+                    fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
+                case "3":
+                    fragment = LaporanFragment.newInstance(getIntent().getStringExtra("id"), "3");
+                    currentFragment = 0;
+                    nowFragment = 0;
+                    fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+                    break;
             }
-            else if (getIntent().getStringExtra("flag").equals("2")){
-                fragment = EventFragment.newInstance(getIntent().getStringExtra("id"),"2");
-                currentFragment = 0;
-                nowFragment = 0;
-                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-            }
-            else if (getIntent().getStringExtra("flag").equals("3")){
-                fragment = LaporanFragment.newInstance(getIntent().getStringExtra("id"),"3");
-                currentFragment = 0;
-                nowFragment = 0;
-                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-            }
-        }else {
+        } else {
             fragment = HomeFragment.newInstance();
             currentFragment = 0;
             nowFragment = 0;
@@ -182,8 +228,7 @@ public class MainActivity extends AppCompatActivity {
     public static void replaceFragment(Fragment fragment, int flag) {
         if (flag == 8) {
             nowFragment = flag;
-        }
-        else if (flag == 7) {
+        } else if (flag == 7) {
             nowFragment = flag;
             flag3 = flag;
             lastFragment3 = fragment;
@@ -207,8 +252,7 @@ public class MainActivity extends AppCompatActivity {
             if (nowFragment == 8) {
                 fragmentManager.beginTransaction().replace(R.id.container, lastFragment3).commit();
                 nowFragment = 7;
-            }
-            else if (nowFragment == 7) {
+            } else if (nowFragment == 7) {
 //                fragmentTransaction=fragmentManager.beginTransaction();
 //                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
 //                fragmentTransaction.replace(R.id.container, lastFragment2).commit();
@@ -243,25 +287,25 @@ public class MainActivity extends AppCompatActivity {
         Back();
         return true;
     }
-    @TargetApi(Build.VERSION_CODES.M)
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(MainActivity.this),
-                            Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-                    } else {
-                        cekIDP();
-                    }
-                } else {
-                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-                }
-            }
-        }
-    }
+//    @TargetApi(Build.VERSION_CODES.M)
+//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case 1: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(MainActivity.this),
+//                            Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+//                    } else {
+//                        cekIDP();
+//                    }
+//                } else {
+//                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+//                }
+//            }
+//        }
+//    }
 
     @SuppressLint("HardwareIds")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

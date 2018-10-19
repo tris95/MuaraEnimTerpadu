@@ -17,9 +17,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -33,6 +35,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.gun0912.tedpermission.TedPermissionResult;
+import com.tedpark.tedpermission.rx2.TedRx2Permission;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,6 +60,8 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,6 +76,7 @@ public class KirimLaporanFragment extends Fragment {
     ImageView imgLaporan;
     String foto;
     Spinner spOpd;
+    private static final int CAMERA_REQUEST = 188, FILE_REQUES = 189;
     List<String> idOpd = new ArrayList<>();
 
     public static KirimLaporanFragment newInstance() {
@@ -87,7 +96,7 @@ public class KirimLaporanFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_kirim_laporan, container, false);
+        View v = inflater.inflate(R.layout.fragment_kirim_laporan, container, false);
         txtIsi = v.findViewById(R.id.txtIsi);
         txtJudul = v.findViewById(R.id.txtJudul);
         btnKirim = v.findViewById(R.id.btnKirim);
@@ -96,7 +105,7 @@ public class KirimLaporanFragment extends Fragment {
         imgLaporan = v.findViewById(R.id.imgLaporan);
         spOpd = v.findViewById(R.id.spOpd);
 
-        foto="";
+        foto = "";
 
         btnKirim.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
@@ -128,8 +137,7 @@ public class KirimLaporanFragment extends Fragment {
 //                        getActivity().finish();
 //                    }
                     }
-                }
-                else {
+                } else {
                     startActivity(new Intent(getContext(), SignInActivity.class));
                     Objects.requireNonNull(getActivity()).finish();
                 }
@@ -147,8 +155,8 @@ public class KirimLaporanFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 final int DRAWABLE_RIGHT = 2;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    if (motionEvent.getRawX() >= (txtNoHp.getRight()-txtNoHp.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())){
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (motionEvent.getRawX() >= (txtNoHp.getRight() - txtNoHp.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                         User user = Utilities.getUser(getContext());
                         txtNoHp.setText(user.getNo_hp_user());
                     }
@@ -171,23 +179,23 @@ public class KirimLaporanFragment extends Fragment {
 //        });
 
 //        if (Utilities.isLogin(getActivity())) {
-            if (MainActivity.opds.size() != 0){
-                idOpd.clear();
-                List<String> arr = new ArrayList<>();
-                for (int a=0; a<MainActivity.opds.size()+1; a++){
-                    if(a==0){
-                        idOpd.add("-");
-                        arr.add("Silahkan pilih OPD");
-                    }else {
-                        idOpd.add(MainActivity.opds.get(a-1).getId_opd());
-                        arr.add(MainActivity.opds.get(a-1).getNama_opd());
-                    }
+        if (MainActivity.opds.size() != 0) {
+            idOpd.clear();
+            List<String> arr = new ArrayList<>();
+            for (int a = 0; a < MainActivity.opds.size() + 1; a++) {
+                if (a == 0) {
+                    idOpd.add("-");
+                    arr.add("Silahkan pilih OPD");
+                } else {
+                    idOpd.add(MainActivity.opds.get(a - 1).getId_opd());
+                    arr.add(MainActivity.opds.get(a - 1).getNama_opd());
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
-                spOpd.setAdapter(adapter);
-            }else {
-                getOpd();
             }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
+            spOpd.setAdapter(adapter);
+        } else {
+            getOpd();
+        }
 //        }else {
 //            startActivity(new Intent(getContext(), SignInActivity.class));
 //            getActivity().finish();
@@ -236,13 +244,13 @@ public class KirimLaporanFragment extends Fragment {
                         idOpd.clear();
                         List<String> arr = new ArrayList<>();
                         MainActivity.opds = response.body().getData();
-                        for (int a=0; a<response.body().getData().size()+1; a++){
-                            if(a==0){
+                        for (int a = 0; a < response.body().getData().size() + 1; a++) {
+                            if (a == 0) {
                                 idOpd.add("-");
                                 arr.add("Silahkan pilih OPD");
-                            }else {
-                                idOpd.add(response.body().getData().get(a-1).getId_opd());
-                                arr.add(response.body().getData().get(a-1).getNama_opd());
+                            } else {
+                                idOpd.add(response.body().getData().get(a - 1).getId_opd());
+                                arr.add(response.body().getData().get(a - 1).getNama_opd());
                             }
                         }
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
@@ -293,7 +301,7 @@ public class KirimLaporanFragment extends Fragment {
             public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
                 pDialog.dismiss();
                 if (response.body() != null) {
-                    Log.e("boo", response.body().getMessage()+" "+id+" "+idopd+" "+judul+" "+isi+" "+hp+" "+lokasi+" "+foto);
+                    Log.e("boo", response.body().getMessage() + " " + id + " " + idopd + " " + judul + " " + isi + " " + hp + " " + lokasi + " " + foto);
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         txtIsi.setText("");
@@ -301,9 +309,9 @@ public class KirimLaporanFragment extends Fragment {
                         imgLaporan.setImageDrawable(getResources().getDrawable(R.drawable.defaultimage));
                         txtLokasi.setText("");
                         txtNoHp.setText("");
-                        foto="";
+                        foto = "";
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Laporan berhasil dikirim", Snackbar.LENGTH_LONG).show();
-                    }else{
+                    } else {
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengirim laporan. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
                     }
@@ -326,108 +334,162 @@ public class KirimLaporanFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void dialogAmbilGambar() {
-        final CharSequence[] options = { "Camera", "Gallery" };
+        final CharSequence[] options = {"Camera", "Gallery"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         builder.setTitle("Ambil foto dari ?");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Camera"))
-                {
-                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
-                            android.Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(),
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
+                if (options[item].equals("Camera")) {
+                    TedRx2Permission.with(Objects.requireNonNull(getContext()))
+                            .setRationaleTitle("Izin Akses")
+                            .setRationaleMessage("Untuk mengakses fitur kamera harap izinkan kamera dan penyimpanan")
+                            .setPermissions(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                            .request()
+                            .subscribe(new Observer<TedPermissionResult>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
 
-                        requestPermissions(new String[]{android.Manifest.permission.CAMERA},
-                                1);
-                    }else {
-                        if(Build.VERSION.SDK_INT>=24){
-                            try{
-                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                                m.invoke(null);
-                            }catch(Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                        startActivityForResult(intent, 1);
-                    }
+                                }
+
+                                @Override
+                                public void onNext(TedPermissionResult tedPermissionResult) {
+                                    if (tedPermissionResult.isGranted()) {
+                                        if (Build.VERSION.SDK_INT >= 24) {
+                                            try {
+                                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                                                m.invoke(null);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                                        startActivityForResult(intent, CAMERA_REQUEST);
+                                    } else {
+                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+                                                "Harap mengaktifkan izin kamera dan penyimpanan",
+                                                Snackbar.LENGTH_INDEFINITE)
+                                                .setAction("OK", new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        Intent intent = new Intent();
+                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                                                        intent.setData(uri);
+                                                        startActivity(intent);
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+
+                                }
+                            });
                 }
-                else if (options[item].equals("Gallery"))
-                {
+//                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.CAMERA) !=
+//                            PackageManager.PERMISSION_GRANTED ||
+//                            ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
+//                                    PackageManager.PERMISSION_GRANTED) {
+//
+//                        requestPermissions(new String[]{android.Manifest.permission.CAMERA},
+//                                CAMERA_REQUEST);
+//
+//                    } else {
+//                        if (Build.VERSION.SDK_INT >= 24) {
+//                            try {
+//                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+//                                m.invoke(null);
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+//                        startActivityForResult(intent, CAMERA_REQUEST);
+                //}
+                else if (options[item].equals("Gallery")) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 2);
+                    startActivityForResult(intent, FILE_REQUES);
                 }
             }
-        }).setNegativeButton("Batal", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
+        }).
+
+                setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
         builder.show();
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
+//    @TargetApi(Build.VERSION_CODES.KITKAT)
+//    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+//                                           @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case CAMERA_REQUEST: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.READ_EXTERNAL_STORAGE)
+//                            != PackageManager.PERMISSION_GRANTED) {
+//
+//                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+//                                FILE_REQUES);
+//                    } else {
+//                        if (Build.VERSION.SDK_INT >= 24) {
+//                            try {
+//                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+//                                m.invoke(null);
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+//                        startActivityForResult(intent, CAMERA_REQUEST);
+//                    }
+//                }
+//                return;
+//            }
+//            case FILE_REQUES: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (Build.VERSION.SDK_INT >= 24) {
+//                        try {
+//                            Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+//                            m.invoke(null);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+//                    startActivityForResult(intent, CAMERA_REQUEST);
+//                }
+//            }
+//        }
+//    }
 
-                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                2);
-                    }else {
-                        if(Build.VERSION.SDK_INT>=24){
-                            try{
-                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                                m.invoke(null);
-                            }catch(Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                        startActivityForResult(intent, 1);
-                    }
-                }
-                return;
-            }
-            case 2: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if(Build.VERSION.SDK_INT>=24){
-                        try{
-                            Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                            m.invoke(null);
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);
-                }
-                return;
-            }
-        }
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) {
+            if (requestCode == CAMERA_REQUEST) {
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
                     if (temp.getName().equals("temp.jpg")) {
@@ -446,8 +508,8 @@ public class KirimLaporanFragment extends Fragment {
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
-                    f.delete();
-                    OutputStream outFile = null;
+                    f. delete();
+                    OutputStream outFile;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     try {
                         outFile = new FileOutputStream(file);
@@ -470,18 +532,18 @@ public class KirimLaporanFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (requestCode == 2) {
+            } else if (requestCode == FILE_REQUES) {
                 Uri imageUri = data.getData();
                 InputStream imageStream = null;
                 Bitmap imageBitmap;
-                try{
-                    imageStream = getActivity().getContentResolver().openInputStream(imageUri);
+                try {
+                    imageStream = Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(Objects.requireNonNull(imageUri));
                     imageBitmap = BitmapFactory.decodeStream(imageStream);
                     String path = Environment
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
-                    OutputStream outFile = null;
+                    OutputStream outFile;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     try {
                         outFile = new FileOutputStream(file);
@@ -503,10 +565,9 @@ public class KirimLaporanFragment extends Fragment {
                     imgLaporan.setImageBitmap(imageBitmap);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
-                }
-                finally {
-                    if (imageStream!=null){
-                        try{
+                } finally {
+                    if (imageStream != null) {
+                        try {
                             imageStream.close();
                         } catch (IOException e) {
                             e.printStackTrace();

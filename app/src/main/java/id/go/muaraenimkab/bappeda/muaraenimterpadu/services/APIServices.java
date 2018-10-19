@@ -32,7 +32,8 @@ public interface APIServices {
     Call<Value<User>> signin(@Field("xkey") String xkey,
                              @Field("email") String email,
                              @Field("password") String password,
-                             @Field("token") String token);
+                             @Field("token") String token,
+                             @Field("idp") String idp);
 
     @FormUrlEncoded
     @POST("signup.php")
@@ -42,7 +43,8 @@ public interface APIServices {
                           @Field("nama") String nama,
                           @Field("noktp") String noktp,
                           @Field("nohp") String nohp,
-                          @Field("alamat") String alamat);
+                          @Field("alamat") String alamat,
+                          @Field("idp") String idp);
 
     @FormUrlEncoded
     @POST("ubahpass.php")
@@ -166,7 +168,8 @@ public interface APIServices {
     @FormUrlEncoded
     @POST("setlogin.php")
     Call<ValueAdd> setlogindb(@Field("xkey") String xkey,
-                              @Field("email") String email);
+                              @Field("email") String email,
+                              @Field("idp") String idp);
 
     @FormUrlEncoded
     @POST("ceknik.php")

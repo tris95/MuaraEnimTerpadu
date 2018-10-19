@@ -1,13 +1,20 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -20,17 +27,21 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gun0912.tedpermission.TedPermissionResult;
+import com.tedpark.tedpermission.rx2.TedRx2Permission;
+
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignInActivity;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 
 public class LaporanFragment extends Fragment {
     private static final String ARG_idlaporan = "idlaporan", ARG_flag = "flag";
-    String idlaporan, flag;
+    String idlaporan, flag,idp;
     TabLayout tabLayout;
     ViewPager mViewPager;
     Toolbar toolbar;
@@ -60,6 +71,7 @@ public class LaporanFragment extends Fragment {
         }
     }
 
+    @SuppressLint("HardwareIds")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -89,7 +101,69 @@ public class LaporanFragment extends Fragment {
                 mViewPager.setCurrentItem(1);
             }
         }
-        Utilities.setLogin(getActivity(),Utilities.getUser(getActivity()).getEmail());
+
+        TedRx2Permission.with(Objects.requireNonNull(getContext()))
+                .setRationaleTitle("Izin Akses")
+                .setRationaleMessage("Untuk mengakses Aplikasi harap izinkan Telepon")
+                .setPermissions(Manifest.permission.READ_PHONE_STATE)
+                .request()
+                .subscribe(new Observer<TedPermissionResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @SuppressLint("HardwareIds")
+                    @Override
+                    public void onNext(TedPermissionResult tedPermissionResult) {
+                        if (tedPermissionResult.isGranted()) {
+                            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.READ_PHONE_STATE) !=
+                                    PackageManager.PERMISSION_GRANTED) {
+                                // TODO: Consider calling
+                                //    ActivityCompat#requestPermissions
+                                // here to request the missing permissions, and then overriding
+                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                //                                          int[] grantResults)
+                                // to handle the case where the user grants the permission. See the documentation
+                                // for ActivityCompat#requestPermissions for more details.
+                                return;
+                            }
+                            //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
+                            idp = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
+                        } else {
+                            Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+                                    "Harap mengaktifkan izin Telepon",
+                                    Snackbar.LENGTH_INDEFINITE)
+                                    .setAction("OK", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent();
+                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                                            intent.setData(uri);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+        try {
+            idp = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        Utilities.setLogin(getActivity(),Utilities.getUser(getActivity()).getEmail(),idp);
         if (!Utilities.isLogin(getContext())) {
             startActivity(new Intent(getContext(), SignInActivity.class));
             getActivity().finish();

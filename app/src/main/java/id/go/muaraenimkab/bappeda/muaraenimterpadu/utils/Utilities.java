@@ -1,26 +1,33 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.utils;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
+import com.gun0912.tedpermission.TedPermissionResult;
+import com.tedpark.tedpermission.rx2.TedRx2Permission;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -48,6 +55,8 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -164,7 +173,7 @@ public class Utilities {
         return sp.getBoolean("xLogin", false);
     }
 
-    public static void setLogin(Context context, String email) {
+    public static void setLogin(Context context, String email, String idp) {
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         final SharedPreferences.Editor prefsEditor = mPrefs.edit();
 
@@ -179,7 +188,7 @@ public class Utilities {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<ValueAdd> call = api.setlogindb(random, email);
+        Call<ValueAdd> call = api.setlogindb(random, email, idp);
         call.enqueue(new Callback<ValueAdd>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -189,14 +198,12 @@ public class Utilities {
                     if (success == 0) {
                         prefsEditor.putBoolean("xLogin", false);
                         prefsEditor.apply();
-                        Log.e("as","0");
                     } else if (success == 1) {
                         prefsEditor.putBoolean("xLogin", true);
                         prefsEditor.apply();
-                    } else {
+                    } else if (success == 2) {
                         prefsEditor.putBoolean("xLogin", false);
                         prefsEditor.apply();
-                        Log.e("login","1");
                     }
                 }
             }
@@ -211,7 +218,6 @@ public class Utilities {
 
     public static String getToken() {
         String token = FirebaseInstanceId.getInstance().getToken();
-        Log.e("token", token);
         if (token == null) {
             token = "";
         }
