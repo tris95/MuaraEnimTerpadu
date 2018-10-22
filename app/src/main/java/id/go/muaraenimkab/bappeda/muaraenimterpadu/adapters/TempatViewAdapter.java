@@ -51,6 +51,8 @@ public class TempatViewAdapter extends RecyclerView.Adapter<TempatViewAdapter.Da
 
         Picasso.with(context)
                 .load(gambar)
+                .fit()
+                .centerCrop()
                 .into(holder.imgtempat);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -72,11 +74,13 @@ public class TempatViewAdapter extends RecyclerView.Adapter<TempatViewAdapter.Da
     class DataObjectHolder extends RecyclerView.ViewHolder {
         ImageView imgtempat;
         TextView lblnamatempat;
+        RelativeLayout rlimgkategori;
 
         DataObjectHolder(View itemView) {
             super(itemView);
             imgtempat = itemView.findViewById(R.id.imgkategori);
             lblnamatempat = itemView.findViewById(R.id.lbljudulkategori);
+            rlimgkategori=itemView.findViewById(R.id.rlimgkategori);
 
             Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
             final DisplayMetrics outMetrics = new DisplayMetrics();
@@ -84,7 +88,7 @@ public class TempatViewAdapter extends RecyclerView.Adapter<TempatViewAdapter.Da
             int viewPagerWidth = Math.round(outMetrics.widthPixels);
             int viewPagerHeight = Math.round(outMetrics.widthPixels)/2;
 
-            imgtempat.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+            rlimgkategori.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
         }
     }
 }

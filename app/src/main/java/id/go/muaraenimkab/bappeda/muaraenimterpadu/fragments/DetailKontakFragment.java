@@ -30,8 +30,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -40,8 +40,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -210,7 +208,7 @@ public class DetailKontakFragment extends Fragment {
 
                 if (ContextCompat.checkSelfPermission(getActivity(),
                         android.Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getContext(),
+                        != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
                         android.Manifest.permission.ACCESS_COARSE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
 
@@ -243,6 +241,7 @@ public class DetailKontakFragment extends Fragment {
                                                 .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                                                     @Override
                                                     public void onSuccess(Location location) {
+                                                        Toast.makeText(getContext(), ""+location, Toast.LENGTH_SHORT).show();
                                                         if (location != null) {
                                                             currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                                                             gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
@@ -299,7 +298,7 @@ public class DetailKontakFragment extends Fragment {
                             });
 //                    requestPermissions(new String[]{
 //                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                }else {
+                } else {
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                             ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
@@ -433,6 +432,7 @@ public class DetailKontakFragment extends Fragment {
         return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class DownloadTask extends AsyncTask<String, Void, String> {
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -473,9 +473,9 @@ public class DetailKontakFragment extends Fragment {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
 
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
 
-            String line = "";
+            String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
@@ -516,7 +516,7 @@ public class DetailKontakFragment extends Fragment {
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
             ArrayList<LatLng> points;
             PolylineOptions lineOptions = null;
-            MarkerOptions markerOptions = new MarkerOptions();
+            //MarkerOptions markerOptions = new MarkerOptions();
 
             for (int i = 0; i < result.size(); i++) {
                 points = new ArrayList<>();

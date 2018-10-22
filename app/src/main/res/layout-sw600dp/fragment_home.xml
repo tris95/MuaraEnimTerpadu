@@ -67,118 +67,124 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.NestedScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:scrollbars="none">
 
-                <RelativeLayout
-                    android:id="@+id/rlslider"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="gone">
-
-                    <com.daimajia.slider.library.SliderLayout
-                        android:id="@+id/slider"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:auto_cycle="true"
-                        app:indicator_visibility="visible"
-                        app:pager_animation_span="1100" />
-
-                    <com.daimajia.slider.library.Indicators.PagerIndicator
-                        android:id="@+id/custom_indicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="40dp"
-                        android:gravity="center"
-                        app:selected_color="@color/colorPrimary"
-                        app:selected_height="6dp"
-                        app:selected_padding_left="5dp"
-                        app:selected_padding_right="5dp"
-                        app:selected_width="6dp"
-                        app:shape="rect"
-                        app:unselected_color="#55333333"
-                        app:unselected_height="6dp"
-                        app:unselected_padding_left="5dp"
-                        app:unselected_padding_right="5dp"
-                        app:unselected_width="6dp" />
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:padding="5dp" />
-
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/colorDivider"
-                    android:visibility="gone"/>
-
-                <RelativeLayout
-                    android:id="@+id/rlberita"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/lblBeritaterbaru"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="@string/berita_baru"
-                        android:textColor="@color/red"
-                        android:textStyle="bold"
-                        android:textSize="26sp"
-                        tools:ignore="RelativeOverlap" />
-
-                    <LinearLayout
-                        android:id="@+id/llkategoriberita"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        tools:ignore="RelativeOverlap,UseCompoundDrawables">
-
-                        <TextView
-                            android:id="@+id/lblBeritaselengkapnya"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableTint="@color/colorPrimary"
-                            android:textSize="26sp"
-                            android:text="@string/berita_selengkapnya"
-                            android:textStyle="bold"
-                            tools:ignore="RelativeOverlap,UnusedAttribute" />
-
-                        <ImageView
-                            android:id="@+id/tvArrow"
-                            android:layout_width="33dp"
-                            android:layout_height="33dp"
-                            android:src="@drawable/baseline_keyboard_arrow_right_24"
-                            android:tint="@color/colorPrimary"
-                            tools:ignore="ContentDescription" />
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvBerita"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" />
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/rlslider"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:visibility="gone">
+
+                        <com.daimajia.slider.library.SliderLayout
+                            android:id="@+id/slider"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:auto_cycle="true"
+                            app:indicator_visibility="visible"
+                            app:pager_animation_span="1100" />
+
+                        <com.daimajia.slider.library.Indicators.PagerIndicator
+                            android:id="@+id/custom_indicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="40dp"
+                            android:gravity="center"
+                            app:selected_color="@color/colorPrimary"
+                            app:selected_height="6dp"
+                            app:selected_padding_left="5dp"
+                            app:selected_padding_right="5dp"
+                            app:selected_width="6dp"
+                            app:shape="oval"
+                            app:unselected_color="#55333333"
+                            app:unselected_height="6dp"
+                            app:unselected_padding_left="5dp"
+                            app:unselected_padding_right="5dp"
+                            app:unselected_width="6dp" />
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:padding="5dp" />
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/colorDivider"
+                        android:visibility="gone" />
+
+                    <RelativeLayout
+                        android:id="@+id/rlberita"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/lblBeritaterbaru"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/berita_baru"
+                            android:textColor="@color/red"
+                            android:textSize="26sp"
+                            android:textStyle="bold"
+                            tools:ignore="RelativeOverlap" />
+
+                        <LinearLayout
+                            android:id="@+id/llkategoriberita"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            tools:ignore="RelativeOverlap,UseCompoundDrawables">
+
+                            <TextView
+                                android:id="@+id/lblBeritaselengkapnya"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableTint="@color/colorPrimary"
+                                android:text="@string/berita_selengkapnya"
+                                android:textSize="26sp"
+                                android:textStyle="bold"
+                                tools:ignore="RelativeOverlap,UnusedAttribute" />
+
+                            <ImageView
+                                android:id="@+id/tvArrow"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:src="@drawable/baseline_keyboard_arrow_right_24"
+                                android:tint="@color/colorPrimary"
+                                tools:ignore="ContentDescription" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvBerita"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" />
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

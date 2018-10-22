@@ -3,6 +3,7 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -165,8 +167,19 @@ public class LaporanFragment extends Fragment {
         }
         Utilities.setLogin(getActivity(),Utilities.getUser(getActivity()).getEmail(),idp);
         if (!Utilities.isLogin(getContext())) {
-            startActivity(new Intent(getContext(), SignInActivity.class));
-            getActivity().finish();
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+            builder.setCancelable(true)
+                    .setTitle("Pemberitahuan")
+                    .setCancelable(false)
+                    .setMessage("Untuk Akses Menu Laporan Lakukan Login Terlebih Dahulu")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(getContext(), SignInActivity.class));
+                            getActivity().finish();
+                        }
+                    })
+                    .show();
         }
 
         return v;

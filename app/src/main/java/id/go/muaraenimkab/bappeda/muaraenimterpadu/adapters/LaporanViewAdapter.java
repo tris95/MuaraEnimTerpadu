@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -50,10 +51,13 @@ public class LaporanViewAdapter extends RecyclerView.Adapter<LaporanViewAdapter.
 
         if (mList.get(position).getFoto().equals("")){
             holder.img.setVisibility(View.GONE);
+            holder.rldefauld.setVisibility(View.GONE);
         }else {
             holder.img.setVisibility(View.VISIBLE);
             Picasso.with(context)
                     .load(Utilities.getBaseURLImageLaporan() + mList.get(position).getFoto())
+                    .fit()
+                    .centerCrop()
                     .into(holder.img);
         }
 
@@ -77,12 +81,14 @@ public class LaporanViewAdapter extends RecyclerView.Adapter<LaporanViewAdapter.
 
     class DataObjectHolder extends RecyclerView.ViewHolder {
         CircularImageView img;
+        RelativeLayout rldefauld;
         LinearLayout ll;
         TextView lblJudul, lblIsi, lblTanggal;
 
         DataObjectHolder(View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.img);
+            rldefauld= itemView.findViewById(R.id.rldefauld);
             lblJudul = itemView.findViewById(R.id.tvJudul);
             lblIsi = itemView.findViewById(R.id.tvIsi);
             lblTanggal = itemView.findViewById(R.id.tvTgl);

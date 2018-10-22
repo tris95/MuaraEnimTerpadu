@@ -1,5 +1,6 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -47,10 +48,12 @@ public class EventViewAdapter extends RecyclerView.Adapter<EventViewAdapter.Data
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EventViewAdapter.DataObjectHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull EventViewAdapter.DataObjectHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.lbljudulEvent.setText(mListEvent.get(position).getNama_event());
         Picasso.with(context)
                 .load(Utilities.getBaseURLImageEvent() + mListEvent.get(position).getGambar_event())
+                .fit()
+                .centerCrop()
                 .into(holder.imgEvent);
         holder.lblDesEvent.setText(mListEvent.get(position).getDeskripsi());
         holder.tanggalevent.setText(mListEvent.get(position).getTanggal_pembukaan()+" s/d "+mListEvent.get(position).getTanggal_penutupan());

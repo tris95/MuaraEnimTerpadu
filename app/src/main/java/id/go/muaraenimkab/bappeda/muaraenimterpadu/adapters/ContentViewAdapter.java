@@ -49,6 +49,8 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
         holder.content.setText(mListContent.get(position).getNama_kategori_pariwisata());
         Picasso.with(context)
                 .load(Utilities.getURLImageKategoriPariwisata() + mListContent.get(position).getGambar_kategori_pariwisata())
+                .fit()
+                .centerCrop()
                 .into(holder.imgContent);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

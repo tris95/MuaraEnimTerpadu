@@ -49,6 +49,8 @@ public class KategoriBeritaViewAdapter extends RecyclerView.Adapter<KategoriBeri
 
         Picasso.with(context)
                 .load(Utilities.getURLImageKategoriBerita() + mListKategoriBerita.get(position).getGambar_kategori_berita())
+                .fit()
+                .centerCrop()
                 .into(holder.imgkategoriBerita);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -68,11 +70,13 @@ public class KategoriBeritaViewAdapter extends RecyclerView.Adapter<KategoriBeri
     class DataObjectHolder extends RecyclerView.ViewHolder {
         ImageView imgkategoriBerita;
         TextView lbljudulkategori;
+        RelativeLayout rlimgkategori;
 
         DataObjectHolder(View itemView) {
             super(itemView);
             imgkategoriBerita = itemView.findViewById(R.id.imgkategori);
             lbljudulkategori = itemView.findViewById(R.id.lbljudulkategori);
+            rlimgkategori=itemView.findViewById(R.id.rlimgkategori);
 
             Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
             final DisplayMetrics outMetrics = new DisplayMetrics();
@@ -80,7 +84,7 @@ public class KategoriBeritaViewAdapter extends RecyclerView.Adapter<KategoriBeri
             int viewPagerWidth = Math.round(outMetrics.widthPixels);
             int viewPagerHeight = Math.round(outMetrics.widthPixels)/2;
 
-            imgkategoriBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+            rlimgkategori.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
         }
     }
 }

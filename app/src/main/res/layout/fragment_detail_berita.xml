@@ -79,6 +79,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:scaleType="fitXY"
+                    android:background="@drawable/defaultimage"
                     tools:ignore="ContentDescription" />
 
             </RelativeLayout>

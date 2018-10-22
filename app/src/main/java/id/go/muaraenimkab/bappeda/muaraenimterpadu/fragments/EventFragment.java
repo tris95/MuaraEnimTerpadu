@@ -2,6 +2,7 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
 
 
 public class EventFragment extends Fragment {
@@ -47,6 +50,8 @@ public class EventFragment extends Fragment {
     RelativeLayout relativeLayout, rl_none;
     TextView tv_cobalagi;
     SwipeRefreshLayout swipeRefresh;
+    ScrollingPagerIndicator recyclerIndicator;
+
 
     public static EventFragment newInstance() {
         EventFragment fragment = new EventFragment();
@@ -82,8 +87,11 @@ public class EventFragment extends Fragment {
         relativeLayout = v.findViewById(R.id.rl);
         rvEvent = v.findViewById(R.id.rvEvent);
         tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
-        swipeRefresh = v.findViewById(R.id.swipeRefresh);
+        //swipeRefresh = v.findViewById(R.id.swipeRefresh);
         rl_none = v.findViewById(R.id.rl_none);
+
+        recyclerIndicator = v.findViewById(R.id.indicator);
+
 
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -91,10 +99,12 @@ public class EventFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Event");
         }
 
-//        linearLayoutManager=new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-//        rvEvent.setLayoutManager(linearLayoutManager);
-//        EventViewAdapter eventViewAdapter=new EventViewAdapter(getContext(),mListEvent);
-//        rvEvent.setAdapter(eventViewAdapter);
+        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvEvent.setLayoutManager(linearLayoutManager);
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(rvEvent);
+
+        recyclerIndicator.setSelectedDotColor(Color.GREEN);
 
         tv_cobalagi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,23 +113,23 @@ public class EventFragment extends Fragment {
             }
         });
 
-        if (MainActivity.events.size() != 0){
+        if (MainActivity.events.size() != 0) {
             relativeLayout.setVisibility(View.GONE);
             rl_none.setVisibility(View.GONE);
-            linearLayoutManager=new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            rvEvent.setLayoutManager(linearLayoutManager);
-            EventViewAdapter eventViewAdapter=new EventViewAdapter(getContext(), (ArrayList<Event>)MainActivity.events);
+            EventViewAdapter eventViewAdapter = new EventViewAdapter(getContext(), (ArrayList<Event>) MainActivity.events);
             rvEvent.setAdapter(eventViewAdapter);
-        }else {
+            //rvEvent.addItemDecoration(new LinePagerIndicatorDecoration());
+            recyclerIndicator.attachToRecyclerView(rvEvent);
+        } else {
             getEvent();
         }
 
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getEvent();
-            }
-        });
+//        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                getEvent();
+//            }
+//        });
 
         return v;
     }
@@ -165,16 +175,17 @@ public class EventFragment extends Fragment {
                     if (success == 1) {
                         mListEvent = (ArrayList<Event>) Objects.requireNonNull(response.body()).getData();
 
-                        if (mListEvent.size() == 0){
+                        if (mListEvent.size() == 0) {
                             rl_none.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             relativeLayout.setVisibility(View.GONE);
                             rl_none.setVisibility(View.GONE);
                             MainActivity.events = mListEvent;
-                            linearLayoutManager=new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                            rvEvent.setLayoutManager(linearLayoutManager);
-                            EventViewAdapter eventViewAdapter=new EventViewAdapter(getContext(),mListEvent);
+
+                            EventViewAdapter eventViewAdapter = new EventViewAdapter(getContext(), mListEvent);
                             rvEvent.setAdapter(eventViewAdapter);
+                            //rvEvent.addItemDecoration(new LinePagerIndicatorDecoration());
+                            recyclerIndicator.attachToRecyclerView(rvEvent);
                         }
                     } else {
                         rl_none.setVisibility(View.GONE);
@@ -203,6 +214,122 @@ public class EventFragment extends Fragment {
             }
         });
     }
+
+//
+//    public class LinePagerIndicatorDecoration extends RecyclerView.ItemDecoration {
+//        private final float DP = Resources.getSystem().getDisplayMetrics().density;
+//        /**
+//         * Height of the space the indicator takes up at the bottom of the view.
+//         */
+//        private final int mIndicatorHeight = (int) (DP * 16);
+//        /**
+//         * Indicator stroke width.
+//         */
+//        private final float mIndicatorStrokeWidth = DP * 2;
+//        /**
+//         * Indicator width.
+//         */
+//        private final float mIndicatorItemLength = DP * 16;
+//        /**
+//         * Padding between indicators.
+//         */
+//        private final float mIndicatorItemPadding = DP * 4;
+//        /**
+//         * Some more natural animation interpolation
+//         */
+//        private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
+//        private final Paint mPaint = new Paint();
+//
+//        LinePagerIndicatorDecoration() {
+//            mPaint.setStrokeCap(Paint.Cap.ROUND);
+//            mPaint.setStrokeWidth(mIndicatorStrokeWidth);
+//            mPaint.setStyle(Paint.Style.STROKE);
+//            mPaint.setAntiAlias(true);
+//        }
+//
+//        @Override
+//        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+//            super.onDrawOver(c, parent, state);
+//            int itemCount = parent.getAdapter().getItemCount();
+//            // center horizontally, calculate width and subtract half from center
+//            float totalLength = mIndicatorItemLength * itemCount;
+//            float paddingBetweenItems = Math.max(0, itemCount - 1) * mIndicatorItemPadding;
+//            float indicatorTotalWidth = totalLength + paddingBetweenItems;
+//            float indicatorStartX = (parent.getWidth() - indicatorTotalWidth) / 2F;
+//            // center vertically in the allotted space
+//            float indicatorPosY = parent.getHeight() - mIndicatorHeight / 2F;
+//            drawInactiveIndicators(c, indicatorStartX, indicatorPosY, itemCount);
+//
+//            // find active page (which should be highlighted)
+//            LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
+//            int activePosition = layoutManager.findFirstVisibleItemPosition();
+//            if (activePosition == RecyclerView.NO_POSITION) {
+//                return;
+//            }
+//
+//            // find offset of active page (if the user is scrolling)
+//            final View activeChild = layoutManager.findViewByPosition(activePosition);
+//            int left = activeChild.getLeft();
+//            int width = activeChild.getWidth();
+//            // on swipe the active item will be positioned from [-width, 0]
+//            // interpolate offset for smooth animation
+//            float progress = mInterpolator.getInterpolation(left * -1 / (float) width);
+//            drawHighlights(c, indicatorStartX, indicatorPosY, activePosition, progress, itemCount);
+//        }
+//
+//        private void drawInactiveIndicators(Canvas c, float indicatorStartX, float indicatorPosY, int itemCount) {
+//            mPaint.setColor(Color.GRAY);
+//            // width of item indicator including padding
+//            final float itemWidth = mIndicatorItemLength + mIndicatorItemPadding;
+//            float start = indicatorStartX;
+//
+//            for (int i = 0; i < itemCount; i++) {
+//                // draw the line for every item
+//                c.drawLine(start, indicatorPosY, start + mIndicatorItemLength, indicatorPosY, mPaint);
+//                start += itemWidth;
+//            }
+//        }
+//
+//
+//        private void drawHighlights(Canvas c, float indicatorStartX, float indicatorPosY,
+//
+//                                    int highlightPosition, float progress, int itemCount) {
+//            mPaint.setColor(Color.GREEN);
+//            // width of item indicator including padding
+//            final float itemWidth = mIndicatorItemLength + mIndicatorItemPadding;
+//
+//            if (progress == 0F) {
+//                // no swipe, draw a normal indicator
+//                float highlightStart = indicatorStartX + itemWidth * highlightPosition;
+//                c.drawLine(highlightStart, indicatorPosY,
+//                        highlightStart + mIndicatorItemLength, indicatorPosY, mPaint);
+//            } else {
+//                float highlightStart = indicatorStartX + itemWidth * highlightPosition;
+//                // calculate partial highlight
+//                float partialLength = mIndicatorItemLength * progress;
+//
+//                // draw the cut off highlight
+//                c.drawLine(highlightStart + partialLength, indicatorPosY,
+//                        highlightStart + mIndicatorItemLength, indicatorPosY, mPaint);
+//                // draw the highlight overlapping to the next item as well
+//                if (highlightPosition < itemCount - 1) {
+//                    highlightStart += itemWidth;
+//                    c.drawLine(highlightStart, indicatorPosY,
+//                            highlightStart + partialLength, indicatorPosY, mPaint);
+//                }
+//            }
+//        }
+//    }
+
+//        @Override
+//
+//        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+//
+//            super.getItemOffsets(outRect, view, parent, state);
+//
+//            outRect.bottom = mIndicatorHeight;
+//
+//        }
 
 }
 

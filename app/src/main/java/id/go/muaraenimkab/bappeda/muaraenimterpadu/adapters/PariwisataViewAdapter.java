@@ -64,6 +64,8 @@ public class PariwisataViewAdapter extends RecyclerView.Adapter<PariwisataViewAd
 
         Picasso.with(context)
                 .load(Utilities.getURLImagePariwisata() + mListPariwisata.get(position).getGambar_pariwisata())
+                .fit()
+                .centerCrop()
                 .into(holder.imgkategoriBerita);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -86,11 +88,13 @@ public class PariwisataViewAdapter extends RecyclerView.Adapter<PariwisataViewAd
     class DataObjectHolder extends RecyclerView.ViewHolder {
         ImageView imgkategoriBerita;
         TextView lbljudulkategori;
+        RelativeLayout rlimgkategori;
 
         DataObjectHolder(View itemView) {
             super(itemView);
             imgkategoriBerita = itemView.findViewById(R.id.imgkategori);
             lbljudulkategori = itemView.findViewById(R.id.lbljudulkategori);
+            rlimgkategori=itemView.findViewById(R.id.rlimgkategori);
 
             Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
             final DisplayMetrics outMetrics = new DisplayMetrics();
@@ -98,7 +102,7 @@ public class PariwisataViewAdapter extends RecyclerView.Adapter<PariwisataViewAd
             int viewPagerWidth = Math.round(outMetrics.widthPixels);
             int viewPagerHeight = Math.round(outMetrics.widthPixels)/2;
 
-            imgkategoriBerita.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+            rlimgkategori.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
         }
     }
 

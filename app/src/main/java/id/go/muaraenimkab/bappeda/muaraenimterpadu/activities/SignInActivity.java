@@ -2,7 +2,9 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -15,9 +17,11 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -37,6 +41,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments.ProfilFragment;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
 import io.reactivex.Observer;
@@ -151,14 +156,16 @@ public class SignInActivity extends AppCompatActivity {
                     Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Silahkan isi email dan password Anda",
                             Snackbar.LENGTH_LONG).show();
                 } else {
-                    signin();
+                    ceklogin();
                 }
             }
         });
         lysignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utilities.hideKeyboard(SignInActivity.this);
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                assert inputMethodManager != null;
+                inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), 0);
             }
         });
 //        lupakatasandi.setOnClickListener(new View.OnClickListener() {
@@ -187,7 +194,7 @@ public class SignInActivity extends AppCompatActivity {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<User>> call = api.signin(random, etEmail.getText().toString().trim(), etPass.getText().toString().trim(), Utilities.getToken(),idp);
+        Call<Value<User>> call = api.signin(random, etEmail.getText().toString().trim(), etPass.getText().toString().trim(), Utilities.getToken(), idp);
         call.enqueue(new Callback<Value<User>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -235,6 +242,61 @@ public class SignInActivity extends AppCompatActivity {
                 pDialog.dismiss();
                 Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                         Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void ceklogin() {
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<ValueAdd> call = api.ceklogin(random, etEmail.getText().toString().trim());
+        call.enqueue(new Callback<ValueAdd>()
+
+        {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse
+                    (@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(SignInActivity.this));
+                        builder.setCancelable(true)
+                                .setTitle("Pemberitahuan")
+                                .setCancelable(false)
+                                .setMessage("Perangkat yang Login Sebelum ini akan Log Out")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        signin();
+                                    }
+                                })
+                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+                    } else if(success == 2) {
+                        signin();
+                    }
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<ValueAdd> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
             }
         });
     }

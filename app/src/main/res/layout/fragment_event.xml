@@ -19,87 +19,107 @@
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rl"
         android:visibility="gone">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             tools:ignore="UselessParent">
+
             <ImageView
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:src="@drawable/nointernet"
                 android:tint="@android:color/darker_gray"
                 tools:ignore="ContentDescription" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tidak_terhubung_ke_server"
                 android:textColor="@android:color/darker_gray" />
+
             <TextView
+                android:id="@+id/tv_cobalagi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/coba_lagi"
-                android:id="@+id/tv_cobalagi"
-                android:textColor="@color/colorOrange"
-                android:paddingTop="7dp"
-                android:paddingBottom="7dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/custom_button"
-                android:layout_marginTop="20dp" />
+                android:paddingLeft="15dp"
+                android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="7dp"
+                android:text="@string/coba_lagi"
+                android:textColor="@color/colorOrange" />
         </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rl_none"
         android:visibility="gone">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             tools:ignore="UseCompoundDrawables,UselessParent">
+
             <ImageView
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:src="@drawable/nointernet"
                 android:tint="@android:color/darker_gray"
                 tools:ignore="ContentDescription" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Belum ada event"
+                android:text="@string/belum_ada_event"
                 android:textColor="@android:color/darker_gray" />
         </LinearLayout>
     </RelativeLayout>
 
     <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:paddingTop="@dimen/activity_margin"-->
-        <!--android:paddingBottom="@dimen/activity_margin"-->
-        <!--android:paddingLeft="@dimen/activity_margin">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:paddingTop="@dimen/activity_margin"-->
+    <!--android:paddingBottom="@dimen/activity_margin"-->
+    <!--android:paddingLeft="@dimen/activity_margin">-->
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/swipeRefresh">
-        <android.support.v7.widget.RecyclerView
+        android:layout_height="match_parent">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:id="@+id/rvEvent"/>
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvEvent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+
+            <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                android:id="@+id/indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="2dp" />
+        </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <!--</RelativeLayout>-->

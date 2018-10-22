@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -59,6 +60,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity {
+    boolean doubleBackToExitPressedOnce = false;
     Fragment fragment;
     public static int flag2, flag3;
     String idp;
@@ -226,19 +228,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void replaceFragment(Fragment fragment, int flag) {
-        if (flag == 8) {
-            nowFragment = flag;
-        } else if (flag == 7) {
-            nowFragment = flag;
-            flag3 = flag;
-            lastFragment3 = fragment;
-        } else if (flag == 6) {
-            nowFragment = flag;
-            flag2 = flag;
-            lastFragment2 = fragment;
-        } else {
-            nowFragment = flag;
-            lastFragment = fragment;
+        switch (flag) {
+            case 8:
+                nowFragment = flag;
+                break;
+            case 7:
+                nowFragment = flag;
+                flag3 = flag;
+                lastFragment3 = fragment;
+                break;
+            case 6:
+                nowFragment = flag;
+                flag2 = flag;
+                lastFragment2 = fragment;
+                break;
+            default:
+                nowFragment = flag;
+                lastFragment = fragment;
+                break;
         }
 //        fragmentTransaction=fragmentManager.beginTransaction();
 //        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right,R.anim.enter_from_right);
@@ -247,41 +254,62 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void Back() {
         if (nowFragment != currentFragment) {
-            if (nowFragment == 8) {
-                fragmentManager.beginTransaction().replace(R.id.container, lastFragment3).commit();
-                nowFragment = 7;
-            } else if (nowFragment == 7) {
+            switch (nowFragment) {
+                case 8:
+                    fragmentManager.beginTransaction().replace(R.id.container, lastFragment3).commit();
+                    nowFragment = 7;
+                    break;
+                case 7:
 //                fragmentTransaction=fragmentManager.beginTransaction();
 //                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
 //                fragmentTransaction.replace(R.id.container, lastFragment2).commit();
-                fragmentManager.beginTransaction().replace(R.id.container, lastFragment2).commit();
-                nowFragment = 6;
-            } else if (nowFragment == 6) {
+                    fragmentManager.beginTransaction().replace(R.id.container, lastFragment2).commit();
+                    nowFragment = 6;
+                    break;
+                case 6:
 //                fragmentTransaction=fragmentManager.beginTransaction();
 //                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
 //                fragmentTransaction.replace(R.id.container, lastFragment).commit();
-                fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
-                nowFragment = 5;
-                flag2 = 4;
-            } else {
+                    fragmentManager.beginTransaction().replace(R.id.container, lastFragment).commit();
+                    nowFragment = 5;
+                    flag2 = 4;
+                    break;
+                default:
 //                fragmentTransaction=fragmentManager.beginTransaction();
 //                fragmentTransaction.setCustomAnimations(R.anim.exit_to_right,R.anim.exit_to_right);
 //                fragmentTransaction.replace(R.id.container, fragment).commit();
-                bottomNavigationView.setCurrentItem(currentFragment);
-                nowFragment = currentFragment;
+                    bottomNavigationView.setCurrentItem(currentFragment);
+                    nowFragment = currentFragment;
+                    break;
             }
         } else {
-            super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Snackbar.make(Objects.requireNonNull(MainActivity.this).findViewById(android.R.id.content), "Tekan Lagi untuk Keluar", Snackbar.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+
+                }
+            }, 2000);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onBackPressed() {
         Back();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onSupportNavigateUp() {
         Back();

@@ -17,6 +17,13 @@
         tools:ignore="UselessParent">
 
         <com.github.siyamed.shapeimageview.RoundedImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:siBorderColor="@color/white"
+            android:src="@drawable/defaultimage"
+            android:scaleType="fitXY"
+            app:siRadius="13dp" />
+        <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/imgContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

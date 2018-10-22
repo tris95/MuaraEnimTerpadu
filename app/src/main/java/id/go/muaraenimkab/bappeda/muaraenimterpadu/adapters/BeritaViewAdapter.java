@@ -57,7 +57,7 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
     public void onBindViewHolder(@NonNull final DataObjectHolder holder, @SuppressLint("RecyclerView") final int position) {
         final String like,view;
         holder.lblJudulBerita.setText(mListBerita.get(position).getJudul_berita());
-        holder.lblIsiBerita.setText(mListBerita.get(position).getIsi_berita());
+        //holder.lblIsiBerita.setText(mListBerita.get(position).getIsi_berita());
         holder.lbltanggalBerita.setText(mListBerita.get(position).getTanggal_post());
 
         if (mListBerita.get(position).getJumlahlike() != null)
@@ -75,6 +75,8 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
 
         Picasso.with(context)
                 .load(Utilities.getURLImageBerita() + mListBerita.get(position).getGambar_berita())
+                .fit()
+                .centerCrop()
                 .into(holder.imgBerita);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +111,7 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
             super(itemView);
             imgBerita = itemView.findViewById(R.id.imgBerita);
             lblJudulBerita = itemView.findViewById(R.id.lblJudulBerita);
-            lblIsiBerita = itemView.findViewById(R.id.lblIsiBerita);
+            //lblIsiBerita = itemView.findViewById(R.id.lblIsiBerita);
             lbltanggalBerita = itemView.findViewById(R.id.lbltanggalBerita);
             lbllikeBerita = itemView.findViewById(R.id.lblLikeBerita);
             lblviewBerita = itemView.findViewById(R.id.lblViewBerita);

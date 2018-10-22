@@ -2,9 +2,13 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ext="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp">
+    android:paddingTop="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="15dp">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -19,8 +23,10 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:background="@drawable/defaultimage"
                 android:id="@+id/imgEvent"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                tools:ignore="ContentDescription" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -43,14 +49,16 @@
                     android:orientation="horizontal"
                     android:id="@+id/ll"
                     android:layout_below="@+id/lbljudulEvent"
-                    android:gravity="center">
+                    android:gravity="center"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/baseline_event_24"
                         android:tint="@color/colorPrimary"
-                        android:id="@+id/img"/>
+                        android:id="@+id/img"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/tanggalevent"
@@ -86,7 +94,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
-        android:text="Lokasi"
+        android:text="@string/lokasi"
         android:id="@+id/btnLokasi"
         android:layout_alignParentBottom="true">
     </Button>

@@ -49,6 +49,8 @@ public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.Da
 
         Picasso.with(context)
                 .load(Utilities.getURLImageKontak() + mListKontak.get(position).getGambar_kantor())
+                .fit()
+                .centerCrop()
                 .into(holder.imgkontak);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -70,11 +72,13 @@ public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.Da
     class DataObjectHolder extends RecyclerView.ViewHolder {
         ImageView imgkontak;
         TextView lbljudulkontak;
+        RelativeLayout rlimgkategori;
 
         DataObjectHolder(View itemView) {
             super(itemView);
             imgkontak = itemView.findViewById(R.id.imgkategori);
             lbljudulkontak = itemView.findViewById(R.id.lbljudulkategori);
+            rlimgkategori=itemView.findViewById(R.id.rlimgkategori);
 
             Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
             final DisplayMetrics outMetrics = new DisplayMetrics();
@@ -82,7 +86,7 @@ public class KontakViewAdapter extends RecyclerView.Adapter<KontakViewAdapter.Da
             int viewPagerWidth = Math.round(outMetrics.widthPixels);
             int viewPagerHeight = Math.round(outMetrics.widthPixels)/2;
 
-            imgkontak.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+            rlimgkategori.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
         }
     }
 }

@@ -65,6 +65,7 @@
                     android:id="@+id/imgdetailwisata"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:background="@drawable/defaultimage"
                     android:clickable="false"
                     android:scaleType="fitXY"
                     tools:ignore="ContentDescription" />

@@ -14,6 +14,7 @@
             android:id="@+id/imgBerita"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@drawable/defaultimage"
             android:scaleType="fitXY"
             tools:ignore="ContentDescription" />
 
@@ -22,29 +23,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/imgBerita"
-            android:textSize="28sp"
-            android:maxLines="1"
+            android:maxLines="3"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:layout_toEndOf="@+id/imgBerita"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp" />
 
-        <TextView
-            android:id="@+id/lblIsiBerita"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:textSize="25sp"
-            android:layout_below="@+id/lblJudulBerita"
-            android:layout_toRightOf="@+id/imgBerita"
-            android:layout_toEndOf="@+id/imgBerita"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp" />
+        <!--<TextView-->
+            <!--android:id="@+id/lblIsiBerita"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:maxLines="2"-->
+            <!--android:textSize="25sp"-->
+            <!--android:layout_below="@+id/lblJudulBerita"-->
+            <!--android:layout_toRightOf="@+id/imgBerita"-->
+            <!--android:layout_toEndOf="@+id/imgBerita"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginStart="10dp" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblIsiBerita"
+            android:layout_below="@+id/lblJudulBerita"
             android:layout_toRightOf="@+id/imgBerita"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"

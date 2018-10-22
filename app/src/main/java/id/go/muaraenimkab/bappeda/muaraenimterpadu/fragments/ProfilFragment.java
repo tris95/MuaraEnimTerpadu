@@ -22,7 +22,6 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,9 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.gun0912.tedpermission.TedPermissionResult;
@@ -49,15 +46,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignInActivity;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignUpActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
@@ -81,7 +73,7 @@ public class ProfilFragment extends Fragment {
     EditText etNama, etNoKtp, etEmail, etNoHp, etAlamat, etPassword;
     public static boolean flagback;
     boolean editmode;
-    String foto,idp;
+    String foto, idp;
     private static final int CAMERA_REQUEST = 188, FILE_REQUES = 189;
     Bitmap imageBitmap;
 
@@ -194,66 +186,73 @@ public class ProfilFragment extends Fragment {
                 });
         try {
             idp = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         Utilities.setLogin(getActivity(), Utilities.getUser(getActivity()).getEmail(), idp);
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btnAction.getText().toString().equals("SignIn")) {
-                    startActivity(new Intent(getContext(), SignInActivity.class));
-                } else if (btnAction.getText().toString().equals("SignOut")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-                    builder.setCancelable(true)
-                            .setTitle("Konfirmasi")
-                            .setMessage("Keluar dari akun ?")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    signout();
-                                }
-                            })
-                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                }
-                            })
-                            .show();
-                } else if (btnAction.getText().toString().equals("Update Akun")) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-                    builder.setCancelable(true)
-                            .setTitle("Konfirmasi")
-                            .setMessage("Update data akun ?")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    if (etNama.getText().toString().isEmpty()) {
-                                        etNama.setError("Silahkan isi nama Anda");
-                                    } else if (etNoKtp.getText().toString().isEmpty()) {
-                                        etNoKtp.setError("Silahkan isi nomor KTP Anda");
-                                    } else if (etNoHp.getText().toString().isEmpty()) {
-                                        etNoHp.setError("Silahkan isi nomor HP Anda");
-                                    } else if (etAlamat.getText().toString().isEmpty()) {
-                                        etAlamat.setError("Silahkan isi alamat Anda");
-                                    } else {
-                                        updateProfilData();
+                switch (btnAction.getText().toString()) {
+                    case "SignIn":
+                        startActivity(new Intent(getContext(), SignInActivity.class));
+                        break;
+                    case "SignOut": {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+                        builder.setCancelable(true)
+                                .setTitle("Konfirmasi")
+                                .setMessage("Keluar dari akun ?")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        signout();
                                     }
-                                }
-                            })
-                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                }
-                            })
-                            .show();
+                                })
+                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                })
+                                .show();
+                        break;
+                    }
+                    case "Update Akun": {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+                        builder.setCancelable(true)
+                                .setTitle("Konfirmasi")
+                                .setMessage("Update data akun ?")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        if (etNama.getText().toString().isEmpty()) {
+                                            etNama.setError("Silahkan isi nama Anda");
+                                        } else if (etNoKtp.getText().toString().isEmpty()) {
+                                            etNoKtp.setError("Silahkan isi nomor KTP Anda");
+                                        } else if (etNoHp.getText().toString().isEmpty()) {
+                                            etNoHp.setError("Silahkan isi nomor HP Anda");
+                                        } else if (etAlamat.getText().toString().isEmpty()) {
+                                            etAlamat.setError("Silahkan isi alamat Anda");
+                                        } else {
+                                            updateProfilData();
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                })
+                                .show();
+                        break;
+                    }
                 }
             }
         });
 
         imgEdit.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 if (!editmode) {
@@ -296,7 +295,7 @@ public class ProfilFragment extends Fragment {
             public boolean onTouch(View view, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     if (Utilities.isLogin(getActivity())) {
-                        View dialogView = inflater.inflate(R.layout.dialog_ganti_password, null);
+                        @SuppressLint("InflateParams") View dialogView = inflater.inflate(R.layout.dialog_ganti_password, null);
                         final EditText oldPas = dialogView.findViewById(R.id.et_old_password);
                         final EditText newPas = dialogView.findViewById(R.id.et_new_password);
                         final EditText rePass = dialogView.findViewById(R.id.et_repassword);
@@ -326,7 +325,7 @@ public class ProfilFragment extends Fragment {
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
                         alertDialog.setCancelable(false);
-                        alertDialog.getWindow().setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        Objects.requireNonNull(alertDialog.getWindow()).setLayout(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     } else {
                         startActivity(new Intent(getContext(), SignInActivity.class));
                         getActivity().finish();
@@ -347,18 +346,22 @@ public class ProfilFragment extends Fragment {
         return v;
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onResume() {
         super.onResume();
 
-        Log.e("Login", Utilities.isLogin(getActivity()) + "");
         if (!flagback) {
 
             if (Utilities.isLogin(getActivity())) {
                 btnAction.setText("SignOut");
                 User users = Utilities.getUser(getActivity());
-                Picasso.with(getActivity()).load(Utilities.getBaseURLImageUser() + users.getGambar_user()).into(imgProfil);
+                Picasso.with(getActivity())
+                        .load(Utilities.getBaseURLImageUser() + users.getGambar_user())
+                        .fit()
+                        .centerCrop()
+                        .into(imgProfil);
                 etAlamat.setText(users.getAlamat_user());
                 etEmail.setText(users.getEmail());
                 etNoHp.setText(users.getNo_hp_user());
@@ -366,9 +369,24 @@ public class ProfilFragment extends Fragment {
                 etNoKtp.setText(users.getNo_ktp());
             } else {
                 btnAction.setText("SignIn");
-                Picasso.with(getActivity()).load(Utilities.getBaseURLImageUser() + "default.png").into(imgProfil);
-                startActivity(new Intent(getContext(), SignInActivity.class));
-                Objects.requireNonNull(getActivity()).finish();
+                Picasso.with(getActivity())
+                        .load(Utilities.getBaseURLImageUser() + "default.png")
+                        .fit()
+                        .centerCrop()
+                        .into(imgProfil);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+                builder.setCancelable(true)
+                        .setTitle("Pemberitahuan")
+                        .setCancelable(false)
+                        .setMessage("Untuk Akses Menu Propile Lakukan Login Terlebih Dahulu")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                startActivity(new Intent(getContext(), SignInActivity.class));
+                                Objects.requireNonNull(getActivity()).finish();
+                            }
+                        })
+                        .show();
             }
         } else {
             if (SignInActivity.flagsignin) {
@@ -401,10 +419,11 @@ public class ProfilFragment extends Fragment {
 //        void onFragmentInteraction(Uri uri);
 //    }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void dialogAmbilGambar() {
         final CharSequence[] options = {"Camera", "Gallery"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         builder.setTitle("Ambil foto dari ?");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -549,6 +568,7 @@ public class ProfilFragment extends Fragment {
 //        }
 //    }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -572,7 +592,7 @@ public class ProfilFragment extends Fragment {
                             + File.separator
                             + "Phoenix" + File.separator + "default";
                     f.delete();
-                    OutputStream outFile = null;
+                    OutputStream outFile;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     try {
                         outFile = new FileOutputStream(file);
@@ -600,13 +620,13 @@ public class ProfilFragment extends Fragment {
                 Uri imageUri = data.getData();
                 InputStream imageStream = null;
                 try {
-                    imageStream = getActivity().getContentResolver().openInputStream(imageUri);
+                    imageStream = Objects.requireNonNull(getActivity()).getContentResolver().openInputStream(Objects.requireNonNull(imageUri));
                     imageBitmap = BitmapFactory.decodeStream(imageStream);
                     String path = Environment
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
-                    OutputStream outFile = null;
+                    OutputStream outFile;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     try {
                         outFile = new FileOutputStream(file);
@@ -662,11 +682,12 @@ public class ProfilFragment extends Fragment {
         APIServices api = retrofit.create(APIServices.class);
         Call<Value<User>> call = api.updateprofilimage(random, id, oldFoto, foto);
         call.enqueue(new Callback<Value<User>>() {
+            @SuppressLint("SetTextI18n")
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<Value<User>> call, @NonNull Response<Value<User>> response) {
                 pDialog.dismiss();
-                Log.e("boo", response.body().getMessage());
+                Log.e("boo", Objects.requireNonNull(response.body()).getMessage());
                 Log.e("boo", id + " | " + oldFoto + " | " + foto);
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
@@ -729,6 +750,7 @@ public class ProfilFragment extends Fragment {
                 etNama.getText().toString().trim(), etNoKtp.getText().toString().trim(), etNoHp.getText().toString().trim(),
                 etAlamat.getText().toString().trim());
         call.enqueue(new Callback<Value<User>>() {
+            @SuppressLint("SetTextI18n")
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<Value<User>> call, @NonNull Response<Value<User>> response) {
@@ -840,6 +862,7 @@ public class ProfilFragment extends Fragment {
         APIServices api = retrofit.create(APIServices.class);
         Call<ValueAdd> call = api.signout(random, etEmail.getText().toString().trim());
         call.enqueue(new Callback<ValueAdd>() {
+            @SuppressLint("SetTextI18n")
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {

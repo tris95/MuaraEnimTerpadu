@@ -35,4 +35,8 @@
     <string name="tidak_ada_berita">Berita belum tersedia</string>
     <string name="content_kosong">Konten belum tersedia</string>
     <string name="toko">Toko</string>
+    <string name="daftar">DAFTAR</string>
+    <string name="belum_punya_akun">Belum punya akun ?</string>
+    <string name="belum_ada_event">Belum ada event</string>
+    <string name="lokasi">Lokasi</string>
 </resources>

@@ -186,4 +186,9 @@ public interface APIServices {
     @POST("getberitanotif.php")
     Call<Value<Berita>> getBeritanotif(@Field("xkey") String xkey,
                                        @Field("idberita") String idberita);
+
+    @FormUrlEncoded
+    @POST("ceklogin.php")
+    Call<ValueAdd> ceklogin(@Field("xkey") String xkey,
+                            @Field("email") String email);
 }
