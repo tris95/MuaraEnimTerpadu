@@ -1,8 +1,11 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -53,9 +58,23 @@ public class LaporanSayaFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     RelativeLayout rl_none, rl_conn;
     TextView tv_cobalagi;
+    String flag,id;
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            getLaporan();
+        }
+    };
+
 
     public LaporanSayaFragment() {
-        // Required empty public constructor
+
+    }
+
+    @SuppressLint("ValidFragment")
+    public LaporanSayaFragment(String flag) {
+        this.flag = flag;
     }
 
     public static LaporanSayaFragment newInstance() {
@@ -70,10 +89,11 @@ public class LaporanSayaFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_laporan_saya, container, false);
+        View v = inflater.inflate(R.layout.fragment_laporan_saya, container, false);
         rView = v.findViewById(R.id.rView);
         swipeRefreshLayout = v.findViewById(R.id.swipeRefresh);
         rl_none = v.findViewById(R.id.rl_none);
@@ -81,37 +101,45 @@ public class LaporanSayaFragment extends Fragment {
         tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
         rView.addItemDecoration(new DividerItemDecoration(rView.getContext(), DividerItemDecoration.VERTICAL));
 
-        if (MainActivity.laporans.size() != 0){
-            linearLayoutManager = new LinearLayoutManager(getContext());
-            rView.setLayoutManager(linearLayoutManager);
-            LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<Laporan>) MainActivity.laporans);
-            rView.setAdapter(laporanViewAdapter);
-        }else {
-            User user = Utilities.getUser(getContext());
-            getLaporan(user.getId_user());
+        User user = Utilities.getUser(getContext());
+        id=user.getId_user();
+        if (MainActivity.laporans.size() != 0) {
+            if (flag!=null) {
+                if (flag.equals("3")) {
+                    getLaporan();
+                } else {
+                    linearLayoutManager = new LinearLayoutManager(getContext());
+                    rView.setLayoutManager(linearLayoutManager);
+                    LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<Laporan>) MainActivity.laporans);
+                    rView.setAdapter(laporanViewAdapter);
+                }
+            }else {
+                linearLayoutManager = new LinearLayoutManager(getContext());
+                rView.setLayoutManager(linearLayoutManager);
+                LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<Laporan>) MainActivity.laporans);
+                rView.setAdapter(laporanViewAdapter);
+            }
+        } else {
+            getLaporan();
         }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                User user = Utilities.getUser(getContext());
-                getLaporan(user.getId_user());
+                getLaporan();
             }
         });
 
         tv_cobalagi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = Utilities.getUser(getContext());
-                getLaporan(user.getId_user());
+                getLaporan();
             }
         });
 
         return v;
     }
 
-    public void onButtonPressed(Uri uri) {
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -123,12 +151,8 @@ public class LaporanSayaFragment extends Fragment {
         super.onDetach();
     }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 
-    private void getLaporan(String id) {
+    private void getLaporan() {
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
         pDialog.setIndeterminate(false);
@@ -144,7 +168,6 @@ public class LaporanSayaFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
-
         APIServices api = retrofit.create(APIServices.class);
         Call<Value<Laporan>> call = api.getlaporan(random, id);
         call.enqueue(new Callback<Value<Laporan>>() {
@@ -156,11 +179,11 @@ public class LaporanSayaFragment extends Fragment {
                     swipeRefreshLayout.setRefreshing(false);
                     if (success == 1) {
                         mList = (ArrayList<Laporan>) Objects.requireNonNull(response.body()).getData();
-                        if(mList.size() == 0){
+                        if (mList.size() == 0) {
                             rl_none.setVisibility(View.VISIBLE);
                             rl_conn.setVisibility(View.GONE);
                             rView.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             rl_none.setVisibility(View.GONE);
                             rl_conn.setVisibility(View.GONE);
                             rView.setVisibility(View.VISIBLE);
@@ -203,6 +226,21 @@ public class LaporanSayaFragment extends Fragment {
                         Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("refresh");
+        Objects.requireNonNull(getActivity()).registerReceiver(receiver, filter);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onPause() {
+        Objects.requireNonNull(getActivity()).unregisterReceiver(receiver);
+        super.onPause();
     }
 
 }

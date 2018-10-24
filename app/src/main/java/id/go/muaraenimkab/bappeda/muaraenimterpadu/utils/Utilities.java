@@ -120,6 +120,7 @@ public class Utilities {
         prefsEditor.apply();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static User getUser(Context context) {
         if (isLogin(context)) {
             SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);

@@ -2,9 +2,11 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
@@ -19,6 +21,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -218,7 +221,7 @@ public class LaporanFragment extends Fragment {
                 case 0:
                     return new KirimLaporanFragment();
                 case 1:
-                    return new LaporanSayaFragment();
+                    return new LaporanSayaFragment(flag);
             }
             return null;
         }
@@ -240,8 +243,4 @@ public class LaporanFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 }

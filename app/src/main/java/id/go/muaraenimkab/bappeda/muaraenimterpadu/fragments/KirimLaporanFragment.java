@@ -305,8 +305,10 @@ public class KirimLaporanFragment extends Fragment {
                         txtLokasi.setText("");
                         txtNoHp.setText("");
                         foto = "";
+
+                        Objects.requireNonNull(getActivity()).sendBroadcast(new Intent("refresh"));
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Laporan berhasil dikirim", Snackbar.LENGTH_LONG).show();
-                    } else {
+                      } else {
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengirim laporan. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
                     }
