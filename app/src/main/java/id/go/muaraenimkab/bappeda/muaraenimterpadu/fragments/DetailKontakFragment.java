@@ -30,6 +30,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -206,6 +207,15 @@ public class DetailKontakFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 gMap = googleMap;
 
+                @SuppressLint("ResourceType") View navigationControl = mapView.findViewById(0x4);
+
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)
+                        navigationControl.getLayoutParams();
+                //         position on right bottom
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+                layoutParams.setMargins(0, 40, 40, 0);
+
                 if (ContextCompat.checkSelfPermission(getActivity(),
                         android.Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
@@ -311,12 +321,13 @@ public class DetailKontakFragment extends Fragment {
                         return;
                     }
                     mFusedLocationClient.getLastLocation()
-                            .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                            .addOnSuccessListener(Objects.requireNonNull(getActivity()), new OnSuccessListener<Location>() {
                                 @Override
                                 public void onSuccess(Location location) {
                                     if (location != null) {
-                                        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                                        gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
+//                                        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+//                                        gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
+
                                         //gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
 //                                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
 
@@ -325,14 +336,14 @@ public class DetailKontakFragment extends Fragment {
                                         gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
 
 //                                    if (currentLatLng != null && destlatLng != null) {
-                                        String url = getUrl(currentLatLng, destlatLng);
-                                        Log.e("url", url);
-                                        DownloadTask FetchUrl = new DownloadTask();
-                                        FetchUrl.execute(url);
+//                                        String url = getUrl(currentLatLng, destlatLng);
+//                                        Log.e("url", url);
+//                                        DownloadTask FetchUrl = new DownloadTask();
+//                                        FetchUrl.execute(url);
 //                                    }
                                     } else {
-                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
-                                                Snackbar.LENGTH_LONG).show();
+//                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan hidupkan GPS Anda",
+//                                                Snackbar.LENGTH_LONG).show();
 
                                         LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
                                         gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));

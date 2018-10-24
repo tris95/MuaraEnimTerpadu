@@ -87,7 +87,7 @@ public class EventFragment extends Fragment {
         relativeLayout = v.findViewById(R.id.rl);
         rvEvent = v.findViewById(R.id.rvEvent);
         tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
-        //swipeRefresh = v.findViewById(R.id.swipeRefresh);
+        swipeRefresh = v.findViewById(R.id.swipeRefresh);
         rl_none = v.findViewById(R.id.rl_none);
 
         recyclerIndicator = v.findViewById(R.id.indicator);
@@ -97,6 +97,12 @@ public class EventFragment extends Fragment {
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Event");
+        }
+
+        if (flag != null) {
+            if (flag.equals("3")) {
+                getEvent();
+            }
         }
 
         linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -124,12 +130,12 @@ public class EventFragment extends Fragment {
             getEvent();
         }
 
-//        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                getEvent();
-//            }
-//        });
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getEvent();
+            }
+        });
 
         return v;
     }
