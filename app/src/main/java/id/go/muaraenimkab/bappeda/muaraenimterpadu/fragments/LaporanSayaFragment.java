@@ -164,6 +164,7 @@ public class LaporanSayaFragment extends Fragment {
                             rl_none.setVisibility(View.GONE);
                             rl_conn.setVisibility(View.GONE);
                             rView.setVisibility(View.VISIBLE);
+                            MainActivity.laporans.clear();
                             MainActivity.laporans = mList;
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             rView.setLayoutManager(linearLayoutManager);

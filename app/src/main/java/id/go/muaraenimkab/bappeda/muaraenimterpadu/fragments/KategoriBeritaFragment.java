@@ -124,6 +124,7 @@ public class KategoriBeritaFragment extends Fragment {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         mListKategoriBerita = (ArrayList<KategoriBerita>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.kategoriBeritas.clear();
                         MainActivity.kategoriBeritas = mListKategoriBerita;
 
                         linearLayoutManager=new LinearLayoutManager(getContext());

@@ -138,7 +138,9 @@ public class PariwisataFragment extends Fragment {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         mListPariwisata = (ArrayList<Pariwisata>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.pariwisatas.clear();
                         MainActivity.pariwisatas = mListPariwisata;
+
                         if (mListPariwisata.size() != 0) {
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             rvPariwisata.setLayoutManager(linearLayoutManager);

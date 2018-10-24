@@ -237,6 +237,7 @@ public class KirimLaporanFragment extends Fragment {
                     if (success == 1) {
                         idOpd.clear();
                         List<String> arr = new ArrayList<>();
+                        MainActivity.opds.clear();
                         MainActivity.opds = response.body().getData();
                         for (int a = 0; a < response.body().getData().size() + 1; a++) {
                             if (a == 0) {

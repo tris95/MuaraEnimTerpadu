@@ -36,6 +36,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:text="1.1" />
+        android:text="@string/persiaplikasi" />
 
 </RelativeLayout>

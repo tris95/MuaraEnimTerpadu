@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
     View view;
     private SliderLayout mSlider;
     RelativeLayout rl, rlberita, rlslider;
-    TextView lblBeritaselengkapnya,lblBeritaterbaru, tv_cobalagi;
+    TextView lblBeritaselengkapnya, lblBeritaterbaru, tv_cobalagi;
     RecyclerView rvContent, rvBerita;
     ArrayList<Content> mListContent;
     ArrayList<Berita> mListBerita;
@@ -65,7 +65,8 @@ public class HomeFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     PagerIndicator indicator;
     ImageView tvArrow;
-    public static boolean flag=false;
+    public static boolean flag = false;
+
     public HomeFragment() {
 
     }
@@ -91,7 +92,7 @@ public class HomeFragment extends Fragment {
         //toolbar = v.findViewById(R.id.toolbar);
         rl = v.findViewById(R.id.rl);
         rlberita = v.findViewById(R.id.rlberita);
-        view=v.findViewById(R.id.view);
+        view = v.findViewById(R.id.view);
         swipeRefreshLayout = v.findViewById(R.id.swipe);
         tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
         indicator = v.findViewById(R.id.custom_indicator);
@@ -117,11 +118,11 @@ public class HomeFragment extends Fragment {
 
         rvBerita.addItemDecoration(new DividerItemDecoration(rvBerita.getContext(), DividerItemDecoration.VERTICAL));
 
-        if (flag){
+        if (flag) {
             getBerita1();
-            flag=false;
+            flag = false;
         }
-        if (MainActivity.ads.size() != 0 && MainActivity.contents.size() != 0) {
+        if (MainActivity.ads.size() != 0 && MainActivity.contents.size() != 0 && MainActivity.Beritas.size() != 0) {
             List<Ad> listDataAd = MainActivity.ads;
             HashMap<String, String> url_maps = new HashMap<>();
 
@@ -170,13 +171,17 @@ public class HomeFragment extends Fragment {
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(false);
                 getAd();
+                MainActivity.kategoriBeritas.clear();
+                MainActivity.Beritask.clear();
+                MainActivity.pariwisatas.clear();
+                MainActivity.tempatPariwisatas.clear();
             }
         });
 
-        llkategoriberita= v.findViewById(R.id.llkategoriberita);
+        llkategoriberita = v.findViewById(R.id.llkategoriberita);
         lblBeritaselengkapnya = v.findViewById(R.id.lblBeritaselengkapnya);
-        lblBeritaterbaru= v.findViewById(R.id.lblBeritaterbaru);
-        tvArrow=v.findViewById(R.id.tvArrow);
+        lblBeritaterbaru = v.findViewById(R.id.lblBeritaterbaru);
+        tvArrow = v.findViewById(R.id.tvArrow);
 
         //lblBeritaselengkapnya.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/52);
         //lblBeritaterbaru.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/52);

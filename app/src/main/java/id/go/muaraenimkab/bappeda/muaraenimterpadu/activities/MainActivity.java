@@ -69,16 +69,25 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     BottomNavigationViewEx bottomNavigationView;
     static int currentFragment = 0, nowFragment = 0;
+    //Home
     public static List<Ad> ads = new ArrayList<>();
     public static List<Content> contents = new ArrayList<>();
-    public static List<Kontak> kontaks = new ArrayList<>();
-    public static List<KategoriBerita> kategoriBeritas = new ArrayList<>();
     public static List<Berita> Beritas = new ArrayList<>();
-    public static List<Laporan> laporans = new ArrayList<>();
-    public static List<Event> events = new ArrayList<>();
-    public static List<Opd> opds = new ArrayList<>();
+    public static List<KategoriBerita> kategoriBeritas = new ArrayList<>();
+    public static List<Berita> Beritask = new ArrayList<>();
     public static List<Pariwisata> pariwisatas = new ArrayList<>();
     public static List<TempatPariwisata> tempatPariwisatas = new ArrayList<>();
+
+    //Kontak
+    public static List<Kontak> kontaks = new ArrayList<>();
+
+    //Laporan
+    public static List<Laporan> laporans = new ArrayList<>();
+    public static List<Opd> opds = new ArrayList<>();
+
+    //Event
+    public static List<Event> events = new ArrayList<>();
+
 
 //    private BroadcastReceiver broadcastRefresh = new BroadcastReceiver() {
 //        @Override

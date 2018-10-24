@@ -121,6 +121,7 @@ public class KontakFragment extends Fragment {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         mListKontak = (ArrayList<Kontak>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.kontaks.clear();
                         MainActivity.kontaks = mListKontak;
 
                         linearLayoutManager=new LinearLayoutManager(getContext());

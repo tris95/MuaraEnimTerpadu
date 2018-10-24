@@ -121,6 +121,7 @@ public class TempatFragment extends Fragment {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         mListtempatPariwisata = (ArrayList<TempatPariwisata>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.tempatPariwisatas.clear();
                         MainActivity.tempatPariwisatas=mListtempatPariwisata;
 
                         if (mListtempatPariwisata.size()!=0) {

@@ -88,8 +88,16 @@ public class BeritaFragment extends Fragment {
         }
         rvBerita = v.findViewById(R.id.rvBerita);
 
-        getBerita();
-
+        if (MainActivity.Beritask.size() != 0) {
+            linearLayoutManager = new LinearLayoutManager(getContext());
+            rvBerita.setLayoutManager(linearLayoutManager);
+            BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), (ArrayList<Berita>) MainActivity.Beritask);
+            rvBerita.setAdapter(beritaViewAdapter);
+            rltidakadaberita.setVisibility(View.GONE);
+            rvBerita.setVisibility(View.VISIBLE);
+        }else {
+            getBerita();
+        }
         tv_cobalagi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,10 +134,12 @@ public class BeritaFragment extends Fragment {
                         mListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
 
                         if (mListBerita.size()!=0) {
+                            MainActivity.Beritask.clear();
+                            MainActivity.Beritask=mListBerita;
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             rvBerita.setLayoutManager(linearLayoutManager);
-                            BeritaViewAdapter kategoriberitaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
-                            rvBerita.setAdapter(kategoriberitaViewAdapter);
+                            BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
+                            rvBerita.setAdapter(beritaViewAdapter);
                             rltidakadaberita.setVisibility(View.GONE);
                             rvBerita.setVisibility(View.VISIBLE);
                         }
