@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,14 +88,18 @@ public class BeritaFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(kategoriberita);
         }
         rvBerita = v.findViewById(R.id.rvBerita);
-
+        Log.e("boo", MainActivity.selectedKategori+" "+idkategoriberita);
         if (MainActivity.Beritask.size() != 0) {
-            linearLayoutManager = new LinearLayoutManager(getContext());
-            rvBerita.setLayoutManager(linearLayoutManager);
-            BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), (ArrayList<Berita>) MainActivity.Beritask);
-            rvBerita.setAdapter(beritaViewAdapter);
-            rltidakadaberita.setVisibility(View.GONE);
-            rvBerita.setVisibility(View.VISIBLE);
+            if(idkategoriberita.equals(MainActivity.selectedKategori)) {
+                linearLayoutManager = new LinearLayoutManager(getContext());
+                rvBerita.setLayoutManager(linearLayoutManager);
+                BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), (ArrayList<Berita>) MainActivity.Beritask);
+                rvBerita.setAdapter(beritaViewAdapter);
+                rltidakadaberita.setVisibility(View.GONE);
+                rvBerita.setVisibility(View.VISIBLE);
+            }else {
+                getBerita();
+            }
         }else {
             getBerita();
         }
@@ -136,6 +141,7 @@ public class BeritaFragment extends Fragment {
                         if (mListBerita.size()!=0) {
                             MainActivity.Beritask.clear();
                             MainActivity.Beritask=mListBerita;
+                            MainActivity.selectedKategori = idkategoriberita;
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             rvBerita.setLayoutManager(linearLayoutManager);
                             BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);

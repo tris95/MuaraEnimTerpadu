@@ -88,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
     //Event
     public static List<Event> events = new ArrayList<>();
 
+    //Selected Kategori
+    public static String selectedKategori="";
+
 
 //    private BroadcastReceiver broadcastRefresh = new BroadcastReceiver() {
 //        @Override
