@@ -186,6 +186,7 @@ public class EventFragment extends Fragment {
                         } else {
                             relativeLayout.setVisibility(View.GONE);
                             rl_none.setVisibility(View.GONE);
+                            MainActivity.events.clear();
                             MainActivity.events = mListEvent;
 
                             EventViewAdapter eventViewAdapter = new EventViewAdapter(getContext(), mListEvent);

@@ -226,6 +226,7 @@ public class HomeFragment extends Fragment {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         List<Ad> listDataAd = Objects.requireNonNull(response.body()).getData();
+                        MainActivity.ads.clear();
                         MainActivity.ads = listDataAd;
                         HashMap<String, String> url_maps = new HashMap<>();
 
@@ -306,6 +307,7 @@ public class HomeFragment extends Fragment {
                     if (success == 1) {
                         rlslider.setVisibility(View.VISIBLE);
                         mListContent = (ArrayList<Content>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.contents.clear();
                         MainActivity.contents = mListContent;
 
                         linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -364,6 +366,7 @@ public class HomeFragment extends Fragment {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         mListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.Beritas.clear();
                         MainActivity.Beritas = mListBerita;
 
                         linearLayoutManagerberita = new LinearLayoutManager(getContext());
@@ -423,6 +426,7 @@ public class HomeFragment extends Fragment {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         mListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.Beritas.clear();
                         MainActivity.Beritas = mListBerita;
 
                         linearLayoutManagerberita = new LinearLayoutManager(getContext());

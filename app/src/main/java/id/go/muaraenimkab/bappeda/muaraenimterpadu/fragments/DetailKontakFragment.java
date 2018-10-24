@@ -251,7 +251,6 @@ public class DetailKontakFragment extends Fragment {
                                                 .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                                                     @Override
                                                     public void onSuccess(Location location) {
-                                                        Toast.makeText(getContext(), ""+location, Toast.LENGTH_SHORT).show();
                                                         if (location != null) {
                                                             currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                                                             gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
