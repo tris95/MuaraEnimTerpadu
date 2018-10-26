@@ -47,6 +47,7 @@ public class BeritaFragment extends Fragment {
     ArrayList<Berita> mListBerita;
     String kategoriberita,idkategoriberita;
     RelativeLayout rl,rltidakadaberita;
+    public static boolean flag = false;
 
     public BeritaFragment() {
         // Required empty public constructor
@@ -89,6 +90,10 @@ public class BeritaFragment extends Fragment {
         }
         rvBerita = v.findViewById(R.id.rvBerita);
         Log.e("boo", MainActivity.selectedKategori+" "+idkategoriberita);
+        if (flag) {
+            getBerita1();
+            flag = false;
+        }
         if (MainActivity.Beritask.size() != 0) {
             if(idkategoriberita.equals(MainActivity.selectedKategori)) {
                 linearLayoutManager = new LinearLayoutManager(getContext());
@@ -187,7 +192,48 @@ public class BeritaFragment extends Fragment {
             }
         });
     }
+    private void getBerita1() {
 
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUser())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<Value<Berita>> call = api.getBerita(random);
+        call.enqueue(new Callback<Value<Berita>>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NonNull Call<Value<Berita>> call, @NonNull Response<Value<Berita>> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        mListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.Beritask.clear();
+                        MainActivity.Beritask=mListBerita;
+                        MainActivity.selectedKategori = idkategoriberita;
+                        linearLayoutManager = new LinearLayoutManager(getContext());
+                        rvBerita.setLayoutManager(linearLayoutManager);
+                        BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
+                        rvBerita.setAdapter(beritaViewAdapter);
+                        rltidakadaberita.setVisibility(View.GONE);
+                        rvBerita.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<Value<Berita>> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
+            }
+        });
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

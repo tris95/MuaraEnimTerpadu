@@ -62,8 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/baseline_location_on_24"
-                android:drawableStart="@drawable/baseline_location_on_24"
+                android:drawableLeft="@drawable/baseline_location_on_24_white"
+                android:drawableStart="@drawable/baseline_location_on_24_white"
                 android:drawableTint="@android:color/white"
                 android:textColor="@color/white"
                 tools:ignore="UnusedAttribute" />

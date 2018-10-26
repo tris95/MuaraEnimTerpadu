@@ -110,7 +110,7 @@ public class ProfilFragment extends Fragment {
         etPassword = v.findViewById(R.id.etPassword);
         imgEdit = v.findViewById(R.id.imgEdit);
 
-        imgProfil.setEnabled(false);
+        // imgProfil.setEnabled(false);
         etNama.setEnabled(false);
         etNoKtp.setEnabled(false);
         etNoHp.setEnabled(false);
@@ -257,7 +257,7 @@ public class ProfilFragment extends Fragment {
             public void onClick(View view) {
                 if (!editmode) {
                     if (Utilities.isLogin(getContext())) {
-                        imgProfil.setEnabled(true);
+                        //imgProfil.setVisibility(View.GONE);
                         etNama.setEnabled(true);
                         etNoKtp.setEnabled(true);
                         etNoHp.setEnabled(true);
@@ -270,7 +270,7 @@ public class ProfilFragment extends Fragment {
                         getActivity().finish();
                     }
                 } else {
-                    imgProfil.setEnabled(false);
+                    //imgProfil.setEnabled(false);
                     etNama.setEnabled(false);
                     etNoKtp.setEnabled(false);
                     etNoHp.setEnabled(false);

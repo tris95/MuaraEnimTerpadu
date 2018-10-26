@@ -465,10 +465,10 @@ public class DetailBeritaFragment extends Fragment {
             public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
-                    if (success == 1) {
-                        Intent intent = new Intent("refresh");
-                        Objects.requireNonNull(getContext()).sendBroadcast(intent);
-                    }
+//                    if (success == 1) {
+//                        Intent intent = new Intent("refresh");
+//                        Objects.requireNonNull(getContext()).sendBroadcast(intent);
+//                    }
                 }
             }
 
@@ -517,8 +517,8 @@ public class DetailBeritaFragment extends Fragment {
                             imglikeunlike.setColorFilter(Color.parseColor("#757575"));
                             llsuka.setEnabled(true);
                         }
-                        Intent intent = new Intent("refresh");
-                        LocalBroadcastManager.getInstance(Objects.requireNonNull(getContext())).sendBroadcast(intent);
+//                        Intent intent = new Intent("refresh");
+//                        LocalBroadcastManager.getInstance(Objects.requireNonNull(getContext())).sendBroadcast(intent);
                     }
                 }
             }
