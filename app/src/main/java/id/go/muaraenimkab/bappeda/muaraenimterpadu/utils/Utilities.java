@@ -37,9 +37,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Utilities {
     //private static Toast mToast;
     private static String server = "http://www.mance.muaraenimkab.go.id/";
+    private static String server2 = "http://www.spikm.muaraenimkab.go.id/";
 
     public static String getBaseURLUser() {
         return server + "android/user/";
+    }
+
+    public static String getBaseURLUserspik() {
+        return server2 + "androidbappeda/";
     }
 
     public static String getURLImageIklan() {
@@ -72,6 +77,10 @@ public class Utilities {
 
     public static String getBaseURLImageLaporan() {
         return server + "wp/gambar_laporan/";
+    }
+
+    public static String getBaseURLImageLaporanspik() {
+        return server2 + "upload/laporan/";
     }
 
     public static String getBaseURLImageTempat() {

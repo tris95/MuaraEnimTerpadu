@@ -1,13 +1,13 @@
 package id.go.muaraenimkab.bappeda.muaraenimterpadu.models;
 
 public class User {
-    String id_user, nama_user, no_ktp, email, password, no_hp_user, alamat_user, gambar_user, status_aktif, token;
+    String id_user, nama_user, no_ktp, email, password, no_hp_user, alamat_user, gambar_user, status_aktif, token,id_refuser_spikm;
 
     public User(){
     }
 
     public User(String id_user, String nama_user, String no_ktp, String email, String password, String no_hp_user,
-                String alamat_user, String gambar_user, String status_aktif, String token){
+                String alamat_user, String gambar_user, String status_aktif, String token,String id_refuser_spikm){
         this.id_user = id_user;
         this.nama_user = nama_user;
         this.no_hp_user = no_hp_user;
@@ -18,6 +18,7 @@ public class User {
         this.gambar_user = gambar_user;
         this.status_aktif = status_aktif;
         this.token = token;
+        this.id_refuser_spikm=id_refuser_spikm;
     }
 
     public String getId_user() {
@@ -98,5 +99,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getId_refuser_spikm() {
+        return id_refuser_spikm;
+    }
+
+    public void setId_refuser_spikm(String id_refuser_spikm) {
+        this.id_refuser_spikm = id_refuser_spikm;
     }
 }

@@ -20,6 +20,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.gun0912.tedpermission.TedPermissionResult;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -43,6 +44,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Event;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.LaporanSpik;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Opd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
@@ -82,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
     public static List<Kontak> kontaks = new ArrayList<>();
 
     //Laporan
-    public static List<Laporan> laporans = new ArrayList<>();
+    //public static List<Laporan> laporans = new ArrayList<>();
+    public static List<LaporanSpik> laporans = new ArrayList<>();
     public static List<Opd> opds = new ArrayList<>();
 
     //Event
@@ -129,8 +132,7 @@ public class MainActivity extends AppCompatActivity {
                         if (tedPermissionResult.isGranted()) {
                             cekIDP();
                         } else {
-                            Snackbar.make(getWindow().getDecorView().getRootView(),
-                                    "Harap mengaktifkan izin Telepon",
+                            Snackbar.make(Objects.requireNonNull(MainActivity.this).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
                                     Snackbar.LENGTH_INDEFINITE)
                                     .setAction("OK", new View.OnClickListener() {
                                         @Override
@@ -143,6 +145,20 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     })
                                     .show();
+                            //Snackbar.make(getWindow().getDecorView().getRootView(),
+//                                    "Harap mengaktifkan izin Telepon",
+//                                    Snackbar.LENGTH_INDEFINITE)
+//                                    .setAction("OK", new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            Intent intent = new Intent();
+//                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                                            intent.setData(uri);
+//                                            startActivity(intent);
+//                                        }
+//                                    })
+//                                    .show();
                         }
                     }
 
@@ -304,12 +320,12 @@ public class MainActivity extends AppCompatActivity {
             }
             this.doubleBackToExitPressedOnce = true;
             Snackbar.make(Objects.requireNonNull(MainActivity.this).findViewById(android.R.id.content), "Tekan Lagi untuk Keluar", Snackbar.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Tekan Lagi untuk Keluar", Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
 
                 @Override
                 public void run() {
                     doubleBackToExitPressedOnce=false;
-
                 }
             }, 2000);
         }

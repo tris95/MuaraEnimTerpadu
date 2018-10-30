@@ -21,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.gun0912.tedpermission.TedPermissionResult;
 import com.tedpark.tedpermission.rx2.TedRx2Permission;
@@ -92,8 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
                             //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
                             idp = Settings.Secure.getString(Objects.requireNonNull(SignUpActivity.this).getContentResolver(), Settings.Secure.ANDROID_ID);
                         } else {
-                            Snackbar.make(getWindow().getDecorView().getRootView(),
-                                    "Harap mengaktifkan izin Telepon",
+                            Snackbar.make(Objects.requireNonNull(SignUpActivity.this).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
                                     Snackbar.LENGTH_INDEFINITE)
                                     .setAction("OK", new View.OnClickListener() {
                                         @Override
@@ -106,6 +106,20 @@ public class SignUpActivity extends AppCompatActivity {
                                         }
                                     })
                                     .show();
+//                            Snackbar.make(getWindow().getDecorView().getRootView(),
+//                                    "Harap mengaktifkan izin Telepon",
+//                                    Snackbar.LENGTH_INDEFINITE)
+//                                    .setAction("OK", new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            Intent intent = new Intent();
+//                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                                            intent.setData(uri);
+//                                            startActivity(intent);
+//                                        }
+//                                    })
+//                                    .show();
                         }
                     }
 
@@ -178,7 +192,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (response.body() != null) {
                         int success = Objects.requireNonNull(response.body()).getSuccess();
                         if (success == 1) {
-                            signup();
+                            signupspik();
                         } else if (success == 2) {
                             Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "NIK Sudah terdaftar",
                                     Snackbar.LENGTH_LONG).show();
@@ -203,7 +217,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void signup() {
+    private void signup(String idpengguna) {
         final ProgressDialog pDialog = new ProgressDialog(SignUpActivity.this);
         pDialog.setMessage("Loading...");
         pDialog.setIndeterminate(false);
@@ -223,7 +237,7 @@ public class SignUpActivity extends AppCompatActivity {
         APIServices api = retrofit.create(APIServices.class);
         Call<ValueAdd> call = api.signup(random, etEmail.getText().toString().trim(), etPassword.getText().toString().trim(),
                 etNama.getText().toString().trim().toUpperCase(), etNoKtp.getText().toString().trim(), etNoHp.getText().toString().trim(),
-                etAlamat.getText().toString().trim().toUpperCase(),idp);
+                etAlamat.getText().toString().trim().toUpperCase(),idp,idpengguna);
         call.enqueue(new Callback<ValueAdd>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -257,6 +271,42 @@ public class SignUpActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<ValueAdd> call, @NonNull Throwable t) {
                 System.out.println("Retrofit Error:" + t.getMessage());
                 pDialog.dismiss();
+                Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
+                        Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void signupspik() {
+        String random = Utilities.getRandom(5);
+
+        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Utilities.getBaseURLUserspik())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+
+        APIServices api = retrofit.create(APIServices.class);
+        Call<ValueAdd> call = api.signupspik(random, etEmail.getText().toString().trim(), etPassword.getText().toString().trim(),
+                etNama.getText().toString().trim().toUpperCase(), etNoHp.getText().toString().trim());
+        call.enqueue(new Callback<ValueAdd>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
+                if (response.body() != null) {
+                    int success = Objects.requireNonNull(response.body()).getSuccess();
+                    if (success == 1) {
+                        signup(Objects.requireNonNull(response.body()).getMessage());
+                    }
+                }
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onFailure(@NonNull Call<ValueAdd> call, @NonNull Throwable t) {
+                System.out.println("Retrofit Error:" + t.getMessage());
                 Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
                         Snackbar.LENGTH_LONG).show();
             }

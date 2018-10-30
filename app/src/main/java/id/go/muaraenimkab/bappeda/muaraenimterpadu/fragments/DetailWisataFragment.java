@@ -305,8 +305,7 @@ public class DetailWisataFragment extends Fragment {
                                                     }
                                                 });
                                     } else {
-                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-                                                "Harap mengaktifkan izin Lokasi",
+                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin Lokasi",
                                                 Snackbar.LENGTH_INDEFINITE)
                                                 .setAction("OK", new View.OnClickListener() {
                                                     @Override
@@ -319,6 +318,20 @@ public class DetailWisataFragment extends Fragment {
                                                     }
                                                 })
                                                 .show();
+//                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+//                                                "Harap mengaktifkan izin Lokasi",
+//                                                Snackbar.LENGTH_INDEFINITE)
+//                                                .setAction("OK", new View.OnClickListener() {
+//                                                    @Override
+//                                                    public void onClick(View v) {
+//                                                        Intent intent = new Intent();
+//                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+//                                                        intent.setData(uri);
+//                                                        startActivity(intent);
+//                                                    }
+//                                                })
+//                                                .show();
                                     }
                                 }
 

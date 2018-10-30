@@ -49,6 +49,7 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignInActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
@@ -157,8 +158,7 @@ public class ProfilFragment extends Fragment {
                             //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
                             idp = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
                         } else {
-                            Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-                                    "Harap mengaktifkan izin Telepon",
+                            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
                                     Snackbar.LENGTH_INDEFINITE)
                                     .setAction("OK", new View.OnClickListener() {
                                         @Override
@@ -171,6 +171,20 @@ public class ProfilFragment extends Fragment {
                                         }
                                     })
                                     .show();
+//                            Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+//                                    "Harap mengaktifkan izin Telepon",
+//                                    Snackbar.LENGTH_INDEFINITE)
+//                                    .setAction("OK", new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            Intent intent = new Intent();
+//                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+//                                            intent.setData(uri);
+//                                            startActivity(intent);
+//                                        }
+//                                    })
+//                                    .show();
                         }
                     }
 
@@ -457,8 +471,7 @@ public class ProfilFragment extends Fragment {
                                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                                         startActivityForResult(intent, CAMERA_REQUEST);
                                     } else {
-                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-                                                "Harap mengaktifkan izin kamera dan penyimpanan",
+                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin kamera dan penyimpanan",
                                                 Snackbar.LENGTH_INDEFINITE)
                                                 .setAction("OK", new View.OnClickListener() {
                                                     @Override
@@ -471,6 +484,20 @@ public class ProfilFragment extends Fragment {
                                                     }
                                                 })
                                                 .show();
+//                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+//                                                "Harap mengaktifkan izin kamera dan penyimpanan",
+//                                                Snackbar.LENGTH_INDEFINITE)
+//                                                .setAction("OK", new View.OnClickListener() {
+//                                                    @Override
+//                                                    public void onClick(View v) {
+//                                                        Intent intent = new Intent();
+//                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+//                                                        intent.setData(uri);
+//                                                        startActivity(intent);
+//                                                    }
+//                                                })
+//                                                .show();
                                     }
                                 }
 

@@ -39,6 +39,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Berita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Content;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Event;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.LaporanSpik;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
@@ -54,7 +55,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LaporanSayaFragment extends Fragment {
     RecyclerView rView;
     LinearLayoutManager linearLayoutManager;
-    ArrayList<Laporan> mList;
+    ArrayList<LaporanSpik> mList;
     SwipeRefreshLayout swipeRefreshLayout;
     RelativeLayout rl_none, rl_conn;
     TextView tv_cobalagi;
@@ -63,7 +64,8 @@ public class LaporanSayaFragment extends Fragment {
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            getLaporan();
+            //getLaporan();
+            getLaporanspik();
         }
     };
 
@@ -106,34 +108,38 @@ public class LaporanSayaFragment extends Fragment {
         if (MainActivity.laporans.size() != 0) {
             if (flag!=null) {
                 if (flag.equals("3")) {
-                    getLaporan();
+                    //getLaporan();
+                    getLaporanspik();
                 } else {
                     linearLayoutManager = new LinearLayoutManager(getContext());
                     rView.setLayoutManager(linearLayoutManager);
-                    LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<Laporan>) MainActivity.laporans);
+                    LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<LaporanSpik>) MainActivity.laporans);
                     rView.setAdapter(laporanViewAdapter);
                 }
             }else {
                 linearLayoutManager = new LinearLayoutManager(getContext());
                 rView.setLayoutManager(linearLayoutManager);
-                LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<Laporan>) MainActivity.laporans);
+                LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), (ArrayList<LaporanSpik>) MainActivity.laporans);
                 rView.setAdapter(laporanViewAdapter);
             }
         } else {
-            getLaporan();
+            //getLaporan();
+            getLaporanspik();
         }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getLaporan();
+                //getLaporan();
+                getLaporanspik();
             }
         });
 
         tv_cobalagi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getLaporan();
+                //getLaporan();
+                getLaporanspik();
             }
         });
 
@@ -152,7 +158,99 @@ public class LaporanSayaFragment extends Fragment {
     }
 
 
-    private void getLaporan() {
+//    private void getLaporan() {
+//        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+//        pDialog.setMessage("Loading...");
+//        pDialog.setIndeterminate(false);
+//        pDialog.setCancelable(false);
+//        pDialog.show();
+//
+//        String random = Utilities.getRandom(5);
+//
+//        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(Utilities.getBaseURLUser())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .client(okHttpClient)
+//                .build();
+//        APIServices api = retrofit.create(APIServices.class);
+//        Call<Value<Laporan>> call = api.getlaporan(random, id);
+//        call.enqueue(new Callback<Value<Laporan>>() {
+//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//            @Override
+//            public void onResponse(@NonNull Call<Value<Laporan>> call, @NonNull Response<Value<Laporan>> response) {
+//                if (response.body() != null) {
+//                    int success = Objects.requireNonNull(response.body()).getSuccess();
+//                    swipeRefreshLayout.setRefreshing(false);
+//                    if (success == 1) {
+//                        mList = (ArrayList<Laporan>) Objects.requireNonNull(response.body()).getData();
+//                        if (mList.size() == 0) {
+//                            rl_none.setVisibility(View.VISIBLE);
+//                            rl_conn.setVisibility(View.GONE);
+//                            rView.setVisibility(View.GONE);
+//                        } else {
+//                            rl_none.setVisibility(View.GONE);
+//                            rl_conn.setVisibility(View.GONE);
+//                            rView.setVisibility(View.VISIBLE);
+//                            MainActivity.laporans.clear();
+//                            MainActivity.laporans = mList;
+//                            linearLayoutManager = new LinearLayoutManager(getContext());
+//                            rView.setLayoutManager(linearLayoutManager);
+//                            LaporanViewAdapter laporanViewAdapter = new LaporanViewAdapter(getContext(), mList);
+//                            rView.setAdapter(laporanViewAdapter);
+//                        }
+//                        pDialog.dismiss();
+//                    } else {
+//                        rl_none.setVisibility(View.GONE);
+//                        rl_conn.setVisibility(View.VISIBLE);
+//                        rView.setVisibility(View.GONE);
+//                        pDialog.dismiss();
+//                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+//                                Snackbar.LENGTH_LONG).show();
+//                    }
+//                } else {
+//                    rl_none.setVisibility(View.GONE);
+//                    rl_conn.setVisibility(View.VISIBLE);
+//                    rView.setVisibility(View.GONE);
+//                    pDialog.dismiss();
+//                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+//                            Snackbar.LENGTH_LONG).show();
+//                }
+//            }
+//
+//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//            @Override
+//            public void onFailure(@NonNull Call<Value<Laporan>> call, @NonNull Throwable t) {
+//                System.out.println("Retrofit Error:" + t.getMessage());
+//                rl_none.setVisibility(View.GONE);
+//                rl_conn.setVisibility(View.VISIBLE);
+//                rView.setVisibility(View.GONE);
+//                swipeRefreshLayout.setRefreshing(false);
+//                pDialog.dismiss();
+//                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
+//                        Snackbar.LENGTH_LONG).show();
+//            }
+//        });
+//    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("refresh");
+        Objects.requireNonNull(getActivity()).registerReceiver(receiver, filter);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onPause() {
+        Objects.requireNonNull(getActivity()).unregisterReceiver(receiver);
+        super.onPause();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void getLaporanspik() {
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
         pDialog.setIndeterminate(false);
@@ -164,21 +262,21 @@ public class LaporanSayaFragment extends Fragment {
         OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Utilities.getBaseURLUser())
+                .baseUrl(Utilities.getBaseURLUserspik())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<Laporan>> call = api.getlaporan(random, id);
-        call.enqueue(new Callback<Value<Laporan>>() {
+        Call<Value<LaporanSpik>> call = api.getlaporanspik(random, Utilities.getUser(getContext()).getId_refuser_spikm());
+        call.enqueue(new Callback<Value<LaporanSpik>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onResponse(@NonNull Call<Value<Laporan>> call, @NonNull Response<Value<Laporan>> response) {
+            public void onResponse(@NonNull Call<Value<LaporanSpik>> call, @NonNull Response<Value<LaporanSpik>> response) {
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     swipeRefreshLayout.setRefreshing(false);
                     if (success == 1) {
-                        mList = (ArrayList<Laporan>) Objects.requireNonNull(response.body()).getData();
+                        mList = (ArrayList<LaporanSpik>) Objects.requireNonNull(response.body()).getData();
                         if (mList.size() == 0) {
                             rl_none.setVisibility(View.VISIBLE);
                             rl_conn.setVisibility(View.GONE);
@@ -215,7 +313,7 @@ public class LaporanSayaFragment extends Fragment {
 
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onFailure(@NonNull Call<Value<Laporan>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Value<LaporanSpik>> call, @NonNull Throwable t) {
                 System.out.println("Retrofit Error:" + t.getMessage());
                 rl_none.setVisibility(View.GONE);
                 rl_conn.setVisibility(View.VISIBLE);
@@ -227,20 +325,4 @@ public class LaporanSayaFragment extends Fragment {
             }
         });
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void onResume() {
-        super.onResume();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("refresh");
-        Objects.requireNonNull(getActivity()).registerReceiver(receiver, filter);
-    }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void onPause() {
-        Objects.requireNonNull(getActivity()).unregisterReceiver(receiver);
-        super.onPause();
-    }
-
 }

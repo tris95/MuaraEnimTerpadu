@@ -9,6 +9,7 @@ import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Event;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.KategoriBerita;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Kontak;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Laporan;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.LaporanSpik;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Opd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Pariwisata;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.TempatPariwisata;
@@ -44,7 +45,16 @@ public interface APIServices {
                           @Field("noktp") String noktp,
                           @Field("nohp") String nohp,
                           @Field("alamat") String alamat,
-                          @Field("idp") String idp);
+                          @Field("idp") String idp,
+                          @Field("idpengguna") String idpengguna);
+
+    @FormUrlEncoded
+    @POST("signupspik.php")
+    Call<ValueAdd> signupspik(@Field("xkey") String xkey,
+                          @Field("email") String email,
+                          @Field("password") String password,
+                          @Field("nama") String nama,
+                          @Field("nohp") String nohp);
 
     @FormUrlEncoded
     @POST("ubahpass.php")
@@ -121,9 +131,24 @@ public interface APIServices {
                                 @Field("foto") String foto);
 
     @FormUrlEncoded
+    @POST("kirimlaporanspik.php")
+    Call<ValueAdd> kirimlaporanspik(@Field("xkey") String xkey,
+                                    @Field("idpengguna") String idpengguna,
+                                    @Field("judul") String judul,
+                                    @Field("isi") String isi,
+                                    @Field("nohp") String nohp,
+                                    @Field("lokasi") String lokasi,
+                                    @Field("foto") String foto);
+
+    @FormUrlEncoded
     @POST("getlaporan.php")
     Call<Value<Laporan>> getlaporan(@Field("xkey") String xkey,
                                     @Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("getlaporanspik.php")
+    Call<Value<LaporanSpik>> getlaporanspik(@Field("xkey") String xkey,
+                                            @Field("idpengguna") String idpengguna);
 
     @FormUrlEncoded
     @POST("getpariwisata.php")
@@ -190,5 +215,6 @@ public interface APIServices {
     @FormUrlEncoded
     @POST("ceklogin.php")
     Call<ValueAdd> ceklogin(@Field("xkey") String xkey,
-                            @Field("email") String email);
+                            @Field("email") String email,
+                            @Field("password") String password);
 }

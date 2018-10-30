@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
-                android:text="Belum Ditanggapi"
+                android:text="Verifikasi"
                 android:background="@color/colorYellow"
                 android:padding="5dp"/>
         </LinearLayout>
@@ -71,15 +71,15 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:background="@color/colorGreen"
+                android:background="@color/colorBlue"
                 android:visibility="gone"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
-                android:text="Telah Ditanggapi"
-                android:background="@color/colorGreen"
+                android:text="Tanggapi"
+                android:background="@color/colorBlue"
                 android:padding="5dp"/>
         </LinearLayout>
 
@@ -93,15 +93,15 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:background="@color/colorRed"
+                android:background="@color/colorGreen"
                 android:visibility="gone"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
-                android:text="Batal Ditanggapi"
-                android:background="@color/colorRed"
+                android:text="Disposisi"
+                android:background="@color/colorGreen"
                 android:padding="5dp"/>
         </LinearLayout>
     </LinearLayout>

@@ -357,8 +357,7 @@ public class DetailBeritaFragment extends Fragment {
                             if (tedPermissionResult.isGranted()) {
                                 cekIDP();
                             } else {
-                                Snackbar.make(Objects.requireNonNull(getActivity()).getWindow().getDecorView().getRootView(),
-                                        "Harap mengaktifkan izin Telepon",
+                                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
                                         Snackbar.LENGTH_INDEFINITE)
                                         .setAction("OK", new View.OnClickListener() {
                                             @Override
@@ -371,6 +370,20 @@ public class DetailBeritaFragment extends Fragment {
                                             }
                                         })
                                         .show();
+//                                Snackbar.make(Objects.requireNonNull(getActivity()).getWindow().getDecorView().getRootView(),
+//                                        "Harap mengaktifkan izin Telepon",
+//                                        Snackbar.LENGTH_INDEFINITE)
+//                                        .setAction("OK", new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                Intent intent = new Intent();
+//                                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                                Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+//                                                intent.setData(uri);
+//                                                startActivity(intent);
+//                                            }
+//                                        })
+//                                        .show();
                             }
                         }
 

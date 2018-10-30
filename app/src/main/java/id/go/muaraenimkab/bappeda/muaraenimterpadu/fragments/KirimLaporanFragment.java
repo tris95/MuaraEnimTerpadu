@@ -20,16 +20,13 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 
 import com.gun0912.tedpermission.TedPermissionResult;
 import com.tedpark.tedpermission.rx2.TedRx2Permission;
@@ -69,7 +66,7 @@ public class KirimLaporanFragment extends Fragment {
     Button btnKirim;
     ImageView imgLaporan;
     String foto;
-    Spinner spOpd;
+    //Spinner spOpd;
     private static final int CAMERA_REQUEST = 188, FILE_REQUES = 189;
     List<String> idOpd = new ArrayList<>();
 
@@ -97,7 +94,7 @@ public class KirimLaporanFragment extends Fragment {
         txtLokasi = v.findViewById(R.id.txtLokasi);
         txtNoHp = v.findViewById(R.id.txtNoHp);
         imgLaporan = v.findViewById(R.id.imgLaporan);
-        spOpd = v.findViewById(R.id.spOpd);
+        //spOpd = v.findViewById(R.id.spOpd);
 
         foto = "";
 
@@ -118,13 +115,14 @@ public class KirimLaporanFragment extends Fragment {
                         txtNoHp.setError("Silahkan isi No. Hp Anda");
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan isi No. Hp Anda",
                                 Snackbar.LENGTH_LONG).show();
-                    } else if (spOpd.getSelectedItemPosition() == 0 || idOpd.size() == 0) {
-                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan pilih Organisasi Perangkat Daerah Tujuan",
-                                Snackbar.LENGTH_LONG).show();
+//                    } else if (spOpd.getSelectedItemPosition() == 0 || idOpd.size() == 0) {
+//                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan pilih Organisasi Perangkat Daerah Tujuan",
+//                                Snackbar.LENGTH_LONG).show();
                     } else {
                         if (Utilities.isLogin(getContext())) {
                             User users = Utilities.getUser(getContext());
-                            laporan(users.getId_user(), idOpd.get(spOpd.getSelectedItemPosition()), txtNoHp.getText().toString().trim(), txtJudul.getText().toString().trim(), txtIsi.getText().toString().trim(), txtLokasi.getText().toString());
+                            //laporan(users.getId_user(), "", txtNoHp.getText().toString().trim(), txtJudul.getText().toString().trim(), txtIsi.getText().toString().trim(), txtLokasi.getText().toString());
+                            laporanspik(users.getId_refuser_spikm().trim(), txtNoHp.getText().toString().trim(), txtJudul.getText().toString().trim(), txtIsi.getText().toString().trim(), txtLokasi.getText().toString());
                         }
 //                    else {
 //                        startActivity(new Intent(getContext(), SignInActivity.class));
@@ -173,23 +171,23 @@ public class KirimLaporanFragment extends Fragment {
 //        });
 
 //        if (Utilities.isLogin(getActivity())) {
-        if (MainActivity.opds.size() != 0) {
-            idOpd.clear();
-            List<String> arr = new ArrayList<>();
-            for (int a = 0; a < MainActivity.opds.size() + 1; a++) {
-                if (a == 0) {
-                    idOpd.add("-");
-                    arr.add("Silahkan pilih OPD");
-                } else {
-                    idOpd.add(MainActivity.opds.get(a - 1).getId_opd());
-                    arr.add(MainActivity.opds.get(a - 1).getNama_opd());
-                }
-            }
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
-            spOpd.setAdapter(adapter);
-        } else {
-            getOpd();
-        }
+//        if (MainActivity.opds.size() != 0) {
+//            idOpd.clear();
+//            List<String> arr = new ArrayList<>();
+//            for (int a = 0; a < MainActivity.opds.size() + 1; a++) {
+//                if (a == 0) {
+//                    idOpd.add("-");
+//                    arr.add("Silahkan pilih OPD");
+//                } else {
+//                    idOpd.add(MainActivity.opds.get(a - 1).getId_opd());
+//                    arr.add(MainActivity.opds.get(a - 1).getNama_opd());
+//                }
+//            }
+//            ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
+//            spOpd.setAdapter(adapter);
+//        } else {
+//            getOpd();
+//        }
 //        }else {
 //            startActivity(new Intent(getContext(), SignInActivity.class));
 //            getActivity().finish();
@@ -208,7 +206,128 @@ public class KirimLaporanFragment extends Fragment {
         super.onDetach();
     }
 
-    private void getOpd() {
+//    private void getOpd() {
+//        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+//        pDialog.setMessage("Loading...");
+//        pDialog.setIndeterminate(false);
+//        pDialog.setCancelable(false);
+//        pDialog.show();
+//
+//        String random = Utilities.getRandom(5);
+//
+//        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(Utilities.getBaseURLUser())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .client(okHttpClient)
+//                .build();
+//
+//        APIServices api = retrofit.create(APIServices.class);
+//        Call<Value<Opd>> call = api.getopd(random);
+//        call.enqueue(new Callback<Value<Opd>>() {
+//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//            @Override
+//            public void onResponse(@NonNull Call<Value<Opd>> call, @NonNull Response<Value<Opd>> response) {
+//                pDialog.dismiss();
+//                if (response.body() != null) {
+//                    int success = Objects.requireNonNull(response.body()).getSuccess();
+//                    if (success == 1) {
+//                        idOpd.clear();
+//                        List<String> arr = new ArrayList<>();
+//                        MainActivity.opds.clear();
+//                        MainActivity.opds = response.body().getData();
+//                        for (int a = 0; a < response.body().getData().size() + 1; a++) {
+//                            if (a == 0) {
+//                                idOpd.add("-");
+//                                arr.add("Silahkan pilih OPD");
+//                            } else {
+//                                idOpd.add(response.body().getData().get(a - 1).getId_opd());
+//                                arr.add(response.body().getData().get(a - 1).getNama_opd());
+//                            }
+//                        }
+//                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
+//                        spOpd.setAdapter(adapter);
+//                    } else {
+//                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+//                                Snackbar.LENGTH_LONG).show();
+//                    }
+//                } else {
+//                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
+//                            Snackbar.LENGTH_LONG).show();
+//                }
+//            }
+//
+//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//            @Override
+//            public void onFailure(@NonNull Call<Value<Opd>> call, @NonNull Throwable t) {
+//                System.out.println("Retrofit Error:" + t.getMessage());
+//                pDialog.dismiss();
+//                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
+//                        Snackbar.LENGTH_LONG).show();
+//            }
+//        });
+//    }
+
+//    private void laporan(final String id, final String idopd, final String hp, final String judul, final String isi, final String lokasi) {
+//        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+//        pDialog.setMessage("Loading...");
+//        pDialog.setIndeterminate(false);
+//        pDialog.setCancelable(false);
+//        pDialog.show();
+//
+//        String random = Utilities.getRandom(5);
+//
+//        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(Utilities.getBaseURLUser())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .client(okHttpClient)
+//                .build();
+//
+//        APIServices api = retrofit.create(APIServices.class);
+//        Call<ValueAdd> call = api.kirimlaporan(random, id, idopd, judul, isi, hp, lokasi, foto);
+//        call.enqueue(new Callback<ValueAdd>() {
+//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//            @Override
+//            public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
+//                pDialog.dismiss();
+//                if (response.body() != null) {
+//                    Log.e("boo", response.body().getMessage() + " " + id + " " + idopd + " " + judul + " " + isi + " " + hp + " " + lokasi + " " + foto);
+//                    int success = Objects.requireNonNull(response.body()).getSuccess();
+//                    if (success == 1) {
+//                        txtIsi.setText("");
+//                        txtJudul.setText("");
+//                        imgLaporan.setImageDrawable(getResources().getDrawable(R.drawable.defaultimage));
+//                        txtLokasi.setText("");
+//                        txtNoHp.setText("");
+//                        foto = "";
+//
+//                        Objects.requireNonNull(getActivity()).sendBroadcast(new Intent("refresh"));
+//                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Laporan berhasil dikirim", Snackbar.LENGTH_LONG).show();
+//                      } else {
+//                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengirim laporan. Silahkan coba lagi",
+//                                Snackbar.LENGTH_LONG).show();
+//                    }
+//                } else {
+//                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengirim data. Silahkan coba lagi",
+//                            Snackbar.LENGTH_LONG).show();
+//                }
+//            }
+//
+//            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//            @Override
+//            public void onFailure(@NonNull Call<ValueAdd> call, @NonNull Throwable t) {
+//                System.out.println("Retrofit Error:" + t.getMessage());
+//                pDialog.dismiss();
+//                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
+//                        Snackbar.LENGTH_LONG).show();
+//            }
+//        });
+//    }
+
+    private void laporanspik(final String idpengguna, final String hp, final String judul, final String isi, final String lokasi) {
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
         pDialog.setIndeterminate(false);
@@ -220,83 +339,19 @@ public class KirimLaporanFragment extends Fragment {
         OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Utilities.getBaseURLUser())
+                .baseUrl(Utilities.getBaseURLUserspik())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<Opd>> call = api.getopd(random);
-        call.enqueue(new Callback<Value<Opd>>() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onResponse(@NonNull Call<Value<Opd>> call, @NonNull Response<Value<Opd>> response) {
-                pDialog.dismiss();
-                if (response.body() != null) {
-                    int success = Objects.requireNonNull(response.body()).getSuccess();
-                    if (success == 1) {
-                        idOpd.clear();
-                        List<String> arr = new ArrayList<>();
-                        MainActivity.opds.clear();
-                        MainActivity.opds = response.body().getData();
-                        for (int a = 0; a < response.body().getData().size() + 1; a++) {
-                            if (a == 0) {
-                                idOpd.add("-");
-                                arr.add("Silahkan pilih OPD");
-                            } else {
-                                idOpd.add(response.body().getData().get(a - 1).getId_opd());
-                                arr.add(response.body().getData().get(a - 1).getNama_opd());
-                            }
-                        }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
-                        spOpd.setAdapter(adapter);
-                    } else {
-                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
-                                Snackbar.LENGTH_LONG).show();
-                    }
-                } else {
-                    Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengambil data. Silahkan coba lagi",
-                            Snackbar.LENGTH_LONG).show();
-                }
-            }
-
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onFailure(@NonNull Call<Value<Opd>> call, @NonNull Throwable t) {
-                System.out.println("Retrofit Error:" + t.getMessage());
-                pDialog.dismiss();
-                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
-                        Snackbar.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    private void laporan(final String id, final String idopd, final String hp, final String judul, final String isi, final String lokasi) {
-        final ProgressDialog pDialog = new ProgressDialog(getActivity());
-        pDialog.setMessage("Loading...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
-        pDialog.show();
-
-        String random = Utilities.getRandom(5);
-
-        OkHttpClient okHttpClient = Utilities.getUnsafeOkHttpClient();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Utilities.getBaseURLUser())
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient)
-                .build();
-
-        APIServices api = retrofit.create(APIServices.class);
-        Call<ValueAdd> call = api.kirimlaporan(random, id, idopd, judul, isi, hp, lokasi, foto);
+        Call<ValueAdd> call = api.kirimlaporanspik(random, idpengguna, judul, isi, hp, lokasi, foto);
         call.enqueue(new Callback<ValueAdd>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
                 pDialog.dismiss();
                 if (response.body() != null) {
-                    Log.e("boo", response.body().getMessage() + " " + id + " " + idopd + " " + judul + " " + isi + " " + hp + " " + lokasi + " " + foto);
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
                         txtIsi.setText("");
@@ -308,7 +363,7 @@ public class KirimLaporanFragment extends Fragment {
 
                         Objects.requireNonNull(getActivity()).sendBroadcast(new Intent("refresh"));
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Laporan berhasil dikirim", Snackbar.LENGTH_LONG).show();
-                      } else {
+                    } else {
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Gagal mengirim laporan. Silahkan coba lagi",
                                 Snackbar.LENGTH_LONG).show();
                     }
@@ -366,8 +421,7 @@ public class KirimLaporanFragment extends Fragment {
                                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                                         startActivityForResult(intent, CAMERA_REQUEST);
                                     } else {
-                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-                                                "Harap mengaktifkan izin kamera dan penyimpanan",
+                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin kamera dan penyimpanan",
                                                 Snackbar.LENGTH_INDEFINITE)
                                                 .setAction("OK", new View.OnClickListener() {
                                                     @Override
@@ -380,6 +434,20 @@ public class KirimLaporanFragment extends Fragment {
                                                     }
                                                 })
                                                 .show();
+//                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+//                                                "Harap mengaktifkan izin kamera dan penyimpanan",
+//                                                Snackbar.LENGTH_INDEFINITE)
+//                                                .setAction("OK", new View.OnClickListener() {
+//                                                    @Override
+//                                                    public void onClick(View v) {
+//                                                        Intent intent = new Intent();
+//                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+//                                                        intent.setData(uri);
+//                                                        startActivity(intent);
+//                                                    }
+//                                                })
+//                                                .show();
                                     }
                                 }
 

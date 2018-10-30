@@ -115,8 +115,7 @@ public class SignInActivity extends AppCompatActivity {
                             //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
                             idp = Settings.Secure.getString(Objects.requireNonNull(SignInActivity.this).getContentResolver(), Settings.Secure.ANDROID_ID);
                         } else {
-                            Snackbar.make(getWindow().getDecorView().getRootView(),
-                                    "Harap mengaktifkan izin Telepon",
+                            Snackbar.make(Objects.requireNonNull(SignInActivity.this).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
                                     Snackbar.LENGTH_INDEFINITE)
                                     .setAction("OK", new View.OnClickListener() {
                                         @Override
@@ -129,6 +128,20 @@ public class SignInActivity extends AppCompatActivity {
                                         }
                                     })
                                     .show();
+//                            Snackbar.make(getWindow().getDecorView().getRootView(),
+//                                    "Harap mengaktifkan izin Telepon",
+//                                    Snackbar.LENGTH_INDEFINITE)
+//                                    .setAction("OK", new View.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(View v) {
+//                                            Intent intent = new Intent();
+//                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                                            intent.setData(uri);
+//                                            startActivity(intent);
+//                                        }
+//                                    })
+//                                    .show();
                         }
                     }
 
@@ -258,7 +271,7 @@ public class SignInActivity extends AppCompatActivity {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<ValueAdd> call = api.ceklogin(random, etEmail.getText().toString().trim());
+        Call<ValueAdd> call = api.ceklogin(random, etEmail.getText().toString().trim(), etPass.getText().toString().trim());
         call.enqueue(new Callback<ValueAdd>()
 
         {
@@ -289,6 +302,9 @@ public class SignInActivity extends AppCompatActivity {
                                 .show();
                     } else if(success == 2) {
                         signin();
+                    }else if (success==3){
+                        Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Password tidak sesuai",
+                                Snackbar.LENGTH_LONG).show();
                     }
                 }
             }

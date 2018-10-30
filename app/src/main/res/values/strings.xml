@@ -29,14 +29,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="tidak_terhubung_ke_server">Tidak terhubung ke server</string>
+    <string name="tidak_terhubung_ke_server">Gagal terhubung ke server</string>
     <string name="coba_lagi">Coba lagi</string>
     <string name="suka">Suka </string>
     <string name="tidak_ada_berita">Berita belum tersedia</string>
     <string name="content_kosong">Konten belum tersedia</string>
     <string name="toko">Toko</string>
-    <string name="daftar">DAFTAR</string>
-    <string name="belum_punya_akun">Belum punya akun ?</string>
+    <string name="daftar">Daftar</string>
+    <string name="belum_punya_akun">Belum punya akun? </string>
     <string name="belum_ada_event">Belum ada event</string>
     <string name="lokasi">Lokasi</string>
     <string name="persiaplikasi">1.0</string>

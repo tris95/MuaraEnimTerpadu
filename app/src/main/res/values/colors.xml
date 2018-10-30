@@ -12,6 +12,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorYellow">#d9cb00</color>
     <color name="colorRed">#c7000a</color>
+    <color name="colorBlue">#0000ff</color>
     <color name="colorGreen">#00c600</color>
 
     <color name="colorDefault">#757575</color>
