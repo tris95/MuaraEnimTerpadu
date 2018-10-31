@@ -24,9 +24,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.gun0912.tedpermission.TedPermissionResult;
 import com.tedpark.tedpermission.rx2.TedRx2Permission;
@@ -43,11 +45,8 @@ import java.util.List;
 import java.util.Objects;
 
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignInActivity;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Opd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
-import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.services.APIServices;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.utils.Utilities;
@@ -67,8 +66,9 @@ public class KirimLaporanFragment extends Fragment {
     ImageView imgLaporan;
     String foto;
     //Spinner spOpd;
+    Spinner Area;
     private static final int CAMERA_REQUEST = 188, FILE_REQUES = 189;
-    List<String> idOpd = new ArrayList<>();
+    //List<String> idOpd = new ArrayList<>();
 
     public static KirimLaporanFragment newInstance() {
         KirimLaporanFragment fragment = new KirimLaporanFragment();
@@ -95,6 +95,7 @@ public class KirimLaporanFragment extends Fragment {
         txtNoHp = v.findViewById(R.id.txtNoHp);
         imgLaporan = v.findViewById(R.id.imgLaporan);
         //spOpd = v.findViewById(R.id.spOpd);
+        Area = v.findViewById(R.id.spArea);
 
         foto = "";
 
@@ -115,14 +116,14 @@ public class KirimLaporanFragment extends Fragment {
                         txtNoHp.setError("Silahkan isi No. Hp Anda");
                         Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan isi No. Hp Anda",
                                 Snackbar.LENGTH_LONG).show();
-//                    } else if (spOpd.getSelectedItemPosition() == 0 || idOpd.size() == 0) {
-//                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan pilih Organisasi Perangkat Daerah Tujuan",
-//                                Snackbar.LENGTH_LONG).show();
+                    } else if (Area.getSelectedItemPosition() == 0) {
+                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silahkan pilih Area",
+                                Snackbar.LENGTH_LONG).show();
                     } else {
                         if (Utilities.isLogin(getContext())) {
                             User users = Utilities.getUser(getContext());
                             //laporan(users.getId_user(), "", txtNoHp.getText().toString().trim(), txtJudul.getText().toString().trim(), txtIsi.getText().toString().trim(), txtLokasi.getText().toString());
-                            laporanspik(users.getId_refuser_spikm().trim(), txtNoHp.getText().toString().trim(), txtJudul.getText().toString().trim(), txtIsi.getText().toString().trim(), txtLokasi.getText().toString());
+                            laporanspik(users.getId_refuser_spikm().trim(), txtNoHp.getText().toString().trim(), txtJudul.getText().toString().trim(), txtIsi.getText().toString().trim(), txtLokasi.getText().toString(), Area.getSelectedItem().toString());
                         }
 //                    else {
 //                        startActivity(new Intent(getContext(), SignInActivity.class));
@@ -170,28 +171,13 @@ public class KirimLaporanFragment extends Fragment {
 //            }
 //        });
 
-//        if (Utilities.isLogin(getActivity())) {
-//        if (MainActivity.opds.size() != 0) {
-//            idOpd.clear();
-//            List<String> arr = new ArrayList<>();
-//            for (int a = 0; a < MainActivity.opds.size() + 1; a++) {
-//                if (a == 0) {
-//                    idOpd.add("-");
-//                    arr.add("Silahkan pilih OPD");
-//                } else {
-//                    idOpd.add(MainActivity.opds.get(a - 1).getId_opd());
-//                    arr.add(MainActivity.opds.get(a - 1).getNama_opd());
-//                }
-//            }
-//            ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
-//            spOpd.setAdapter(adapter);
-//        } else {
-//            getOpd();
-//        }
-//        }else {
-//            startActivity(new Intent(getContext(), SignInActivity.class));
-//            getActivity().finish();
-//        }
+        List<String> arr = new ArrayList<>();
+        arr.clear();
+        arr.add("Silahkan pilih Area");
+        arr.add("Kecamatan");
+        arr.add("Kabupaten");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, arr);
+        Area.setAdapter(adapter);
 
         return v;
     }
@@ -327,7 +313,7 @@ public class KirimLaporanFragment extends Fragment {
 //        });
 //    }
 
-    private void laporanspik(final String idpengguna, final String hp, final String judul, final String isi, final String lokasi) {
+    private void laporanspik(final String idpengguna, final String hp, final String judul, final String isi, final String lokasi, final String area) {
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
         pDialog.setIndeterminate(false);
@@ -345,7 +331,7 @@ public class KirimLaporanFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<ValueAdd> call = api.kirimlaporanspik(random, idpengguna, judul, isi, hp, lokasi, foto);
+        Call<ValueAdd> call = api.kirimlaporanspik(random, idpengguna, judul, isi, hp, lokasi, foto,area);
         call.enqueue(new Callback<ValueAdd>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -573,7 +559,7 @@ public class KirimLaporanFragment extends Fragment {
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
-                    f. delete();
+                    f.delete();
                     OutputStream outFile;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     try {
