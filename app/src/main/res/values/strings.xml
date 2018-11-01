@@ -40,4 +40,9 @@
     <string name="belum_ada_event">Belum ada event</string>
     <string name="lokasi">Lokasi</string>
     <string name="persiaplikasi">1.0</string>
+
+    <string name="facebook_app_id">186330145622267</string>
+    <string name="facebook_account_kit_client_token">f79f4d88b4b3fa7cb291f7d94f112d8e</string>
+    <string name="fb_login_protocol_scheme">fb186330145622267</string>
+    <string name="ak_login_protocol_scheme">ak186330145622267</string>
 </resources>

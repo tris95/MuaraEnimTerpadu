@@ -16,13 +16,25 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.facebook.accountkit.Account;
+import com.facebook.accountkit.AccountKit;
+import com.facebook.accountkit.AccountKitCallback;
+import com.facebook.accountkit.AccountKitError;
+import com.facebook.accountkit.AccountKitLoginResult;
+import com.facebook.accountkit.PhoneNumber;
+import com.facebook.accountkit.ui.AccountKitActivity;
+import com.facebook.accountkit.ui.AccountKitConfiguration;
+import com.facebook.accountkit.ui.LoginType;
 import com.gun0912.tedpermission.TedPermissionResult;
 import com.tedpark.tedpermission.rx2.TedRx2Permission;
 
@@ -48,8 +60,11 @@ public class SignUpActivity extends AppCompatActivity {
     String idp;
     EditText etNama, etNoKtp, etNoHp, etEmail, etAlamat, etPassword;
     RelativeLayout lysignup;
+    public static int APP_REQUEST_CODE = 99;
+    ProgressDialog pDialog;
+//    LinearLayout ll_phone;
 
-    @SuppressLint("HardwareIds")
+    @SuppressLint({"HardwareIds", "ClickableViewAccessibility"})
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
         etNoKtp = findViewById(R.id.etNoKtp);
         etPassword = findViewById(R.id.etPass);
         lysignup= findViewById(R.id.lysignup);
+//        ll_phone = findViewById(R.id.ll_phone);
 
         TedRx2Permission.with(Objects.requireNonNull(SignUpActivity.this))
                 .setRationaleTitle("Izin Akses")
@@ -160,6 +176,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
         lysignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +185,109 @@ public class SignUpActivity extends AppCompatActivity {
                 inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), 0);
             }
         });
+
+        etNoHp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b){
+                    pDialog = new ProgressDialog(SignUpActivity.this);
+                    pDialog.setMessage("Loading...");
+                    pDialog.setIndeterminate(false);
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                    phoneLogin();
+                }
+            }
+        });
+
+        etNoHp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    pDialog = new ProgressDialog(SignUpActivity.this);
+                    pDialog.setMessage("Loading...");
+                    pDialog.setIndeterminate(false);
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                    phoneLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+//        ll_phone.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                pDialog = new ProgressDialog(SignUpActivity.this);
+//                pDialog.setMessage("Loading...");
+//                pDialog.setIndeterminate(false);
+//                pDialog.setCancelable(false);
+//                pDialog.show();
+//                phoneLogin();
+//            }
+//        });
+
+    }
+
+    public void phoneLogin() {
+        final Intent intent = new Intent(SignUpActivity.this, AccountKitActivity.class);
+        AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
+                new AccountKitConfiguration.AccountKitConfigurationBuilder(
+                        LoginType.PHONE,
+                        AccountKitActivity.ResponseType.TOKEN); // or .ResponseType.TOKEN
+        intent.putExtra(
+                AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
+                configurationBuilder.build());
+        startActivityForResult(intent, APP_REQUEST_CODE);
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == APP_REQUEST_CODE) {
+            pDialog.dismiss();
+            AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
+//            String toastMessage = "";
+            if (loginResult.getError() != null) {
+//                toastMessage = loginResult.getError().getErrorType().getMessage();
+//                Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), toastMessage,
+//                        Snackbar.LENGTH_LONG).show();
+//                showErrorActivity(loginResult.getError());
+//            } else if (loginResult.wasCancelled()) {
+//                toastMessage = "Login Cancelled";
+//                Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), toastMessage,
+//                        Snackbar.LENGTH_LONG).show();
+//                finish();
+                Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal memverifikasi nomor telepon",
+                        Snackbar.LENGTH_LONG).show();
+            } else {
+                AccountKit.getCurrentAccount(new AccountKitCallback<Account>() {
+                     @Override
+                     public void onSuccess(final Account account) {
+                         PhoneNumber phoneNumber = account.getPhoneNumber();
+                         String phoneNumberString="";
+                         if (phoneNumber != null) {
+                             phoneNumberString = phoneNumber.toString();
+                         }
+//                         Log.e("num", phoneNumberString);
+                         etNoHp.setText(phoneNumberString);
+                     }
+                    @Override
+                    public void onError(AccountKitError accountKitError) {
+//                         Log.e("error", accountKitError.toString());
+//                         Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), accountKitError.toString(),
+//                                Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal memverifikasi nomor telepon",
+                                Snackbar.LENGTH_LONG).show();
+                    }
+                });
+//                toastMessage = "Login Success";
+//                Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), toastMessage,
+//                        Snackbar.LENGTH_LONG).show();
+            }
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

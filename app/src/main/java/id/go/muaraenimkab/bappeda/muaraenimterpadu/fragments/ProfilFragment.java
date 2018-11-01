@@ -34,6 +34,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.facebook.accountkit.Account;
+import com.facebook.accountkit.AccountKit;
+import com.facebook.accountkit.AccountKitCallback;
+import com.facebook.accountkit.AccountKitError;
+import com.facebook.accountkit.AccountKitLoginResult;
+import com.facebook.accountkit.PhoneNumber;
+import com.facebook.accountkit.ui.AccountKitActivity;
+import com.facebook.accountkit.ui.AccountKitConfiguration;
+import com.facebook.accountkit.ui.LoginType;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.gun0912.tedpermission.TedPermissionResult;
 import com.squareup.picasso.Picasso;
@@ -51,6 +60,7 @@ import java.util.Objects;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.R;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.MainActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignInActivity;
+import id.go.muaraenimkab.bappeda.muaraenimterpadu.activities.SignUpActivity;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.User;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.Value;
 import id.go.muaraenimkab.bappeda.muaraenimterpadu.models.ValueAdd;
@@ -77,6 +87,8 @@ public class ProfilFragment extends Fragment {
     String foto, idp;
     private static final int CAMERA_REQUEST = 188, FILE_REQUES = 189;
     Bitmap imageBitmap;
+    ProgressDialog pDialog;
+    public static int APP_REQUEST_CODE = 99;
 
     public ProfilFragment() {
         // Required empty public constructor
@@ -350,6 +362,36 @@ public class ProfilFragment extends Fragment {
             }
         });
 
+        etNoHp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b){
+                    pDialog = new ProgressDialog(getActivity());
+                    pDialog.setMessage("Loading...");
+                    pDialog.setIndeterminate(false);
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                    phoneLogin();
+                }
+            }
+        });
+
+        etNoHp.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    pDialog = new ProgressDialog(getActivity());
+                    pDialog.setMessage("Loading...");
+                    pDialog.setIndeterminate(false);
+                    pDialog.setCancelable(false);
+                    pDialog.show();
+                    phoneLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         imgProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -432,6 +474,18 @@ public class ProfilFragment extends Fragment {
 //    public interface OnFragmentInteractionListener {
 //        void onFragmentInteraction(Uri uri);
 //    }
+
+    public void phoneLogin() {
+        final Intent intent = new Intent(getActivity(), AccountKitActivity.class);
+        AccountKitConfiguration.AccountKitConfigurationBuilder configurationBuilder =
+                new AccountKitConfiguration.AccountKitConfigurationBuilder(
+                        LoginType.PHONE,
+                        AccountKitActivity.ResponseType.TOKEN); // or .ResponseType.TOKEN
+        intent.putExtra(
+                AccountKitActivity.ACCOUNT_KIT_ACTIVITY_CONFIGURATION,
+                configurationBuilder.build());
+        startActivityForResult(intent, APP_REQUEST_CODE);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void dialogAmbilGambar() {
@@ -685,6 +739,47 @@ public class ProfilFragment extends Fragment {
                         }
                     }
                 }
+            }
+        }else if (requestCode == APP_REQUEST_CODE) {
+            pDialog.dismiss();
+            AccountKitLoginResult loginResult = data.getParcelableExtra(AccountKitLoginResult.RESULT_KEY);
+//            String toastMessage = "";
+            if (loginResult.getError() != null) {
+//                toastMessage = loginResult.getError().getErrorType().getMessage();
+//                Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), toastMessage,
+//                        Snackbar.LENGTH_LONG).show();
+//                showErrorActivity(loginResult.getError());
+//            } else if (loginResult.wasCancelled()) {
+//                toastMessage = "Login Cancelled";
+//                Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), toastMessage,
+//                        Snackbar.LENGTH_LONG).show();
+//                finish();
+                Snackbar.make(Objects.requireNonNull(getActivity().findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal memverifikasi nomor telepon",
+                        Snackbar.LENGTH_LONG).show();
+            } else {
+                AccountKit.getCurrentAccount(new AccountKitCallback<Account>() {
+                    @Override
+                    public void onSuccess(final Account account) {
+                        PhoneNumber phoneNumber = account.getPhoneNumber();
+                        String phoneNumberString="";
+                        if (phoneNumber != null) {
+                            phoneNumberString = phoneNumber.toString();
+                        }
+//                         Log.e("num", phoneNumberString);
+                        etNoHp.setText(phoneNumberString);
+                    }
+                    @Override
+                    public void onError(AccountKitError accountKitError) {
+//                         Log.e("error", accountKitError.toString());
+//                         Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), accountKitError.toString(),
+//                                Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(Objects.requireNonNull(getActivity().findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal memverifikasi nomor telepon",
+                                Snackbar.LENGTH_LONG).show();
+                    }
+                });
+//                toastMessage = "Login Success";
+//                Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), toastMessage,
+//                        Snackbar.LENGTH_LONG).show();
             }
         }
     }

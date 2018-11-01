@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -84,5 +85,9 @@ dependencies {
 //    implementation ('com.mapbox.mapboxsdk:mapbox-android-navigation-ui:0.20.0'){
 //        transitive=true
 //    }
+
+    //phone verify
+    implementation 'com.facebook.android:facebook-android-sdk:4.33.0'
+    implementation 'com.facebook.android:account-kit-sdk:4.33.0'
 }
 apply plugin: 'com.google.gms.google-services'

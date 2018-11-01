@@ -263,6 +263,7 @@ public class HomeFragment extends Fragment {
                             getContent(pDialog);
                         } else {
                             mSlider.setBackgroundResource(R.drawable.defaultimage);
+                            getContent(pDialog);
                         }
                     } else {
                         pDialog.dismiss();
