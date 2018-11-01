@@ -36,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Utilities {
     //private static Toast mToast;
+    //private static String server = "http://www.freshyummy.co.id/mance/";
     private static String server = "http://www.mance.muaraenimkab.go.id/";
     private static String server2 = "http://www.spikm.muaraenimkab.go.id/";
 

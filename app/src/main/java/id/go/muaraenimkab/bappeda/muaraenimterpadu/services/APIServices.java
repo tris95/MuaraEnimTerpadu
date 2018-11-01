@@ -138,7 +138,8 @@ public interface APIServices {
                                     @Field("isi") String isi,
                                     @Field("nohp") String nohp,
                                     @Field("lokasi") String lokasi,
-                                    @Field("foto") String foto);
+                                    @Field("foto") String foto,
+                                    @Field("area") String area);
 
     @FormUrlEncoded
     @POST("getlaporan.php")

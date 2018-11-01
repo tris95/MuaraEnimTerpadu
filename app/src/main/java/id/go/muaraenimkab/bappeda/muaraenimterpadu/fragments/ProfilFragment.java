@@ -26,6 +26,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TabHost;
 
 import com.facebook.accountkit.Account;
 import com.facebook.accountkit.AccountKit;
@@ -75,12 +77,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
 
 public class ProfilFragment extends Fragment {
     Toolbar toolbar;
     Button btnAction;
     CircularImageView imgProfil;
-    LinearLayout imgEdit;
+    LinearLayout imgEdit,profilmuaraenim;
     EditText etNama, etNoKtp, etEmail, etNoHp, etAlamat, etPassword;
     public static boolean flagback;
     boolean editmode;
@@ -122,6 +126,7 @@ public class ProfilFragment extends Fragment {
         etAlamat = v.findViewById(R.id.etAlamat);
         etPassword = v.findViewById(R.id.etPassword);
         imgEdit = v.findViewById(R.id.imgEdit);
+        profilmuaraenim=v.findViewById(R.id.profilmuaraenim);
 
         // imgProfil.setEnabled(false);
         etNama.setEnabled(false);
@@ -313,6 +318,46 @@ public class ProfilFragment extends Fragment {
                     etNoKtp.setText(users.getNo_ktp());
                     editmode = false;
                 }
+            }
+        });
+
+        profilmuaraenim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                final AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+//                assert (getActivity()) != null;
+//                dialog.setCancelable(true);
+//                LayoutInflater inflater = getActivity().getLayoutInflater();
+//                View dialogView = inflater.inflate(R.layout.dialogtab_profile_muara_enim, null);
+//
+//                dialog.setView(dialogView);
+//                dialog.create();
+//                dialog.show();
+                AlertDialog.Builder builder;
+                AlertDialog alertDialog;
+
+                LayoutInflater inflater = (LayoutInflater)
+                        getActivity().getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View layout = Objects.requireNonNull(inflater).inflate(R.layout.dialogtab_profile_muara_enim,
+                        (ViewGroup) v.findViewById(R.id.tabhost));
+
+                TabHost tabs = layout.findViewById(R.id.tabhost);
+                tabs.setup();
+
+                TabHost.TabSpec tabpage1 = tabs.newTabSpec("Tentang");
+                tabpage1.setContent(R.id.ScrollView01);
+                tabpage1.setIndicator("Tentang");
+                TabHost.TabSpec tabpage2 = tabs.newTabSpec("Visi dan Misi");
+                tabpage2.setContent(R.id.ScrollView02);
+                tabpage2.setIndicator("Visi dan Misi");
+                tabs.addTab(tabpage1);
+                tabs.addTab(tabpage2);
+
+                builder = new AlertDialog.Builder(getContext());
+
+                builder.setView(layout);
+                alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
