@@ -143,20 +143,22 @@ public class KirimLaporanFragment extends Fragment {
                 dialogAmbilGambar();
             }
         });
-
-        txtNoHp.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                final int DRAWABLE_RIGHT = 2;
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    if (motionEvent.getRawX() >= (txtNoHp.getRight() - txtNoHp.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        User user = Utilities.getUser(getContext());
-                        txtNoHp.setText(user.getNo_hp_user());
-                    }
-                }
-                return false;
-            }
-        });
+        User user = Utilities.getUser(getContext());
+        txtNoHp.setText(user.getNo_hp_user());
+        txtNoHp.setEnabled(false);
+//        txtNoHp.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                final int DRAWABLE_RIGHT = 2;
+//                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//                    if (motionEvent.getRawX() >= (txtNoHp.getRight() - txtNoHp.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+//                        User user = Utilities.getUser(getContext());
+//                        txtNoHp.setText(user.getNo_hp_user());
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
 //        spOpd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
@@ -331,7 +333,7 @@ public class KirimLaporanFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<ValueAdd> call = api.kirimlaporanspik(random, idpengguna, judul, isi, hp, lokasi, foto,area);
+        Call<ValueAdd> call = api.kirimlaporanspik(random, idpengguna, judul, isi, hp, lokasi, foto, area);
         call.enqueue(new Callback<ValueAdd>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
