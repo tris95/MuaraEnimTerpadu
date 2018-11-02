@@ -206,6 +206,7 @@ public class DetailKontakFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 gMap = googleMap;
+                if (gMap != null) gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
                 @SuppressLint("ResourceType") View navigationControl = mapView.findViewById(0x4);
 

@@ -9,19 +9,18 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp">
+        android:layout_height="match_parent">
 
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorDefault"/>
 
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp">
+            android:layout_height="match_parent">
 
             <ScrollView android:id="@+id/ScrollView01"
                 android:layout_width="match_parent"
@@ -43,13 +42,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
+                        android:layout_margin="7dp"
+                        android:textColor="@color/colorDefault"
                         android:text="@string/profilmuaraenim"/>
-
                 </LinearLayout>
-
             </ScrollView>
-
 
             <ScrollView android:id="@+id/ScrollView02"
                 android:layout_width="match_parent"
@@ -74,6 +71,7 @@
                         android:layout_marginTop="5dp"
                         android:text="VISI"
                         android:textSize="25dp"
+                        android:textColor="@color/colorDefault"
                         android:gravity="center"/>
 
                     <TextView
@@ -81,12 +79,14 @@
                         android:layout_height="wrap_content"
                         android:text="@string/Visi"
                         android:layout_marginLeft="5dp"
+                        android:textColor="@color/colorDefault"
                         android:layout_marginRight="5dp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="MISI"
+                        android:textColor="@color/colorDefault"
                         android:textSize="25dp"
                         android:gravity="center"/>
 
@@ -94,16 +94,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1. "/>
+                            android:text="1. "
+                            android:textColor="@color/colorDefault"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi1" />
+                            android:text="@string/Misi1"
+                            android:textColor="@color/colorDefault"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -114,11 +116,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2. "/>
+                            android:text="2. "
+                            android:textColor="@color/colorDefault"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi2" />
+                            android:text="@string/Misi2"
+                            android:textColor="@color/colorDefault"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -129,11 +133,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="3. "/>
+                            android:text="3. "
+                            android:textColor="@color/colorDefault"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi3" />
+                            android:text="@string/Misi3"
+                            android:textColor="@color/colorDefault"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -144,11 +150,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="4. "/>
+                            android:text="4. "
+                            android:textColor="@color/colorDefault"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi4" />
+                            android:text="@string/Misi4"
+                            android:textColor="@color/colorDefault"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -159,11 +167,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="5. "/>
+                            android:text="5. "
+                            android:textColor="@color/colorDefault"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi5" />
+                            android:text="@string/Misi5"
+                            android:textColor="@color/colorDefault"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -174,11 +184,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="6. "/>
+                            android:text="6. "
+                            android:textColor="@color/colorDefault"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi6" />
+                            android:text="@string/Misi6"
+                            android:textColor="@color/colorDefault"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -189,14 +201,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="7. "/>
+                            android:text="7. "
+                            android:textColor="@color/colorDefault"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi7" />
+                            android:text="@string/Misi7"
+                            android:textColor="@color/colorDefault"/>
                     </LinearLayout>
                 </LinearLayout>
-
             </ScrollView>
         </FrameLayout>
     </LinearLayout>

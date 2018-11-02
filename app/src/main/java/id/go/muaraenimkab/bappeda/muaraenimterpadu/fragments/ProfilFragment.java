@@ -35,6 +35,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.facebook.accountkit.Account;
 import com.facebook.accountkit.AccountKit;
@@ -352,6 +353,12 @@ public class ProfilFragment extends Fragment {
                 tabpage2.setIndicator("Visi dan Misi");
                 tabs.addTab(tabpage1);
                 tabs.addTab(tabpage2);
+
+                for(int i=0;i<tabs.getTabWidget().getChildCount();i++)
+                {
+                    TextView tv = tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+                    tv.setTextColor(getResources().getColor(R.color.colorDefault));
+                }
 
                 builder = new AlertDialog.Builder(getContext());
 

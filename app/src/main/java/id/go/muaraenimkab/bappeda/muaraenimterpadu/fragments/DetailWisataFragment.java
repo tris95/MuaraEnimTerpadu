@@ -3,9 +3,11 @@ package id.go.muaraenimkab.bappeda.muaraenimterpadu.fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
@@ -20,6 +22,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -31,6 +34,8 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -80,6 +85,7 @@ public class DetailWisataFragment extends Fragment {
     View bottomsheet;
     DocumentView lbldeskripsiwisata;
     ImageView imgdetailwisata, imgup;
+    WebView webView;
 //    MainActivity mainActivity =new MainActivity();
     String idparawisata, namapariwisata, gambarpariwisata, deskripsi, lat, lng, alamat;
     private static final String ARG_alamat = "alamat", ARG_lat = "lat", ARG_lng = "lng", ARG_idparawisata = "idparawisata",ARG_namapariwisata = "namapariwisata",
@@ -90,6 +96,10 @@ public class DetailWisataFragment extends Fragment {
     GoogleMap gMap;
     FusedLocationProviderClient mFusedLocationClient;
     LatLng currentLatLng;
+
+    boolean loadingFinished = true;
+    boolean redirect = false;
+    ProgressDialog pDialog;
 
     public DetailWisataFragment() {
         // Required empty public constructor
@@ -142,12 +152,42 @@ public class DetailWisataFragment extends Fragment {
 //        rlback=v.findViewById(R.id.rlback);
         lbldeskripsiwisata=v.findViewById(R.id.lbldeskripsiwisata);
 
+        webView = v.findViewById(R.id.wv);
+
         ((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
         if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setDisplayShowHomeEnabled(true);
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(namapariwisata);
+        }
+
+        if (isValid(deskripsi)){
+            webView.setVisibility(View.VISIBLE);
+            imgdetailwisata.setVisibility(View.GONE);
+            lbldeskripsiwisata.setVisibility(View.GONE);
+
+            pDialog = new ProgressDialog(getActivity());
+            pDialog.setMessage("Loading...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+
+            webView.setWebViewClient(new MyBrowser());
+            webView.getSettings().setLoadsImagesAutomatically(true);
+            //wvPrivacyPolicy.getSettings().setJavaScriptEnabled(true);
+            webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+            if (Build.VERSION.SDK_INT >= 19) {
+                webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+            }
+            else {
+                webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            }
+
+            webView.loadUrl(deskripsi);
+        }else{
+            webView.setVisibility(View.GONE);
+            imgdetailwisata.setVisibility(View.VISIBLE);
+            lbldeskripsiwisata.setVisibility(View.VISIBLE);
         }
 
         Display display = getActivity().getWindowManager().getDefaultDisplay();
@@ -232,6 +272,7 @@ public class DetailWisataFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 gMap = googleMap;
+                if (gMap != null) gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
                 @SuppressLint("ResourceType") View navigationControl = mapView.findViewById(0x4);
 
@@ -394,6 +435,51 @@ public class DetailWisataFragment extends Fragment {
         animation.setDuration(500);
         animation.setFillAfter(true);
         view.startAnimation(animation);
+    }
+
+    public static boolean isValid(String url){
+        try{
+            new URL(url).toURI();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    private class MyBrowser extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String urlNewString) {
+            if (!loadingFinished) {
+                redirect = true;
+            }
+
+            loadingFinished = false;
+            view.loadUrl(urlNewString);
+            return true;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap facIcon) {
+            loadingFinished = false;
+            pDialog.show();
+            //SHOW LOADING IF IT ISNT ALREADY VISIBLE
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            if (!redirect) {
+                loadingFinished = true;
+            }
+
+            if (loadingFinished && !redirect) {
+                //HIDE LOADING IT HAS FINISHED
+                pDialog.dismiss();
+                //wvPrivacyPolicy.setVisibility(View.INVISIBLE);
+            } else {
+                redirect = false;
+            }
+
+        }
     }
 
     @Override
