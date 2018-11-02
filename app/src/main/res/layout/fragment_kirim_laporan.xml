@@ -71,11 +71,7 @@
             android:inputType="number"
             android:hint="No. Hp yang dapat dihubungi"
             android:textAlignment="textStart"
-            android:gravity="start"
-            android:drawableRight="@drawable/baseline_file_copy_black_24dp"
-            android:drawableEnd="@drawable/baseline_file_copy_black_24dp"
-            android:drawableTint="@color/colorDefault"
-            android:backgroundTint="@color/colorDefault"/>
+            android:gravity="start"/>
 
         <TextView
             android:id="@+id/lblLokasi"
