@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lysignin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/lysignin">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,22 +18,22 @@
             android:layout_height="130dp"
             android:layout_above="@+id/rl"
             android:layout_centerHorizontal="true"
-            android:scaleType="fitXY"
             android:layout_marginBottom="30dp"
+            android:scaleType="fitXY"
             android:src="@drawable/mance"
             tools:ignore="ContentDescription" />
 
         <RelativeLayout
+            android:id="@+id/rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rl"
             android:layout_centerVertical="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:orientation="vertical"
                 tools:ignore="UselessParent">
 
@@ -41,8 +41,8 @@
                     android:id="@+id/ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -57,8 +57,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
                         android:backgroundTint="@color/colorDefault"
                         android:hint="Alamat Email"
                         android:inputType="textEmailAddress"
@@ -71,8 +71,8 @@
                     android:id="@+id/ll2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -87,8 +87,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
                         android:backgroundTint="@color/colorDefault"
                         android:hint="Password"
                         android:inputType="textPassword"
@@ -101,47 +101,47 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:background="@drawable/button_background"
                     android:text="Masuk"
-                    android:textColor="@android:color/white"
                     android:textAllCaps="false"
-                    android:background="@drawable/button_background" />
+                    android:textColor="@android:color/white" />
                 <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginTop="20dp"-->
-                    <!--android:id="@+id/lupakatasandi"-->
-                    <!--android:text="Lupa Kata Sandi ? "-->
-                    <!--android:textColor="@android:color/holo_red_dark" />-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:id="@+id/lupakatasandi"-->
+                <!--android:text="Lupa Kata Sandi ? "-->
+                <!--android:textColor="@android:color/holo_red_dark" />-->
             </LinearLayout>
         </RelativeLayout>
 
         <!--<TextView-->
-            <!--android:id="@+id/textView5"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_above="@+id/ll"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:text="Silahkan masuk dengan email Anda yang sudah terdaftar."-->
-            <!--android:textAlignment="center" />-->
+        <!--android:id="@+id/textView5"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@+id/ll"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:text="Silakan masuk dengan email Anda yang sudah terdaftar."-->
+        <!--android:textAlignment="center" />-->
 
         <!--<TextView-->
-            <!--android:id="@+id/textView"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/button"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--android:text="Tidak bisa mengakses no. HP Anda ?" />-->
+        <!--android:id="@+id/textView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/button"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:text="Tidak bisa mengakses no. HP Anda ?" />-->
 
         <!--<TextView-->
-            <!--android:id="@+id/textView2"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/textView"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:text="HUBUNGI KAMI"-->
-            <!--android:textColor="@color/colorPrimary" />-->
+        <!--android:id="@+id/textView2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/textView"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:text="HUBUNGI KAMI"-->
+        <!--android:textColor="@color/colorPrimary" />-->
 
         <LinearLayout
             android:id="@+id/line1"
@@ -150,8 +150,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <View
                 android:id="@+id/view"
@@ -183,21 +183,21 @@
             android:layout_below="@+id/line1"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:visibility="gone"
+            android:background="@drawable/button_background"
             android:text="Masuk dengan Facebook"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:background="@drawable/button_background" />
+            android:visibility="gone" />
     </RelativeLayout>
 
     <!--<com.facebook.login.widget.LoginButton-->
-        <!--android:id="@+id/login_button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginTop="30dp"-->
-        <!--android:layout_marginBottom="30dp"-->
-        <!--android:visibility="gone"/>-->
+    <!--android:id="@+id/login_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:layout_marginBottom="30dp"-->
+    <!--android:visibility="gone"/>-->
 
     <LinearLayout
         android:id="@+id/ll_daftar"
@@ -205,8 +205,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:background="@color/colorPrimary"
+        android:gravity="center"
         android:orientation="horizontal"
         android:padding="15dp">
 
@@ -222,7 +222,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/daftar"
+            android:text=" Daftar"
             android:textColor="@android:color/white" />
     </LinearLayout>
 </RelativeLayout>

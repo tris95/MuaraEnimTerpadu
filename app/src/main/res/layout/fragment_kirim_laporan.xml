@@ -1,121 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/activity_margin"
-        tools:context=".fragments.KirimLaporanFragment">
+        tools:context="id.go.muaraenimkab.mance.fragments.KirimLaporanFragment">
 
         <TextView
             android:id="@+id/lblTujuan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Area"/>
+            android:text="Area"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spArea"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/lblJudul"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:layout_marginTop="@dimen/activity_margin"
-            android:text="Judul Laporan" />
+            android:text="Judul Laporan"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/txtJudul"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textAutoComplete"
-            android:hint="Judul laporan Anda"/>
+            android:hint="Judul laporan Anda"
+            android:inputType="textAutoComplete" />
 
         <TextView
             android:id="@+id/lblIsi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:layout_marginTop="@dimen/activity_margin"
-            android:text="Isi Laporan" />
+            android:text="Isi Laporan"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/txtIsi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minLines="5"
-            android:inputType="textAutoComplete"
+            android:gravity="start"
             android:hint="Isi laporan Anda"
-            android:textAlignment="textStart"
-            android:gravity="start" />
+            android:inputType="textAutoComplete"
+            android:minLines="5"
+            android:textAlignment="textStart" />
 
         <TextView
             android:id="@+id/lblnotlp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:layout_marginTop="@dimen/activity_margin"
-            android:text="No. Hp" />
+            android:text="No. Hp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/txtNoHp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="number"
+            android:gravity="start"
             android:hint="No. Hp yang dapat dihubungi"
-            android:textAlignment="textStart"
-            android:gravity="start"/>
+            android:inputType="number"
+            android:textAlignment="textStart" />
 
         <TextView
             android:id="@+id/lblLokasi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:layout_marginTop="@dimen/activity_margin"
-            android:text="Lokasi" />
+            android:text="Lokasi"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/txtLokasi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minLines="2"
-            android:inputType="textAutoComplete"
+            android:gravity="start"
             android:hint="Detail lokasi pengaduan (optional)"
-            android:textAlignment="textStart"
-            android:gravity="start" />
+            android:inputType="textAutoComplete"
+            android:minLines="2"
+            android:textAlignment="textStart" />
 
         <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="250dp"-->
-            <!--android:id="@+id/imgLaporan"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--android:src="@drawable/jalan"-->
-            <!--android:layout_marginTop="15dp"-->
-            <!--android:layout_marginLeft="5dp"-->
-            <!--android:layout_marginRight="5dp"/>-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="250dp"-->
+        <!--android:id="@+id/imgLaporan"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@drawable/jalan"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:layout_marginLeft="5dp"-->
+        <!--android:layout_marginRight="5dp"/>-->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:layout_marginTop="@dimen/activity_margin"
-            android:text="Foto Laporan" />
+            android:text="Foto Laporan"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgLaporan"
             android:layout_width="match_parent"
             android:layout_height="230dp"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/defaultimage"/>
+            android:src="@drawable/defaultimage" />
 
         <Button
             android:id="@+id/btnKirim"

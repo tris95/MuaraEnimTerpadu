@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ext="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:ext="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".fragments.DetailBeritaFragment">
+    tools:context="id.go.muaraenimkab.mance.fragments.DetailBeritaFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -52,10 +52,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_button"
-                android:paddingBottom="7dp"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="7dp"
                 android:text="@string/coba_lagi"
                 android:textColor="@color/colorOrange" />
         </LinearLayout>
@@ -104,118 +104,126 @@
                     android:visibility="gone">
 
                     <LinearLayout
+                        android:id="@+id/ll1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:id="@+id/ll1"
-                        android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
                         android:gravity="center"
+                        android:orientation="horizontal"
                         tools:ignore="UseCompoundDrawables">
+
                         <ImageView
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:src="@drawable/baseline_event_24"
                             android:tint="@color/colorPrimary"
                             tools:ignore="ContentDescription" />
+
                         <TextView
                             android:id="@+id/lbltanggalBerita"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="23sp"/>
+                            android:textSize="23sp" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:id="@+id/ll2"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toEndOf="@+id/ll1"
                         android:layout_toRightOf="@+id/ll1"
                         android:gravity="center"
-                        android:layout_toEndOf="@+id/ll1"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginStart="5dp"
+                        android:orientation="horizontal"
                         tools:ignore="UseCompoundDrawables">
+
                         <ImageView
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:src="@drawable/baseline_favorite_24"
                             android:tint="@color/colorPrimary"
                             tools:ignore="ContentDescription" />
+
                         <TextView
                             android:id="@+id/lblLikeBerita"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="23sp"/>
+                            android:textSize="23sp" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:id="@+id/ll3"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toEndOf="@+id/ll2"
                         android:layout_toRightOf="@+id/ll2"
                         android:gravity="center"
-                        android:layout_toEndOf="@+id/ll2"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginStart="5dp"
+                        android:orientation="horizontal"
                         tools:ignore="UseCompoundDrawables">
+
                         <ImageView
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:src="@drawable/baseline_person_24"
                             android:tint="@color/colorPrimary"
                             tools:ignore="ContentDescription" />
+
                         <TextView
                             android:id="@+id/lblViewBerita"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="23sp"/>
+                            android:textSize="23sp" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llsuka"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:id="@+id/llsuka"
-                        android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center"
+                        android:orientation="horizontal"
                         tools:ignore="RelativeOverlap,UseCompoundDrawables">
+
                         <TextView
                             android:id="@+id/lblLikeUnlike"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="30sp"
-                            android:text="@string/suka"
+                            android:layout_marginEnd="3dp"
                             android:layout_marginRight="3dp"
-                            android:layout_marginEnd="3dp" />
+                            android:text="@string/suka"
+                            android:textSize="30sp" />
+
                         <ImageView
                             android:id="@+id/imglikeunlike"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
-                            android:tint="#757575"
                             android:src="@drawable/baseline_thumb_up_24"
+                            android:tint="#757575"
                             tools:ignore="ContentDescription" />
                     </LinearLayout>
                 </RelativeLayout>
 
                 <!--<TextView-->
-                    <!--android:id="@+id/lblIsiBerita"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@+id/rlket"-->
-                    <!--android:paddingTop="5dp"-->
-                    <!--android:textSize="16sp" />-->
+                <!--android:id="@+id/lblIsiBerita"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@+id/rlket"-->
+                <!--android:paddingTop="5dp"-->
+                <!--android:textSize="16sp" />-->
 
                 <com.bluejamesbond.text.DocumentView
+                    android:id="@+id/lblIsiBerita"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlket"
-                    android:id="@+id/lblIsiBerita"
-                    ext:documentView_textSize="26sp"
-                    ext:documentView_textColor="#757575"
-                    ext:documentView_textAlignment="justified" />
+                    ext:documentView_textAlignment="justified"
+                    ext:documentView_textColor="@color/colorDefault"
+                    ext:documentView_textSize="26sp" />
 
             </RelativeLayout>
         </LinearLayout>

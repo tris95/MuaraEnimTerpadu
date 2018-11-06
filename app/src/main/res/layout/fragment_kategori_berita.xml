@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.LaporanSayaFragment">
+    tools:context="id.go.muaraenimkab.mance.fragments.LaporanSayaFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -55,19 +55,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/custom_button"
-                    android:paddingBottom="7dp"
                     android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
                     android:paddingTop="7dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="7dp"
                     android:text="@string/coba_lagi"
                     android:textColor="@color/colorOrange" />
             </LinearLayout>
         </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvKategoriBerita"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rvKategoriBerita"/>
+            android:layout_height="match_parent" />
     </RelativeLayout>
 
 </LinearLayout>

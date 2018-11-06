@@ -13,11 +13,11 @@
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/tb1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@android:color/transparent"-->
-        <!--android:theme="@style/AppTheme.TransparentToolbar" />-->
+    <!--android:id="@+id/tb1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/transparent"-->
+    <!--android:theme="@style/AppTheme.TransparentToolbar" />-->
 
     <!--<android.support.v7.widget.Toolbar-->
     <!--android:layout_width="match_parent"-->
@@ -46,9 +46,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="450dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/custom_slide_down"
-        android:orientation="vertical"
-        android:layout_marginBottom="10dp">
+        android:orientation="vertical">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingBottom="10dp">
 
@@ -77,9 +77,17 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    ext:documentView_textSize="26sp"
-                    app:documentView_textColor="@android:color/white"
-                    ext:documentView_textAlignment="justified" />
+                    android:layout_marginBottom="10dp"
+                    app:documentView_textColor="@color/colorDefault"
+                    ext:documentView_textAlignment="justified"
+                    ext:documentView_textSize="26sp" />
+
+                <WebView
+                    android:id="@+id/wv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

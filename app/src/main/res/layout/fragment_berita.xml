@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.LaporanSayaFragment">
+    tools:context="id.go.muaraenimkab.mance.fragments.LaporanSayaFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tidak_terhubung_ke_server"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray" />
 
             <TextView
                 android:id="@+id/tv_cobalagi"
@@ -51,10 +51,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_button"
-                android:paddingBottom="7dp"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:paddingTop="7dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="7dp"
                 android:text="@string/coba_lagi"
                 android:textColor="@color/colorOrange" />
         </LinearLayout>
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tidak_ada_berita"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -95,9 +95,9 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvBerita"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rvBerita"/>
+            android:layout_height="match_parent" />
     </RelativeLayout>
 
 </LinearLayout>

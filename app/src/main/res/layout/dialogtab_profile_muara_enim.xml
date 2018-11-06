@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ext="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tabhost"
     android:layout_width="fill_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorDefault"/>
+            android:textColor="@color/colorDefault" />
 
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ScrollView android:id="@+id/ScrollView01"
+            <ScrollView
+                android:id="@+id/ScrollView01"
                 android:layout_width="match_parent"
-                android:scrollbars="none"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:scrollbars="none">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -35,20 +36,33 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
-                        android:scaleType="fitXY"
                         android:background="@drawable/adipura"
+                        android:scaleType="fitXY"
                         tools:ignore="ContentDescription" />
 
-                    <TextView
+                    <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="7dp"-->
+                    <!--android:textColor="@color/colorDefault"-->
+                    <!--android:text="@string/profilmuaraenim"/>-->
+
+                    <com.bluejamesbond.text.DocumentView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="7dp"
-                        android:textColor="@color/colorDefault"
-                        android:text="@string/profilmuaraenim"/>
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="20dp"
+                        ext:documentView_text="@string/profilmuaraenim"
+                        ext:documentView_textAlignment="justified"
+                        ext:documentView_textColor="@color/colorDefault"
+                        ext:documentView_textSize="16sp" />
+
                 </LinearLayout>
             </ScrollView>
 
-            <ScrollView android:id="@+id/ScrollView02"
+            <ScrollView
+                android:id="@+id/ScrollView02"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="none">
@@ -69,145 +83,165 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
+                        android:gravity="center"
                         android:text="VISI"
-                        android:textSize="25dp"
                         android:textColor="@color/colorDefault"
-                        android:gravity="center"/>
+                        android:textSize="25dp" />
+
+                    <com.bluejamesbond.text.DocumentView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        ext:documentView_text="@string/Visi"
+                        ext:documentView_textAlignment="justified"
+                        ext:documentView_textColor="@color/colorDefault" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/Visi"
-                        android:layout_marginLeft="5dp"
-                        android:textColor="@color/colorDefault"
-                        android:layout_marginRight="5dp"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="MISI"
                         android:textColor="@color/colorDefault"
-                        android:textSize="25dp"
-                        android:gravity="center"/>
+                        android:textSize="25dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginRight="7dp">
+                        android:layout_marginLeft="20dp"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1. "
-                            android:textColor="@color/colorDefault"/>
-                        <TextView
+                            android:textColor="@color/colorDefault" />
+
+                        <com.bluejamesbond.text.DocumentView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi1"
-                            android:textColor="@color/colorDefault"/>
+                            ext:documentView_text="@string/Misi1"
+                            ext:documentView_textAlignment="justified"
+                            ext:documentView_textColor="@color/colorDefault" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginLeft="20dp"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2. "
-                            android:textColor="@color/colorDefault"/>
-                        <TextView
+                            android:textColor="@color/colorDefault" />
+
+                        <com.bluejamesbond.text.DocumentView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi2"
-                            android:textColor="@color/colorDefault"/>
+                            ext:documentView_text="@string/Misi2"
+                            ext:documentView_textAlignment="justified"
+                            ext:documentView_textColor="@color/colorDefault" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginLeft="20dp"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="3. "
-                            android:textColor="@color/colorDefault"/>
-                        <TextView
+                            android:textColor="@color/colorDefault" />
+
+                        <com.bluejamesbond.text.DocumentView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi3"
-                            android:textColor="@color/colorDefault"/>
+                            ext:documentView_text="@string/Misi3"
+                            ext:documentView_textAlignment="justified"
+                            ext:documentView_textColor="@color/colorDefault" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginLeft="20dp"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="4. "
-                            android:textColor="@color/colorDefault"/>
-                        <TextView
+                            android:textColor="@color/colorDefault" />
+
+                        <com.bluejamesbond.text.DocumentView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi4"
-                            android:textColor="@color/colorDefault"/>
+                            ext:documentView_text="@string/Misi4"
+                            ext:documentView_textAlignment="justified"
+                            ext:documentView_textColor="@color/colorDefault" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginLeft="20dp"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="5. "
-                            android:textColor="@color/colorDefault"/>
-                        <TextView
+                            android:textColor="@color/colorDefault" />
+
+                        <com.bluejamesbond.text.DocumentView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi5"
-                            android:textColor="@color/colorDefault"/>
+                            ext:documentView_text="@string/Misi5"
+                            ext:documentView_textAlignment="justified"
+                            ext:documentView_textColor="@color/colorDefault" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginLeft="20dp"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="6. "
-                            android:textColor="@color/colorDefault"/>
-                        <TextView
+                            android:textColor="@color/colorDefault" />
+
+                        <com.bluejamesbond.text.DocumentView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi6"
-                            android:textColor="@color/colorDefault"/>
+                            ext:documentView_text="@string/Misi6"
+                            ext:documentView_textAlignment="justified"
+                            ext:documentView_textColor="@color/colorDefault" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginLeft="20dp"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="7. "
-                            android:textColor="@color/colorDefault"/>
-                        <TextView
+                            android:textColor="@color/colorDefault" />
+
+                        <com.bluejamesbond.text.DocumentView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/Misi7"
-                            android:textColor="@color/colorDefault"/>
+                            ext:documentView_text="@string/Misi7"
+                            ext:documentView_textAlignment="justified"
+                            ext:documentView_textColor="@color/colorDefault" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

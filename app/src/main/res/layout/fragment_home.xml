@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.HomeFragment">
+    tools:context="id.go.muaraenimkab.mance.fragments.HomeFragment">
 
     <!--<android.support.design.widget.AppBarLayout-->
     <!--android:layout_width="match_parent"-->
@@ -116,19 +116,33 @@
                             app:unselected_width="6dp" />
                     </RelativeLayout>
 
+                    <TextView
+                        android:id="@+id/lblkonten"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/konten_informasi"
+                        android:textColor="@color/colorOrange"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:ignore="RelativeOverlap" />
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rvContent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:orientation="horizontal"
-                        android:padding="5dp" />
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp" />
 
                     <View
                         android:id="@+id/view"
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/colorDivider"
                         android:visibility="gone" />
 
@@ -136,7 +150,9 @@
                         android:id="@+id/rlberita"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
                         android:visibility="gone">
 
                         <TextView
@@ -145,33 +161,39 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:text="@string/berita_baru"
-                            android:textColor="@color/red"
+                            android:textColor="@color/colorOrange"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             tools:ignore="RelativeOverlap" />
 
                         <LinearLayout
                             android:id="@+id/llkategoriberita"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/lblBeritaterbaru"
+                            android:layout_toRightOf="@+id/lblBeritaterbaru"
+                            android:gravity="end"
                             tools:ignore="RelativeOverlap,UseCompoundDrawables">
 
                             <TextView
                                 android:id="@+id/lblBeritaselengkapnya"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:drawableTint="@color/colorPrimary"
+                                android:layout_gravity="center_vertical"
                                 android:text="@string/berita_selengkapnya"
+                                android:textColor="@color/colorPrimary"
                                 android:textSize="16sp"
                                 android:textStyle="bold"
                                 tools:ignore="RelativeOverlap,UnusedAttribute" />
 
                             <ImageView
                                 android:id="@+id/tvArrow"
-                                android:layout_width="23dp"
-                                android:layout_height="23dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:src="@drawable/baseline_keyboard_arrow_right_24"
                                 android:tint="@color/colorPrimary"
                                 tools:ignore="ContentDescription" />

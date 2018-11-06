@@ -1,43 +1,59 @@
 {
   "project_info": {
-    "project_number": "490980118161",
-    "firebase_url": "https://muaraenimterpadu.firebaseio.com",
-    "project_id": "muaraenimterpadu",
-    "storage_bucket": "muaraenimterpadu.appspot.com"
+    "project_number": "1032189392329",
+    "firebase_url": "https://mance-221612.firebaseio.com",
+    "project_id": "mance-221612",
+    "storage_bucket": "mance-221612.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:490980118161:android:2a6cf5ed7b52a8f6",
+        "mobilesdk_app_id": "1:1032189392329:android:e8ad9502b59cba71",
         "android_client_info": {
-          "package_name": "id.go.muaraenimkab.bappeda.muaraenimterpadu"
+          "package_name": "id.go.muaraenimkab.mance"
         }
       },
       "oauth_client": [
         {
-          "client_id": "490980118161-qhuephsjhd26hhniflbj46p3s1f1meal.apps.googleusercontent.com",
+          "client_id": "1032189392329-0j8o8pmd2mhmioe3rbb1vgfn1ukg2csv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "id.go.muaraenimkab.bappeda.muaraenimterpadu",
-            "certificate_hash": "fefe6762220318a4408bd5695786d4dc11e7f5a2"
-          }
-        },
-        {
-          "client_id": "490980118161-kufi7s99hvmnr434mhca19lvon5jvtj8.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "id.go.muaraenimkab.bappeda.muaraenimterpadu",
+            "package_name": "id.go.muaraenimkab.mance",
             "certificate_hash": "edb771d62425eca009685d1448012978a7ab5df5"
           }
         },
         {
-          "client_id": "490980118161-ik44fka2uovnaqdgva54fgmer4o8pnla.apps.googleusercontent.com",
+          "client_id": "1032189392329-g22bs2gmikm41trcibf1ospc4sr4bvuh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.go.muaraenimkab.mance",
+            "certificate_hash": "fefe6762220318a4408bd5695786d4dc11e7f5a2"
+          }
+        },
+        {
+          "client_id": "1032189392329-ohotr2d8tvlj70ca9858difbvc51iau5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.go.muaraenimkab.mance",
+            "certificate_hash": "eecc9f69d7f9ba04d94b08dc43083dcefa7a2fae"
+          }
+        },
+        {
+          "client_id": "1032189392329-tcc10snoa11docs2qbji56u437pi7bfh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.go.muaraenimkab.mance",
+            "certificate_hash": "30b68f405bf14e59b2889061169c6bb60f43df29"
+          }
+        },
+        {
+          "client_id": "1032189392329-302tq6914fs87n60lveviespu21n5662.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDBXcsA4SnHK6MaDh-9rX4Hnb9OSX2Jbdk"
+          "current_key": "AIzaSyBGkJtI2xa13xEld0Z5MOAlXg6XCA6FcTQ"
         }
       ],
       "services": {
@@ -48,7 +64,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "490980118161-ik44fka2uovnaqdgva54fgmer4o8pnla.apps.googleusercontent.com",
+              "client_id": "1032189392329-302tq6914fs87n60lveviespu21n5662.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

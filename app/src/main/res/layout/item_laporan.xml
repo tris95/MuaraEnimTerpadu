@@ -8,9 +8,9 @@
     android:padding="10dp">
 
     <RelativeLayout
+        android:id="@+id/rldefauld"
         android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:id="@+id/rldefauld">
+        android:layout_height="70dp">
 
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="match_parent"
@@ -55,9 +55,9 @@
     </LinearLayout>
 
     <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_margin="10dp"-->
-        <!--android:src="@drawable/baseline_keyboard_arrow_right_24"-->
-        <!--android:tint="@android:color/white" />-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:src="@drawable/baseline_keyboard_arrow_right_24"-->
+    <!--android:tint="@android:color/white" />-->
 </LinearLayout>
