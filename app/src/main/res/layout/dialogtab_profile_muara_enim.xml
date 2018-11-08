@@ -102,147 +102,157 @@
                         android:gravity="center"
                         android:text="MISI"
                         android:textColor="@color/colorDefault"
-                        android:textSize="25dp" />
+                        android:textSize="25dp"
+                        android:layout_marginTop="10dp"/>
 
-                    <LinearLayout
+                    <com.bluejamesbond.text.DocumentView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:orientation="horizontal">
+                        android:layout_marginBottom="20dp"
+                        ext:documentView_text="@string/Misi"
+                        ext:documentView_textAlignment="justified"
+                        ext:documentView_textColor="@color/colorDefault" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1. "
-                            android:textColor="@color/colorDefault" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:orientation="horizontal">-->
 
-                        <com.bluejamesbond.text.DocumentView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            ext:documentView_text="@string/Misi1"
-                            ext:documentView_textAlignment="justified"
-                            ext:documentView_textColor="@color/colorDefault" />
-                    </LinearLayout>
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="1. "-->
+                            <!--android:textColor="@color/colorDefault" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:orientation="horizontal">
+                        <!--<com.bluejamesbond.text.DocumentView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--ext:documentView_text="@string/Misi1"-->
+                            <!--ext:documentView_textAlignment="justified"-->
+                            <!--ext:documentView_textColor="@color/colorDefault" />-->
+                    <!--</LinearLayout>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="2. "
-                            android:textColor="@color/colorDefault" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:orientation="horizontal">-->
 
-                        <com.bluejamesbond.text.DocumentView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            ext:documentView_text="@string/Misi2"
-                            ext:documentView_textAlignment="justified"
-                            ext:documentView_textColor="@color/colorDefault" />
-                    </LinearLayout>
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="2. "-->
+                            <!--android:textColor="@color/colorDefault" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:orientation="horizontal">
+                        <!--<com.bluejamesbond.text.DocumentView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--ext:documentView_text="@string/Misi2"-->
+                            <!--ext:documentView_textAlignment="justified"-->
+                            <!--ext:documentView_textColor="@color/colorDefault" />-->
+                    <!--</LinearLayout>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="3. "
-                            android:textColor="@color/colorDefault" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:orientation="horizontal">-->
 
-                        <com.bluejamesbond.text.DocumentView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            ext:documentView_text="@string/Misi3"
-                            ext:documentView_textAlignment="justified"
-                            ext:documentView_textColor="@color/colorDefault" />
-                    </LinearLayout>
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="3. "-->
+                            <!--android:textColor="@color/colorDefault" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:orientation="horizontal">
+                        <!--<com.bluejamesbond.text.DocumentView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--ext:documentView_text="@string/Misi3"-->
+                            <!--ext:documentView_textAlignment="justified"-->
+                            <!--ext:documentView_textColor="@color/colorDefault" />-->
+                    <!--</LinearLayout>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="4. "
-                            android:textColor="@color/colorDefault" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:orientation="horizontal">-->
 
-                        <com.bluejamesbond.text.DocumentView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            ext:documentView_text="@string/Misi4"
-                            ext:documentView_textAlignment="justified"
-                            ext:documentView_textColor="@color/colorDefault" />
-                    </LinearLayout>
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="4. "-->
+                            <!--android:textColor="@color/colorDefault" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:orientation="horizontal">
+                        <!--<com.bluejamesbond.text.DocumentView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--ext:documentView_text="@string/Misi4"-->
+                            <!--ext:documentView_textAlignment="justified"-->
+                            <!--ext:documentView_textColor="@color/colorDefault" />-->
+                    <!--</LinearLayout>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="5. "
-                            android:textColor="@color/colorDefault" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:orientation="horizontal">-->
 
-                        <com.bluejamesbond.text.DocumentView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            ext:documentView_text="@string/Misi5"
-                            ext:documentView_textAlignment="justified"
-                            ext:documentView_textColor="@color/colorDefault" />
-                    </LinearLayout>
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="5. "-->
+                            <!--android:textColor="@color/colorDefault" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:orientation="horizontal">
+                        <!--<com.bluejamesbond.text.DocumentView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--ext:documentView_text="@string/Misi5"-->
+                            <!--ext:documentView_textAlignment="justified"-->
+                            <!--ext:documentView_textColor="@color/colorDefault" />-->
+                    <!--</LinearLayout>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="6. "
-                            android:textColor="@color/colorDefault" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:orientation="horizontal">-->
 
-                        <com.bluejamesbond.text.DocumentView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            ext:documentView_text="@string/Misi6"
-                            ext:documentView_textAlignment="justified"
-                            ext:documentView_textColor="@color/colorDefault" />
-                    </LinearLayout>
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="6. "-->
+                            <!--android:textColor="@color/colorDefault" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:orientation="horizontal">
+                        <!--<com.bluejamesbond.text.DocumentView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--ext:documentView_text="@string/Misi6"-->
+                            <!--ext:documentView_textAlignment="justified"-->
+                            <!--ext:documentView_textColor="@color/colorDefault" />-->
+                    <!--</LinearLayout>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="7. "
-                            android:textColor="@color/colorDefault" />
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:orientation="horizontal">-->
 
-                        <com.bluejamesbond.text.DocumentView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            ext:documentView_text="@string/Misi7"
-                            ext:documentView_textAlignment="justified"
-                            ext:documentView_textColor="@color/colorDefault" />
-                    </LinearLayout>
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="7. "-->
+                            <!--android:textColor="@color/colorDefault" />-->
+
+                        <!--<com.bluejamesbond.text.DocumentView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--ext:documentView_text="@string/Misi7"-->
+                            <!--ext:documentView_textAlignment="justified"-->
+                            <!--ext:documentView_textColor="@color/colorDefault" />-->
+                    <!--</LinearLayout>-->
                 </LinearLayout>
             </ScrollView>
         </FrameLayout>

@@ -207,6 +207,8 @@ public class DetailBeritaFragment extends Fragment {
             }
         });
 
+        Objects.requireNonNull(getActivity()).sendBroadcast(new Intent("refresh1"));
+
         return v;
     }
 

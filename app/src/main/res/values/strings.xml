@@ -47,13 +47,14 @@
     <string name="ak_login_protocol_scheme">ak186330145622267</string>
 
     <string name="Visi">Muara enim untuk rakyat yang agamis berdaya saing mandiri, sehat dan sejahtera</string>
-    <string name="Misi1">Meningkatkan kualitas sumber daya manusia yang beriman, bertakwa, cerdas dan mandiri.</string>
-    <string name="Misi2">Mewujudkan pembinaan anak yatim, yatim piatu dan duafa dan bantuan langsung kepada keluarga miskin hingga mandiri.</string>
-    <string name="Misi3">Mewujudkan daya saing ekonomi daerah melalui penguatan komoditas dan produk unggul desa di sektor agribisnis, agroindustri dan agropolitan.</string>
-    <string name="Misi4">Mewujudkan pendidikan dan kesehatan yang mudah dijangkau dan bebas biaya.</string>
-    <string name="Misi5">Meningkatkan infrastruktur dan suprastruktur dasar yang berkualitas secara merata dan mendukung terwujudnya jalan tol Muara enim-Indralaya-Palembang.</string>
-    <string name="Misi6">Memanfaatkan potensi SDA untuk memenuhi kebutuhan masyarakat dan industri dengan meperhatikan penelolaan tata ruang dan lingkungan.</string>
-    <string name="Misi7">Mewujudkan tata kelola pemerintahan yang profesioanal, kredibel dan berorientasi pada peningkatan pelayanan publik.\n</string>
+    <string name="Misi">1. Meningkatkan kualitas sumber daya manusia yang beriman, bertakwa, cerdas dan mandiri.\n\n2. Mewujudkan pembinaan anak yatim, yatim piatu dan duafa dan bantuan langsung kepada keluarga miskin hingga mandiri.\n\n3. Mewujudkan daya saing ekonomi daerah melalui penguatan komoditas dan produk unggul desa di sektor agribisnis, agroindustri dan agropolitan.\n\n4. Mewujudkan pendidikan dan kesehatan yang mudah dijangkau dan bebas biaya.\n\n5. Meningkatkan infrastruktur dan suprastruktur dasar yang berkualitas secara merata dan mendukung terwujudnya jalan tol Muara enim-Indralaya-Palembang.\n\n6. Memanfaatkan potensi SDA untuk memenuhi kebutuhan masyarakat dan industri dengan meperhatikan penelolaan tata ruang dan lingkungan.\n\n7. Mewujudkan tata kelola pemerintahan yang profesioanal, kredibel dan berorientasi pada peningkatan pelayanan publik.</string>
+    <!--<string name="Misi1">Meningkatkan kualitas sumber daya manusia yang beriman, bertakwa, cerdas dan mandiri. \n2. Mewujudkan pembinaan anak yatim, yatim piatu dan duafa dan bantuan langsung kepada keluarga miskin hingga mandiri.</string>-->
+    <!--<string name="Misi2">Mewujudkan pembinaan anak yatim, yatim piatu dan duafa dan bantuan langsung kepada keluarga miskin hingga mandiri.</string>-->
+    <!--<string name="Misi3">Mewujudkan daya saing ekonomi daerah melalui penguatan komoditas dan produk unggul desa di sektor agribisnis, agroindustri dan agropolitan.</string>-->
+    <!--<string name="Misi4">Mewujudkan pendidikan dan kesehatan yang mudah dijangkau dan bebas biaya.</string>-->
+    <!--<string name="Misi5">Meningkatkan infrastruktur dan suprastruktur dasar yang berkualitas secara merata dan mendukung terwujudnya jalan tol Muara enim-Indralaya-Palembang.</string>-->
+    <!--<string name="Misi6">Memanfaatkan potensi SDA untuk memenuhi kebutuhan masyarakat dan industri dengan meperhatikan penelolaan tata ruang dan lingkungan.</string>-->
+    <!--<string name="Misi7">Mewujudkan tata kelola pemerintahan yang profesioanal, kredibel dan berorientasi pada peningkatan pelayanan publik.</string>-->
     <string name="profil_muara_enim">Profil Muara Enim</string>
     <string name="visi_dan_misi">Visi dan Misi</string>
 

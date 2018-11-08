@@ -219,6 +219,21 @@ public class ProfilFragment extends Fragment {
             e.printStackTrace();
         }
         Utilities.setLogin(getActivity(), Utilities.getUser(getActivity()).getEmail(), idp);
+        if (!Utilities.isLogin(getContext())) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
+            builder.setCancelable(true)
+                    .setTitle("Pemberitahuan")
+                    .setCancelable(false)
+                    .setMessage("Untuk akses menu profil silakan login terlebih dahulu")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivity(new Intent(getContext(), SignInActivity.class));
+                            Objects.requireNonNull(getActivity()).finish();
+                        }
+                    })
+                    .show();
+        }
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -498,19 +513,6 @@ public class ProfilFragment extends Fragment {
                         .fit()
                         .centerCrop()
                         .into(imgProfil);
-                AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-                builder.setCancelable(true)
-                        .setTitle("Pemberitahuan")
-                        .setCancelable(false)
-                        .setMessage("Untuk akses menu profil silakan login terlebih dahulu")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                startActivity(new Intent(getContext(), SignInActivity.class));
-                                Objects.requireNonNull(getActivity()).finish();
-                            }
-                        })
-                        .show();
             }
         } else {
             if (SignInActivity.flagsignin) {

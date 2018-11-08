@@ -4,6 +4,7 @@ package id.go.muaraenimkab.mance.adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import id.go.muaraenimkab.mance.R;
 import id.go.muaraenimkab.mance.activities.MainActivity;
@@ -87,6 +89,8 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
 
                 HomeFragment.flag = true;
                 BeritaFragment.flag = true;
+                BeritaFragment.flag_id = mListBerita.get(position).getId_berita();
+//                notifyDataSetChanged();
 
             }
         });

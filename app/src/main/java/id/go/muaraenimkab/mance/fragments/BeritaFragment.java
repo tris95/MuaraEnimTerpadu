@@ -1,13 +1,18 @@
 package id.go.muaraenimkab.mance.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,6 +53,8 @@ public class BeritaFragment extends Fragment {
     String kategoriberita, idkategoriberita;
     RelativeLayout rl, rltidakadaberita;
     public static boolean flag = false;
+    public static String flag_id = "";
+    BeritaViewAdapter beritaViewAdapter;
 
     public BeritaFragment() {
         // Required empty public constructor
@@ -88,16 +96,16 @@ public class BeritaFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(kategoriberita);
         }
         rvBerita = v.findViewById(R.id.rvBerita);
-        Log.e("boo", MainActivity.selectedKategori + " " + idkategoriberita);
         if (flag) {
             getBerita1();
             flag = false;
         }
+
         if (MainActivity.Beritask.size() != 0) {
             if (idkategoriberita.equals(MainActivity.selectedKategori)) {
                 linearLayoutManager = new LinearLayoutManager(getContext());
                 rvBerita.setLayoutManager(linearLayoutManager);
-                BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), (ArrayList<Berita>) MainActivity.Beritask);
+                beritaViewAdapter = new BeritaViewAdapter(getContext(), (ArrayList<Berita>) MainActivity.Beritask);
                 rvBerita.setAdapter(beritaViewAdapter);
                 rltidakadaberita.setVisibility(View.GONE);
                 rvBerita.setVisibility(View.VISIBLE);
@@ -113,6 +121,7 @@ public class BeritaFragment extends Fragment {
                 getBerita();
             }
         });
+
         return v;
     }
 
@@ -148,7 +157,7 @@ public class BeritaFragment extends Fragment {
                             MainActivity.selectedKategori = idkategoriberita;
                             linearLayoutManager = new LinearLayoutManager(getContext());
                             rvBerita.setLayoutManager(linearLayoutManager);
-                            BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
+                            beritaViewAdapter = new BeritaViewAdapter(getContext(), (ArrayList<Berita>) MainActivity.Beritask);
                             rvBerita.setAdapter(beritaViewAdapter);
                             rltidakadaberita.setVisibility(View.GONE);
                             rvBerita.setVisibility(View.VISIBLE);
@@ -204,7 +213,7 @@ public class BeritaFragment extends Fragment {
                 .build();
 
         APIServices api = retrofit.create(APIServices.class);
-        Call<Value<Berita>> call = api.getBerita(random);
+        Call<Value<Berita>> call = api.getBeritaOfKategori(random, idkategoriberita);
         call.enqueue(new Callback<Value<Berita>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -212,14 +221,27 @@ public class BeritaFragment extends Fragment {
                 if (response.body() != null) {
                     int success = Objects.requireNonNull(response.body()).getSuccess();
                     if (success == 1) {
-                        mListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
-                        MainActivity.Beritask.clear();
-                        MainActivity.Beritask = mListBerita;
-                        MainActivity.selectedKategori = idkategoriberita;
+                        ArrayList<Berita> tempListBerita = (ArrayList<Berita>) Objects.requireNonNull(response.body()).getData();
+                        MainActivity.Beritask = tempListBerita;
+
+//                        if (mListBerita != null) {
+//                            for (Berita berita : mListBerita) {
+//                                if (berita.getId_berita().equals(flag_id)){
+//                                    berita.setJumlahview(tempListBerita.get(0).getJumlahview());
+//                                    berita.setJumlahlike(tempListBerita.get(0).getJumlahlike());
+//                                }
+//                            }
+//                        }
+
+                        //beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
+                        //beritaViewAdapter.notifyDataSetChanged();
+                        //rvBerita.setAdapter(beritaViewAdapter);
+
                         linearLayoutManager = new LinearLayoutManager(getContext());
                         rvBerita.setLayoutManager(linearLayoutManager);
-                        BeritaViewAdapter beritaViewAdapter = new BeritaViewAdapter(getContext(), mListBerita);
+                        beritaViewAdapter = new BeritaViewAdapter(getContext(), (ArrayList<Berita>) MainActivity.Beritask);
                         rvBerita.setAdapter(beritaViewAdapter);
+
                         rltidakadaberita.setVisibility(View.GONE);
                         rvBerita.setVisibility(View.VISIBLE);
                     }
