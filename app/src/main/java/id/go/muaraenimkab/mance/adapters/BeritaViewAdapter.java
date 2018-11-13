@@ -89,7 +89,7 @@ public class BeritaViewAdapter extends RecyclerView.Adapter<BeritaViewAdapter.Da
 
                 HomeFragment.flag = true;
                 BeritaFragment.flag = true;
-                BeritaFragment.flag_id = mListBerita.get(position).getId_berita();
+//                BeritaFragment.flag_id = mListBerita.get(position).getId_berita();
 //                notifyDataSetChanged();
 
             }

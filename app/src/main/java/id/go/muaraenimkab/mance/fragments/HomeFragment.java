@@ -9,6 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -61,10 +62,11 @@ public class HomeFragment extends Fragment {
     ArrayList<Berita> mListBerita;
     public static List<Berita> mListisiBerita = new ArrayList<>();
     LinearLayoutManager linearLayoutManagercontent, linearLayoutManagerberita;
-    LinearLayout llkategoriberita;
+    LinearLayout llkategoriberita, llProfil;
     SwipeRefreshLayout swipeRefreshLayout;
     PagerIndicator indicator;
     ImageView tvArrow;
+    CardView cvTentang, cvVisiMisi;
     public static boolean flag = false;
 
     public HomeFragment() {
@@ -97,6 +99,9 @@ public class HomeFragment extends Fragment {
         tv_cobalagi = v.findViewById(R.id.tv_cobalagi);
         indicator = v.findViewById(R.id.custom_indicator);
         lblkonten = v.findViewById(R.id.lblkonten);
+        cvTentang = v.findViewById(R.id.cv1);
+        cvVisiMisi = v.findViewById(R.id.cv2);
+        llProfil = v.findViewById(R.id.llProfil);
 
         //((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -116,6 +121,12 @@ public class HomeFragment extends Fragment {
         int viewPagerHeight = viewPagerWidth / 2;
 
         rlslider.setLayoutParams(new LinearLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+        LinearLayout.LayoutParams params_tentang = new LinearLayout.LayoutParams(viewPagerHeight-125, viewPagerWidth/4);
+        LinearLayout.LayoutParams params_visimisi = new LinearLayout.LayoutParams(viewPagerHeight+35, viewPagerWidth/4);
+        params_tentang.setMargins(10,10,0,10);
+        params_visimisi.setMargins(30,10,10,10);
+        cvTentang.setLayoutParams(params_tentang);
+        cvVisiMisi.setLayoutParams(params_visimisi);
 
 //        rvBerita.addItemDecoration(new DividerItemDecoration(rvBerita.getContext(), DividerItemDecoration.VERTICAL));
 
@@ -161,9 +172,12 @@ public class HomeFragment extends Fragment {
             rvBerita.setAdapter(beritaViewAdapter);
 
             lblkonten.setVisibility(View.VISIBLE);
-            view.setVisibility(View.VISIBLE);
+//            view.setVisibility(View.VISIBLE);
             rlberita.setVisibility(View.VISIBLE);
             rlslider.setVisibility(View.VISIBLE);
+//            cvTentang.setVisibility(View.VISIBLE);
+//            cvVisiMisi.setVisibility(View.VISIBLE);
+            llProfil.setVisibility(View.VISIBLE);
 
         } else {
             getAd();
@@ -201,6 +215,20 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getAd();
+            }
+        });
+
+        cvTentang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.replaceFragment(TentangFragment.newInstance(), 5);
+            }
+        });
+
+        cvVisiMisi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.replaceFragment(VisiMisiFragment.newInstance(), 5);
             }
         });
 
@@ -423,8 +451,11 @@ public class HomeFragment extends Fragment {
                         rvBerita.setAdapter(beritaViewAdapter);
 
                         lblkonten.setVisibility(View.VISIBLE);
-                        view.setVisibility(View.VISIBLE);
+//                        view.setVisibility(View.VISIBLE);
                         rlberita.setVisibility(View.VISIBLE);
+//                        cvTentang.setVisibility(View.VISIBLE);
+//                        cvVisiMisi.setVisibility(View.VISIBLE);
+                        llProfil.setVisibility(View.VISIBLE);
                         pDialog.dismiss();
 
                     } else {
@@ -484,8 +515,11 @@ public class HomeFragment extends Fragment {
                         rvBerita.setAdapter(beritaViewAdapter);
 
                         lblkonten.setVisibility(View.VISIBLE);
-                        view.setVisibility(View.VISIBLE);
+//                        view.setVisibility(View.VISIBLE);
                         rlberita.setVisibility(View.VISIBLE);
+//                        cvTentang.setVisibility(View.VISIBLE);
+//                        cvVisiMisi.setVisibility(View.VISIBLE);
+                        llProfil.setVisibility(View.VISIBLE);
                     }
                 }
             }

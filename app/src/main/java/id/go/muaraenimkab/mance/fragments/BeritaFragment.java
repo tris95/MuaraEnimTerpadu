@@ -53,7 +53,7 @@ public class BeritaFragment extends Fragment {
     String kategoriberita, idkategoriberita;
     RelativeLayout rl, rltidakadaberita;
     public static boolean flag = false;
-    public static String flag_id = "";
+//    public static String flag_id = "";
     BeritaViewAdapter beritaViewAdapter;
 
     public BeritaFragment() {

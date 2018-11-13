@@ -84,9 +84,8 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
             display.getMetrics(outMetrics);
             int viewPagerWidth = Math.round(outMetrics.widthPixels) / 3;
             int viewPagerHeight = Math.round(outMetrics.widthPixels) / 4;
-            int Width = Math.round(outMetrics.widthPixels);
 
-            rl.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth, viewPagerHeight));
+            rl.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth+30, viewPagerHeight));
             //content.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/44);
         }
     }

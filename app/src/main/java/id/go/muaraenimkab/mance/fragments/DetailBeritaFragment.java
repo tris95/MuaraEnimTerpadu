@@ -18,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -147,6 +148,7 @@ public class DetailBeritaFragment extends Fragment {
 //                    Manifest.permission.READ_PHONE_STATE}, 1);
 //        }
 
+
         if (flag != null) {
             if (flag.equals("5")) {
                 cekLike();
@@ -155,32 +157,36 @@ public class DetailBeritaFragment extends Fragment {
                 getisiBerita();
             }
         } else {
-            if (HomeFragment.mListisiBerita.size() != 0) {
-                cekLike();
-                cekIDP();
-
-                lblJudulBerita.setText(judulberita);
-                lbltanggalBerita.setText(tanggalberita);
-                lblLikeBerita.setText(likeberita);
-                lblViewBerita.setText(viewberita);
-
-                Picasso.with(getContext())
-                        .load(gambar)
-                        .into(imgDetaiBerita);
-
-                lblIsiBerita.setText(HomeFragment.mListisiBerita.get(0).getIsi_berita());
-
-                lblLikeUnlike.setVisibility(View.VISIBLE);
-                rlket.setVisibility(View.VISIBLE);
-            } else {
+//            if (HomeFragment.mListisiBerita.size() != 0) {
+//                cekLike();
+//                cekIDP();
+//
+//                lblJudulBerita.setText(judulberita);
+//                lbltanggalBerita.setText(tanggalberita);
+//                lblLikeBerita.setText(likeberita);
+//                lblViewBerita.setText(viewberita);
+//
+//                Picasso.with(getContext())
+//                        .load(gambar)
+//                        .into(imgDetaiBerita);
+//
+//                lblLikeUnlike.setVisibility(View.VISIBLE);
+//                rlket.setVisibility(View.VISIBLE);
+//
+//                if (HomeFragment.mListisiBerita.get(0).getId_berita().equals(idberita)){
+//                    lblIsiBerita.setText(HomeFragment.mListisiBerita.get(0).getIsi_berita());
+//                }else {
+//                    getisiBerita();
+//                }
+//            } else {
                 if (Utilities.getUser(getContext()).getId_user() != null) {
                     cekLike();
-                    cekIDP();
-                } else
-                    cekIDP();
+                }
+                cekIDP();
                 getisiBerita();
-            }
+//            }
         }
+
         llsuka.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
