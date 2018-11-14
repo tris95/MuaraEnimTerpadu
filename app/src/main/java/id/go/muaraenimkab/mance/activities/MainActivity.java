@@ -17,6 +17,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -110,42 +111,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//            requestPermissions(new String[]{
-//                    Manifest.permission.READ_PHONE_STATE}, 1);
-//        }
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{
+                    Manifest.permission.READ_PHONE_STATE}, 1);
+        }
 
-        TedRx2Permission.with(Objects.requireNonNull(MainActivity.this))
-                .setRationaleTitle("Izin Akses")
-                .setRationaleMessage("Untuk mengakses aplikasi harap izinkan telepon")
-                .setPermissions(Manifest.permission.READ_PHONE_STATE)
-                .request()
-                .subscribe(new Observer<TedPermissionResult>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(TedPermissionResult tedPermissionResult) {
-                        if (tedPermissionResult.isGranted()) {
-                            cekIDP();
-                        } else {
-                            Snackbar.make(Objects.requireNonNull(MainActivity.this).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
-                                    Snackbar.LENGTH_INDEFINITE)
-                                    .setAction("OK", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent = new Intent();
-                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                            Uri uri = Uri.fromParts("package", getPackageName(), null);
-                                            intent.setData(uri);
-                                            startActivity(intent);
-                                        }
-                                    })
-                                    .show();
-                            //Snackbar.make(getWindow().getDecorView().getRootView(),
-//                                    "Harap mengaktifkan izin Telepon",
+//        TedRx2Permission.with(Objects.requireNonNull(MainActivity.this))
+//                .setRationaleTitle("Izin Akses")
+//                .setRationaleMessage("Untuk mengakses aplikasi harap izinkan telepon")
+//                .setPermissions(Manifest.permission.READ_PHONE_STATE)
+//                .request()
+//                .subscribe(new Observer<TedPermissionResult>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(TedPermissionResult tedPermissionResult) {
+//                        if (tedPermissionResult.isGranted()) {
+//                            cekIDP();
+//                        } else {
+//                            Snackbar.make(Objects.requireNonNull(MainActivity.this).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
 //                                    Snackbar.LENGTH_INDEFINITE)
 //                                    .setAction("OK", new View.OnClickListener() {
 //                                        @Override
@@ -158,19 +145,33 @@ public class MainActivity extends AppCompatActivity {
 //                                        }
 //                                    })
 //                                    .show();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+//                            //Snackbar.make(getWindow().getDecorView().getRootView(),
+////                                    "Harap mengaktifkan izin Telepon",
+////                                    Snackbar.LENGTH_INDEFINITE)
+////                                    .setAction("OK", new View.OnClickListener() {
+////                                        @Override
+////                                        public void onClick(View v) {
+////                                            Intent intent = new Intent();
+////                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+////                                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+////                                            intent.setData(uri);
+////                                            startActivity(intent);
+////                                        }
+////                                    })
+////                                    .show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         fragmentManager = getSupportFragmentManager();
@@ -342,25 +343,25 @@ public class MainActivity extends AppCompatActivity {
         Back();
         return true;
     }
-//    @TargetApi(Build.VERSION_CODES.M)
-//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case 1: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(MainActivity.this),
-//                            Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-//                    } else {
-//                        cekIDP();
-//                    }
-//                } else {
-//                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-//                }
-//            }
-//        }
-//    }
+    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(MainActivity.this),
+                            Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+                    } else {
+                        cekIDP();
+                    }
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+                }
+            }
+        }
+    }
 
     @SuppressLint("HardwareIds")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
