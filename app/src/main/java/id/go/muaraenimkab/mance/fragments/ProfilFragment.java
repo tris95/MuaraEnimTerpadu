@@ -2,6 +2,7 @@ package id.go.muaraenimkab.mance.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -61,6 +62,7 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 import id.go.muaraenimkab.mance.R;
+import id.go.muaraenimkab.mance.activities.MainActivity;
 import id.go.muaraenimkab.mance.activities.SignInActivity;
 import id.go.muaraenimkab.mance.models.User;
 import id.go.muaraenimkab.mance.models.Value;
@@ -565,6 +567,7 @@ public class ProfilFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         builder.setTitle("Ambil foto dari?");
         builder.setItems(options, new DialogInterface.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.M)
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(DialogInterface dialog, int item) {
@@ -636,16 +639,15 @@ public class ProfilFragment extends Fragment {
 //
 //                                }
 //                            });
-
-                    if (ContextCompat.checkSelfPermission(getContext(),
-                            android.Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(),
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-
-                        requestPermissions(new String[]{android.Manifest.permission.CAMERA},
-                                1);
-                    }else {
+//                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+//                            android.Manifest.permission.CAMERA)
+//                            != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(),
+//                            android.Manifest.permission.READ_EXTERNAL_STORAGE)
+//                            != PackageManager.PERMISSION_GRANTED) {
+//
+//                        getActivity().requestPermissions(new String[]{android.Manifest.permission.CAMERA},
+//                                MainActivity.CAMERA_REQUEST);
+//                    }else {
                         if(Build.VERSION.SDK_INT>=24){
                             try{
                                 Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
@@ -657,11 +659,11 @@ public class ProfilFragment extends Fragment {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                        startActivityForResult(intent, 1);
-                    }
+                        startActivityForResult(intent, MainActivity.CAMERA_REQUEST);
+                //    }
                 } else if (options[item].equals("Galeri")) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, FILE_REQUES);
+                    startActivityForResult(intent, MainActivity.FILE_REQUES);
                 }
             }
         }).setNegativeButton("Batal", new DialogInterface.OnClickListener() {
@@ -673,70 +675,12 @@ public class ProfilFragment extends Fragment {
         builder.show();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                Log.e("permisi", "case 1");
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.e("permisi", "yes kam");
-                    if (ContextCompat.checkSelfPermission(getContext(),
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-
-                        Log.e("permisi", "no");
-
-                        requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                                2);
-                    }else {
-                        Log.e("permisi", "yes");
-
-                        if(Build.VERSION.SDK_INT>=24){
-                            try{
-                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                                m.invoke(null);
-                            }catch(Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                        startActivityForResult(intent, 1);
-                    }
-                }else {
-                    Log.e("permisi", "no kam");
-                    requestPermissions(new String[]{android.Manifest.permission.CAMERA},
-                            1);
-                }
-            }
-            case 2: {
-                Log.e("permisi", "case 2");
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if(Build.VERSION.SDK_INT>=24){
-                        try{
-                            Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                            m.invoke(null);
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);
-                }
-                return;
-            }
-        }
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == CAMERA_REQUEST) {
+            if (requestCode == MainActivity.CAMERA_REQUEST) {
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
                     if (temp.getName().equals("temp.jpg")) {
@@ -779,7 +723,7 @@ public class ProfilFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (requestCode == FILE_REQUES) {
+            } else if (requestCode == MainActivity.FILE_REQUES) {
                 Uri imageUri = data.getData();
                 InputStream imageStream = null;
                 try {
@@ -836,7 +780,7 @@ public class ProfilFragment extends Fragment {
 //                Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), toastMessage,
 //                        Snackbar.LENGTH_LONG).show();
 //                finish();
-                Snackbar.make(Objects.requireNonNull(getActivity().findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal memverifikasi nomor telepon",
+                Snackbar.make(Objects.requireNonNull(getActivity().findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal verifikasi nomor Hp",
                         Snackbar.LENGTH_LONG).show();
             } else {
                 AccountKit.getCurrentAccount(new AccountKitCallback<Account>() {
@@ -856,7 +800,7 @@ public class ProfilFragment extends Fragment {
 //                         Log.e("error", accountKitError.toString());
 //                         Snackbar.make(Objects.requireNonNull(findViewById(android.R.id.content)).findViewById(android.R.id.content), accountKitError.toString(),
 //                                Snackbar.LENGTH_LONG).show();
-                        Snackbar.make(Objects.requireNonNull(getActivity().findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal memverifikasi nomor telepon",
+                        Snackbar.make(Objects.requireNonNull(getActivity().findViewById(android.R.id.content)).findViewById(android.R.id.content), "Gagal verifikasi nomor Hp",
                                 Snackbar.LENGTH_LONG).show();
                     }
                 });

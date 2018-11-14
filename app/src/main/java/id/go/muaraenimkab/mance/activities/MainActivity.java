@@ -8,7 +8,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -19,13 +22,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.gun0912.tedpermission.TedPermissionResult;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.tedpark.tedpermission.rx2.TedRx2Permission;
 
+import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -64,6 +71,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
     Fragment fragment;
+    public static final int PHONE_REQUEST = 1, CAMERA_REQUEST = 2, FILE_REQUES = 3;
     public static int flag2, flag3;
     String idp;
     static Fragment lastFragment, lastFragment2, lastFragment3;
@@ -111,11 +119,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{
-                    Manifest.permission.READ_PHONE_STATE}, 1);
-        }
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) !=
+                PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.CAMERA) !=
+                        PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                        PackageManager.PERMISSION_GRANTED) {
 
+            requestPermissions(new String[]{
+                    Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, PHONE_REQUEST);
+        }
 //        TedRx2Permission.with(Objects.requireNonNull(MainActivity.this))
 //                .setRationaleTitle("Izin Akses")
 //                .setRationaleMessage("Untuk mengakses aplikasi harap izinkan telepon")
@@ -343,21 +356,17 @@ public class MainActivity extends AppCompatActivity {
         Back();
         return true;
     }
+
     @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(MainActivity.this),
-                            Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-                    } else {
-                        cekIDP();
-                    }
+            case PHONE_REQUEST: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                    cekIDP();
                 } else {
-                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, PHONE_REQUEST);
                 }
             }
         }

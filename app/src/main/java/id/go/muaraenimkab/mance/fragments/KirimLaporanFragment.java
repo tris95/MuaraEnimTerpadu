@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Objects;
 
 import id.go.muaraenimkab.mance.R;
+import id.go.muaraenimkab.mance.activities.MainActivity;
 import id.go.muaraenimkab.mance.activities.SignInActivity;
 import id.go.muaraenimkab.mance.models.User;
 import id.go.muaraenimkab.mance.models.ValueAdd;
@@ -70,7 +71,7 @@ public class KirimLaporanFragment extends Fragment {
     String foto;
     //Spinner spOpd;
     Spinner Area;
-    private static final int CAMERA_REQUEST = 188, FILE_REQUES = 189;
+
     //List<String> idOpd = new ArrayList<>();
 
     public static KirimLaporanFragment newInstance() {
@@ -382,6 +383,7 @@ public class KirimLaporanFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         builder.setTitle("Ambil foto dari ?");
         builder.setItems(options, new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Camera")) {
@@ -453,15 +455,15 @@ public class KirimLaporanFragment extends Fragment {
 //                                }
 //                            });
 //                }
-                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.CAMERA) !=
-                            PackageManager.PERMISSION_GRANTED ||
-                            ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                                    PackageManager.PERMISSION_GRANTED) {
-
-                        requestPermissions(new String[]{android.Manifest.permission.CAMERA},
-                                CAMERA_REQUEST);
-
-                    } else {
+//                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.CAMERA) !=
+//                            PackageManager.PERMISSION_GRANTED ||
+//                            ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
+//                                    PackageManager.PERMISSION_GRANTED) {
+//
+//                        getActivity().requestPermissions(new String[]{android.Manifest.permission.CAMERA},
+//                                MainActivity.CAMERA_REQUEST);
+//
+//                    } else {
                         if (Build.VERSION.SDK_INT >= 24) {
                             try {
                                 Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
@@ -473,12 +475,12 @@ public class KirimLaporanFragment extends Fragment {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                        startActivityForResult(intent, CAMERA_REQUEST);
+                        startActivityForResult(intent, MainActivity.CAMERA_REQUEST);
                     }
-                }
+               // }
                 else if (options[item].equals("Gallery")) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, FILE_REQUES);
+                    startActivityForResult(intent, MainActivity.FILE_REQUES);
                 }
             }
         }).
@@ -492,61 +494,12 @@ public class KirimLaporanFragment extends Fragment {
         builder.show();
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
-                                           @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case CAMERA_REQUEST: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-
-                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                FILE_REQUES);
-                    } else {
-                        if (Build.VERSION.SDK_INT >= 24) {
-                            try {
-                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                                m.invoke(null);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                        startActivityForResult(intent, CAMERA_REQUEST);
-                    }
-                }
-                return;
-            }
-            case FILE_REQUES: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (Build.VERSION.SDK_INT >= 24) {
-                        try {
-                            Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                            m.invoke(null);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, CAMERA_REQUEST);
-                }
-            }
-        }
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == CAMERA_REQUEST) {
+            if (requestCode == MainActivity.CAMERA_REQUEST) {
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
                     if (temp.getName().equals("temp.jpg")) {
@@ -589,7 +542,7 @@ public class KirimLaporanFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (requestCode == FILE_REQUES) {
+            } else if (requestCode == MainActivity.FILE_REQUES) {
                 Uri imageUri = data.getData();
                 InputStream imageStream = null;
                 Bitmap imageBitmap;
