@@ -343,39 +343,25 @@ public class DetailBeritaFragment extends Fragment {
     private void cekIDP() {
 //        TelephonyManager telephonyManager = (TelephonyManager) Objects.requireNonNull(getContext()).getSystemService(Context.TELEPHONY_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
-                Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            TedRx2Permission.with(Objects.requireNonNull(getContext()))
-                    .setRationaleTitle("Izin Akses")
-                    .setRationaleMessage("Untuk mengakses aplikasi harap izinkan telepon")
-                    .setPermissions(Manifest.permission.READ_PHONE_STATE)
-                    .request()
-                    .subscribe(new Observer<TedPermissionResult>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(TedPermissionResult tedPermissionResult) {
-                            if (tedPermissionResult.isGranted()) {
-                                cekIDP();
-                            } else {
-                                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
-                                        Snackbar.LENGTH_INDEFINITE)
-                                        .setAction("OK", new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Intent intent = new Intent();
-                                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                                Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-                                                intent.setData(uri);
-                                                startActivity(intent);
-                                            }
-                                        })
-                                        .show();
-//                                Snackbar.make(Objects.requireNonNull(getActivity()).getWindow().getDecorView().getRootView(),
-//                                        "Harap mengaktifkan izin Telepon",
+//        if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+//                Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            TedRx2Permission.with(Objects.requireNonNull(getContext()))
+//                    .setRationaleTitle("Izin Akses")
+//                    .setRationaleMessage("Untuk mengakses aplikasi harap izinkan telepon")
+//                    .setPermissions(Manifest.permission.READ_PHONE_STATE)
+//                    .request()
+//                    .subscribe(new Observer<TedPermissionResult>() {
+//                        @Override
+//                        public void onSubscribe(Disposable d) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onNext(TedPermissionResult tedPermissionResult) {
+//                            if (tedPermissionResult.isGranted()) {
+//                                cekIDP();
+//                            } else {
+//                                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
 //                                        Snackbar.LENGTH_INDEFINITE)
 //                                        .setAction("OK", new View.OnClickListener() {
 //                                            @Override
@@ -388,23 +374,41 @@ public class DetailBeritaFragment extends Fragment {
 //                                            }
 //                                        })
 //                                        .show();
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    });
-            return;
-        }
+////                                Snackbar.make(Objects.requireNonNull(getActivity()).getWindow().getDecorView().getRootView(),
+////                                        "Harap mengaktifkan izin Telepon",
+////                                        Snackbar.LENGTH_INDEFINITE)
+////                                        .setAction("OK", new View.OnClickListener() {
+////                                            @Override
+////                                            public void onClick(View v) {
+////                                                Intent intent = new Intent();
+////                                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+////                                                Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+////                                                intent.setData(uri);
+////                                                startActivity(intent);
+////                                            }
+////                                        })
+////                                        .show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onComplete() {
+//
+//                        }
+//                    });
+//            return;
+//        }
         //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
-        idp = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
+        try {
+            idp = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         if (!idp.equals("")) {
             String random = Utilities.getRandom(5);
@@ -480,13 +484,13 @@ public class DetailBeritaFragment extends Fragment {
         call.enqueue(new Callback<ValueAdd>() {
             @Override
             public void onResponse(@NonNull Call<ValueAdd> call, @NonNull Response<ValueAdd> response) {
-                if (response.body() != null) {
-                    int success = Objects.requireNonNull(response.body()).getSuccess();
+//                if (response.body() != null) {
+//                    int success = Objects.requireNonNull(response.body()).getSuccess();
 //                    if (success == 1) {
 //                        Intent intent = new Intent("refresh");
 //                        Objects.requireNonNull(getContext()).sendBroadcast(intent);
 //                    }
-                }
+//                }
             }
 
             @Override

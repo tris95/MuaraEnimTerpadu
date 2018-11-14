@@ -9,9 +9,11 @@ import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -153,83 +155,69 @@ public class LokasiEventFragment extends Fragment {
                 gMap = googleMap;
                 if (gMap != null) gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
-                if (ContextCompat.checkSelfPermission(getActivity(),
-                        android.Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
+//                if (ContextCompat.checkSelfPermission(getActivity(),
+//                        android.Manifest.permission.ACCESS_FINE_LOCATION)
+//                        != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()),
+//                        android.Manifest.permission.ACCESS_COARSE_LOCATION)
+//                        != PackageManager.PERMISSION_GRANTED) {
 
-                    TedRx2Permission.with(Objects.requireNonNull(getContext()))
-                            .setRationaleTitle("Izin Akses")
-                            .setRationaleMessage("Untuk mengakses aplikasi harap izinkan lokasi")
-                            .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
-                            .request()
-                            .subscribe(new Observer<TedPermissionResult>() {
-                                @Override
-                                public void onSubscribe(Disposable d) {
-
-                                }
-
-                                @Override
-                                public void onNext(TedPermissionResult tedPermissionResult) {
-                                    if (tedPermissionResult.isGranted()) {
-                                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                                                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                            // TODO: Consider calling
-                                            //    ActivityCompat#requestPermissions
-                                            // here to request the missing permissions, and then overriding
-                                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                            //                                          int[] grantResults)
-                                            // to handle the case where the user grants the permission. See the documentation
-                                            // for ActivityCompat#requestPermissions for more details.
-                                            return;
-                                        }
-                                        mFusedLocationClient.getLastLocation()
-                                                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                                                    @Override
-                                                    public void onSuccess(Location location) {
-                                                        if (location != null) {
-//                                                            currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-//                                                            gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
-
-// gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
-//                                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
-
-                                                            LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                                                            gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi)).showInfoWindow();
-                                                            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
-
-//                                    if (currentLatLng != null && destlatLng != null) {
-//                                                            String url = getUrl(currentLatLng, destlatLng);
-//                                                            DownloadTask FetchUrl = new DownloadTask();
-//                                                            FetchUrl.execute(url);
-//                                    }
-                                                        } else {
-//                                                            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silakan hidupkan GPS Anda",
-//                                                                    Snackbar.LENGTH_LONG).show();
-
-                                                            LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                                                            gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi)).showInfoWindow();
-                                                            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
-                                                        }
-                                                    }
-                                                });
-                                    } else {
-                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin Lokasi",
-                                                Snackbar.LENGTH_INDEFINITE)
-                                                .setAction("OK", new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        Intent intent = new Intent();
-                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-                                                        intent.setData(uri);
-                                                        startActivity(intent);
-                                                    }
-                                                })
-                                                .show();
-//                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-//                                                "Harap mengaktifkan izin Lokasi",
+//                    TedRx2Permission.with(Objects.requireNonNull(getContext()))
+//                            .setRationaleTitle("Izin Akses")
+//                            .setRationaleMessage("Untuk mengakses aplikasi harap izinkan lokasi")
+//                            .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+//                            .request()
+//                            .subscribe(new Observer<TedPermissionResult>() {
+//                                @Override
+//                                public void onSubscribe(Disposable d) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onNext(TedPermissionResult tedPermissionResult) {
+//                                    if (tedPermissionResult.isGranted()) {
+//                                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+//                                                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                                            // TODO: Consider calling
+//                                            //    ActivityCompat#requestPermissions
+//                                            // here to request the missing permissions, and then overriding
+//                                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                                            //                                          int[] grantResults)
+//                                            // to handle the case where the user grants the permission. See the documentation
+//                                            // for ActivityCompat#requestPermissions for more details.
+//                                            return;
+//                                        }
+//                                        mFusedLocationClient.getLastLocation()
+//                                                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+//                                                    @Override
+//                                                    public void onSuccess(Location location) {
+//                                                        if (location != null) {
+////                                                            currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+////                                                            gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
+//
+//// gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
+////                                    gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
+//
+//                                                            LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+//                                                            gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi)).showInfoWindow();
+//                                                            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+//
+////                                    if (currentLatLng != null && destlatLng != null) {
+////                                                            String url = getUrl(currentLatLng, destlatLng);
+////                                                            DownloadTask FetchUrl = new DownloadTask();
+////                                                            FetchUrl.execute(url);
+////                                    }
+//                                                        } else {
+////                                                            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silakan hidupkan GPS Anda",
+////                                                                    Snackbar.LENGTH_LONG).show();
+//
+//                                                            LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+//                                                            gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi)).showInfoWindow();
+//                                                            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+//                                                        }
+//                                                    }
+//                                                });
+//                                    } else {
+//                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin Lokasi",
 //                                                Snackbar.LENGTH_INDEFINITE)
 //                                                .setAction("OK", new View.OnClickListener() {
 //                                                    @Override
@@ -242,25 +230,41 @@ public class LokasiEventFragment extends Fragment {
 //                                                    }
 //                                                })
 //                                                .show();
-                                    }
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-
-                                }
-
-                                @Override
-                                public void onComplete() {
-
-                                }
-                            });
-                } else {
-                    mFusedLocationClient.getLastLocation()
-                            .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                                @Override
-                                public void onSuccess(Location location) {
-                                    if (location != null) {
+////                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+////                                                "Harap mengaktifkan izin Lokasi",
+////                                                Snackbar.LENGTH_INDEFINITE)
+////                                                .setAction("OK", new View.OnClickListener() {
+////                                                    @Override
+////                                                    public void onClick(View v) {
+////                                                        Intent intent = new Intent();
+////                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+////                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+////                                                        intent.setData(uri);
+////                                                        startActivity(intent);
+////                                                    }
+////                                                })
+////                                                .show();
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onError(Throwable e) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onComplete() {
+//
+//                                }
+//                            });
+//                    requestPermissions(new String[]{
+//                            android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+//                } else {
+//                    mFusedLocationClient.getLastLocation()
+//                            .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+//                                @Override
+//                                public void onSuccess(Location location) {
+//                                    if (location != null) {
 //                                        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 //                                        gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
 //
@@ -276,17 +280,17 @@ public class LokasiEventFragment extends Fragment {
 //                                        DownloadTask FetchUrl = new DownloadTask();
 //                                        FetchUrl.execute(url);
 //                                    }
-                                    } else {
-//                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silakan hidupkan GPS Anda",
-//                                                Snackbar.LENGTH_LONG).show();
-
-                                        LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi)).showInfoWindow();
-                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
-                                    }
-                                }
-                            });
-                }
+//                                    } else {
+////                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silakan hidupkan GPS Anda",
+////                                                Snackbar.LENGTH_LONG).show();
+//
+//                                        LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+//                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi)).showInfoWindow();
+//                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+//                                    }
+//                                }
+//                            });
+//                }
             }
         });
 
@@ -327,7 +331,7 @@ public class LokasiEventFragment extends Fragment {
         super.onDetach();
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//    @SuppressLint("NewApi")
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
 //        switch (requestCode) {
@@ -355,42 +359,42 @@ public class LokasiEventFragment extends Fragment {
 //                        Log.e("permission", "GRANTED");
 //                    }
 //
-//                    mFusedLocationClient.getLastLocation()
-//                            .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-//                                @SuppressLint("NewApi")
-//                                @Override
-//                                public void onSuccess(Location location) {
-//                                    if (location != null) {
-//                                        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-//                                        gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
-//                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
+////                    mFusedLocationClient.getLastLocation()
+////                            .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+////                                @SuppressLint("NewApi")
+////                                @Override
+////                                public void onSuccess(Location location) {
+////                                    if (location != null) {
+////                                        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+////                                        gMap.addMarker(new MarkerOptions().position(currentLatLng).title("Saya"));
+////                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(currentLatLng).zoom(15).build()));
 ////                                        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12));
 //
-//                                        LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-//                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi));
-////                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+//                    LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+//                    gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi)).showInfoWindow();
+//                    gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
 //
 ////                                        if (currentLatLng != null && destlatLng != null) {
-//                                        String url = getUrl(currentLatLng, destlatLng);
-//                                        DownloadTask FetchUrl = new DownloadTask();
-//                                        FetchUrl.execute(url);
+////                                        String url = getUrl(currentLatLng, destlatLng);
+////                                        Log.e("url", url);
+////                                        DownloadTask FetchUrl = new DownloadTask();
+////                                        FetchUrl.execute(url);
 ////                                        }
-//                                    } else {
-//                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silakan hidupkan GPS Anda",
-//                                                Snackbar.LENGTH_LONG).show();
-//
-//                                        LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-//                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(namaLokasi));
-//                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
-//                                    }
-//                                }
-//                            });
+////                                    } else {
+////                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Silakan hidupkan GPS Anda",
+////                                                Snackbar.LENGTH_LONG).show();
+////
+////                                        LatLng destlatLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+////                                        gMap.addMarker(new MarkerOptions().position(destlatLng).title(alamat));
+////                                        gMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(destlatLng).zoom(15).build()));
+////                                    }
+////                                }
+////                            });
 ////                      }
 ////                    }
 //                } else {
 //                    requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
 //                }
-//                return;
 //            }
 //        }
 //    }

@@ -16,7 +16,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,9 +31,6 @@ import id.go.muaraenimkab.mance.utils.Utilities;
  */
 
 public class SplashScreenActivity extends AppCompatActivity {
-    Thread splashTread;
-    String newVersion;
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -202,12 +198,19 @@ public class SplashScreenActivity extends AppCompatActivity {
         protected void onPostExecute(Document d) {
             super.onPostExecute(d);
 
-            Elements es =  d.body().getElementsByClass("xyOfqd").select(".hAyfc");
-            String newVersion = es.get(3).child(1).child(0).child(0).ownText();
+            String newVersion="bull";
+
+            try {
+                Elements es = d.body().getElementsByClass("xyOfqd").select(".hAyfc");
+                newVersion = es.get(3).child(1).child(0).child(0).ownText();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             PackageManager packageManager = SplashScreenActivity.this.getPackageManager();
             String packageName = SplashScreenActivity.this.getPackageName();
             String myVersionCode = "null";
+
             try {
                 myVersionCode = String.valueOf(packageManager.getPackageInfo(packageName, 0).versionName);
             } catch (PackageManager.NameNotFoundException e) {
@@ -215,36 +218,42 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
             Log.e("version", myVersionCode+" "+newVersion);
 
-            if (!myVersionCode.equalsIgnoreCase(newVersion)) {
-                //show dialog
-                new AlertDialog.Builder(SplashScreenActivity.this)
-                        .setTitle("Pembaruan aplikasi tersedia")
-                        .setPositiveButton("Perbarui", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
-                                try {
+            if (Utilities.isNetworkAvailable(SplashScreenActivity.this)) {
+                if (!myVersionCode.equalsIgnoreCase(newVersion)) {
+                    //show dialog
+                    new AlertDialog.Builder(SplashScreenActivity.this)
+                            .setTitle("Pembaruan aplikasi tersedia")
+                            .setPositiveButton("Perbarui", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                                    try {
 //                                    Toast.makeText(getApplicationContext(), "App is in BETA version cannot update", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                                } catch (ActivityNotFoundException anfe) {
-                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+appPackageName)));
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                                    } catch (ActivityNotFoundException anfe) {
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                                    }
                                 }
-                            }
-                        })
-                        .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                dialog.dismiss();
-                                Intent myIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                                startActivity(myIntent);
-                                finish();
+                            })
+                            .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                    dialog.dismiss();
+                                    Intent myIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                                    startActivity(myIntent);
+                                    finish();
 //                                onBackPressed();
-                            }
-                        })
-                        .setCancelable(false)
-                        .setIcon(R.drawable.ic_action_info)
-                        .show();
+                                }
+                            })
+                            .setCancelable(false)
+                            .setIcon(R.drawable.ic_action_info)
+                            .show();
 
+                } else {
+                    Intent myIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                    startActivity(myIntent);
+                    finish();
+                }
             }else {
                 Intent myIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
                 startActivity(myIntent);

@@ -22,6 +22,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -144,50 +145,36 @@ public class ProfilFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Profile");
         }
 
-        TedRx2Permission.with(Objects.requireNonNull(getContext()))
-                .setRationaleTitle("Izin Akses")
-                .setRationaleMessage("Untuk mengakses aplikasi harap izinkan telepon")
-                .setPermissions(Manifest.permission.READ_PHONE_STATE)
-                .request()
-                .subscribe(new Observer<TedPermissionResult>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @SuppressLint("HardwareIds")
-                    @Override
-                    public void onNext(TedPermissionResult tedPermissionResult) {
-                        if (tedPermissionResult.isGranted()) {
-                            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.READ_PHONE_STATE) !=
-                                    PackageManager.PERMISSION_GRANTED) {
-                                // TODO: Consider calling
-                                //    ActivityCompat#requestPermissions
-                                // here to request the missing permissions, and then overriding
-                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                //                                          int[] grantResults)
-                                // to handle the case where the user grants the permission. See the documentation
-                                // for ActivityCompat#requestPermissions for more details.
-                                return;
-                            }
-                            //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
-                            idp = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
-                        } else {
-                            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
-                                    Snackbar.LENGTH_INDEFINITE)
-                                    .setAction("OK", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent = new Intent();
-                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-                                            intent.setData(uri);
-                                            startActivity(intent);
-                                        }
-                                    })
-                                    .show();
-//                            Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-//                                    "Harap mengaktifkan izin Telepon",
+//        TedRx2Permission.with(Objects.requireNonNull(getContext()))
+//                .setRationaleTitle("Izin Akses")
+//                .setRationaleMessage("Untuk mengakses aplikasi harap izinkan telepon")
+//                .setPermissions(Manifest.permission.READ_PHONE_STATE)
+//                .request()
+//                .subscribe(new Observer<TedPermissionResult>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @SuppressLint("HardwareIds")
+//                    @Override
+//                    public void onNext(TedPermissionResult tedPermissionResult) {
+//                        if (tedPermissionResult.isGranted()) {
+//                            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.READ_PHONE_STATE) !=
+//                                    PackageManager.PERMISSION_GRANTED) {
+//                                // TODO: Consider calling
+//                                //    ActivityCompat#requestPermissions
+//                                // here to request the missing permissions, and then overriding
+//                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                                //                                          int[] grantResults)
+//                                // to handle the case where the user grants the permission. See the documentation
+//                                // for ActivityCompat#requestPermissions for more details.
+//                                return;
+//                            }
+//                            //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
+//                            idp = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
+//                        } else {
+//                            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
 //                                    Snackbar.LENGTH_INDEFINITE)
 //                                    .setAction("OK", new View.OnClickListener() {
 //                                        @Override
@@ -200,19 +187,33 @@ public class ProfilFragment extends Fragment {
 //                                        }
 //                                    })
 //                                    .show();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+////                            Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+////                                    "Harap mengaktifkan izin Telepon",
+////                                    Snackbar.LENGTH_INDEFINITE)
+////                                    .setAction("OK", new View.OnClickListener() {
+////                                        @Override
+////                                        public void onClick(View v) {
+////                                            Intent intent = new Intent();
+////                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+////                                            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+////                                            intent.setData(uri);
+////                                            startActivity(intent);
+////                                        }
+////                                    })
+////                                    .show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
         try {
             idp = Settings.Secure.getString(Objects.requireNonNull(getActivity()).getContentResolver(), Settings.Secure.ANDROID_ID);
         } catch (Exception e) {
@@ -568,48 +569,34 @@ public class ProfilFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Kamera")) {
-                    TedRx2Permission.with(Objects.requireNonNull(getContext()))
-                            .setRationaleTitle("Izin Akses")
-                            .setRationaleMessage("Untuk mengakses fitur kamera harap izinkan kamera dan penyimpanan")
-                            .setPermissions(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                            .request()
-                            .subscribe(new Observer<TedPermissionResult>() {
-                                @Override
-                                public void onSubscribe(Disposable d) {
-
-                                }
-
-                                @Override
-                                public void onNext(TedPermissionResult tedPermissionResult) {
-                                    if (tedPermissionResult.isGranted()) {
-                                        if (Build.VERSION.SDK_INT >= 24) {
-                                            try {
-                                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                                                m.invoke(null);
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                                        startActivityForResult(intent, CAMERA_REQUEST);
-                                    } else {
-                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin kamera dan penyimpanan",
-                                                Snackbar.LENGTH_INDEFINITE)
-                                                .setAction("OK", new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        Intent intent = new Intent();
-                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-                                                        intent.setData(uri);
-                                                        startActivity(intent);
-                                                    }
-                                                })
-                                                .show();
-//                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-//                                                "Harap mengaktifkan izin kamera dan penyimpanan",
+//                    TedRx2Permission.with(Objects.requireNonNull(getContext()))
+//                            .setRationaleTitle("Izin Akses")
+//                            .setRationaleMessage("Untuk mengakses fitur kamera harap izinkan kamera dan penyimpanan")
+//                            .setPermissions(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+//                            .request()
+//                            .subscribe(new Observer<TedPermissionResult>() {
+//                                @Override
+//                                public void onSubscribe(Disposable d) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onNext(TedPermissionResult tedPermissionResult) {
+//                                    if (tedPermissionResult.isGranted()) {
+//                                        if (Build.VERSION.SDK_INT >= 24) {
+//                                            try {
+//                                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+//                                                m.invoke(null);
+//                                            } catch (Exception e) {
+//                                                e.printStackTrace();
+//                                            }
+//                                        }
+//                                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+//                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+//                                        startActivityForResult(intent, CAMERA_REQUEST);
+//                                    } else {
+//                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin kamera dan penyimpanan",
 //                                                Snackbar.LENGTH_INDEFINITE)
 //                                                .setAction("OK", new View.OnClickListener() {
 //                                                    @Override
@@ -622,41 +609,56 @@ public class ProfilFragment extends Fragment {
 //                                                    }
 //                                                })
 //                                                .show();
-                                    }
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-
-                                }
-
-                                @Override
-                                public void onComplete() {
-
-                                }
-                            });
-//                    if (ContextCompat.checkSelfPermission(getContext(),
-//                            android.Manifest.permission.CAMERA)
-//                            != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(),
-//                            android.Manifest.permission.READ_EXTERNAL_STORAGE)
-//                            != PackageManager.PERMISSION_GRANTED) {
+////                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+////                                                "Harap mengaktifkan izin kamera dan penyimpanan",
+////                                                Snackbar.LENGTH_INDEFINITE)
+////                                                .setAction("OK", new View.OnClickListener() {
+////                                                    @Override
+////                                                    public void onClick(View v) {
+////                                                        Intent intent = new Intent();
+////                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+////                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+////                                                        intent.setData(uri);
+////                                                        startActivity(intent);
+////                                                    }
+////                                                })
+////                                                .show();
+//                                    }
+//                                }
 //
-//                        requestPermissions(new String[]{android.Manifest.permission.CAMERA},
-//                                1);
-//                    }else {
-//                        if(Build.VERSION.SDK_INT>=24){
-//                            try{
-//                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-//                                m.invoke(null);
-//                            }catch(Exception e){
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//                        startActivityForResult(intent, 1);
-//                    }
+//                                @Override
+//                                public void onError(Throwable e) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onComplete() {
+//
+//                                }
+//                            });
+
+                    if (ContextCompat.checkSelfPermission(getContext(),
+                            android.Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getContext(),
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                        requestPermissions(new String[]{android.Manifest.permission.CAMERA},
+                                1);
+                    }else {
+                        if(Build.VERSION.SDK_INT>=24){
+                            try{
+                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                                m.invoke(null);
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                        startActivityForResult(intent, 1);
+                    }
                 } else if (options[item].equals("Galeri")) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, FILE_REQUES);
@@ -671,53 +673,63 @@ public class ProfilFragment extends Fragment {
         builder.show();
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case 1: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    if (ContextCompat.checkSelfPermission(getContext(),
-//                            android.Manifest.permission.READ_EXTERNAL_STORAGE)
-//                            != PackageManager.PERMISSION_GRANTED) {
-//
-//                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-//                                2);
-//                    }else {
-//                        if(Build.VERSION.SDK_INT>=24){
-//                            try{
-//                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-//                                m.invoke(null);
-//                            }catch(Exception e){
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//                        startActivityForResult(intent, 1);
-//                    }
-//                }
-//                return;
-//            }
-//            case 2: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    if(Build.VERSION.SDK_INT>=24){
-//                        try{
-//                            Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-//                            m.invoke(null);
-//                        }catch(Exception e){
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//                    startActivityForResult(intent, 1);
-//                }
-//                return;
-//            }
-//        }
-//    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                Log.e("permisi", "case 1");
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.e("permisi", "yes kam");
+                    if (ContextCompat.checkSelfPermission(getContext(),
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                        Log.e("permisi", "no");
+
+                        requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                                2);
+                    }else {
+                        Log.e("permisi", "yes");
+
+                        if(Build.VERSION.SDK_INT>=24){
+                            try{
+                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                                m.invoke(null);
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                        startActivityForResult(intent, 1);
+                    }
+                }else {
+                    Log.e("permisi", "no kam");
+                    requestPermissions(new String[]{android.Manifest.permission.CAMERA},
+                            1);
+                }
+            }
+            case 2: {
+                Log.e("permisi", "case 2");
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(Build.VERSION.SDK_INT>=24){
+                        try{
+                            Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                            m.invoke(null);
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                    startActivityForResult(intent, 1);
+                }
+                return;
+            }
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

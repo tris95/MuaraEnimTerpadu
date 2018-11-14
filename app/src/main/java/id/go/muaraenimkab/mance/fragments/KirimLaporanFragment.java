@@ -1,11 +1,14 @@
 package id.go.muaraenimkab.mance.fragments;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -19,6 +22,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -381,48 +385,34 @@ public class KirimLaporanFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Camera")) {
-                    TedRx2Permission.with(Objects.requireNonNull(getContext()))
-                            .setRationaleTitle("Izin Akses")
-                            .setRationaleMessage("Untuk mengakses fitur kamera harap izinkan kamera dan penyimpanan")
-                            .setPermissions(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                            .request()
-                            .subscribe(new Observer<TedPermissionResult>() {
-                                @Override
-                                public void onSubscribe(Disposable d) {
-
-                                }
-
-                                @Override
-                                public void onNext(TedPermissionResult tedPermissionResult) {
-                                    if (tedPermissionResult.isGranted()) {
-                                        if (Build.VERSION.SDK_INT >= 24) {
-                                            try {
-                                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-                                                m.invoke(null);
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                                        startActivityForResult(intent, CAMERA_REQUEST);
-                                    } else {
-                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin kamera dan penyimpanan",
-                                                Snackbar.LENGTH_INDEFINITE)
-                                                .setAction("OK", new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        Intent intent = new Intent();
-                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-                                                        intent.setData(uri);
-                                                        startActivity(intent);
-                                                    }
-                                                })
-                                                .show();
-//                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-//                                                "Harap mengaktifkan izin kamera dan penyimpanan",
+//                    TedRx2Permission.with(Objects.requireNonNull(getContext()))
+//                            .setRationaleTitle("Izin Akses")
+//                            .setRationaleMessage("Untuk mengakses fitur kamera harap izinkan kamera dan penyimpanan")
+//                            .setPermissions(android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+//                            .request()
+//                            .subscribe(new Observer<TedPermissionResult>() {
+//                                @Override
+//                                public void onSubscribe(Disposable d) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onNext(TedPermissionResult tedPermissionResult) {
+//                                    if (tedPermissionResult.isGranted()) {
+//                                        if (Build.VERSION.SDK_INT >= 24) {
+//                                            try {
+//                                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+//                                                m.invoke(null);
+//                                            } catch (Exception e) {
+//                                                e.printStackTrace();
+//                                            }
+//                                        }
+//                                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+//                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+//                                        startActivityForResult(intent, CAMERA_REQUEST);
+//                                    } else {
+//                                        Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Harap mengaktifkan izin kamera dan penyimpanan",
 //                                                Snackbar.LENGTH_INDEFINITE)
 //                                                .setAction("OK", new View.OnClickListener() {
 //                                                    @Override
@@ -435,42 +425,57 @@ public class KirimLaporanFragment extends Fragment {
 //                                                    }
 //                                                })
 //                                                .show();
-                                    }
-                                }
+////                                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+////                                                "Harap mengaktifkan izin kamera dan penyimpanan",
+////                                                Snackbar.LENGTH_INDEFINITE)
+////                                                .setAction("OK", new View.OnClickListener() {
+////                                                    @Override
+////                                                    public void onClick(View v) {
+////                                                        Intent intent = new Intent();
+////                                                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+////                                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+////                                                        intent.setData(uri);
+////                                                        startActivity(intent);
+////                                                    }
+////                                                })
+////                                                .show();
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onError(Throwable e) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onComplete() {
+//
+//                                }
+//                            });
+//                }
+                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.CAMERA) !=
+                            PackageManager.PERMISSION_GRANTED ||
+                            ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                                    PackageManager.PERMISSION_GRANTED) {
 
-                                @Override
-                                public void onError(Throwable e) {
+                        requestPermissions(new String[]{android.Manifest.permission.CAMERA},
+                                CAMERA_REQUEST);
 
-                                }
-
-                                @Override
-                                public void onComplete() {
-
-                                }
-                            });
+                    } else {
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            try {
+                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                                m.invoke(null);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                        startActivityForResult(intent, CAMERA_REQUEST);
+                    }
                 }
-//                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.CAMERA) !=
-//                            PackageManager.PERMISSION_GRANTED ||
-//                            ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
-//                                    PackageManager.PERMISSION_GRANTED) {
-//
-//                        requestPermissions(new String[]{android.Manifest.permission.CAMERA},
-//                                CAMERA_REQUEST);
-//
-//                    } else {
-//                        if (Build.VERSION.SDK_INT >= 24) {
-//                            try {
-//                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-//                                m.invoke(null);
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//                        startActivityForResult(intent, CAMERA_REQUEST);
-                //}
                 else if (options[item].equals("Gallery")) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, FILE_REQUES);
@@ -487,54 +492,54 @@ public class KirimLaporanFragment extends Fragment {
         builder.show();
     }
 
-//    @TargetApi(Build.VERSION_CODES.KITKAT)
-//    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
-//                                           @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case CAMERA_REQUEST: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.READ_EXTERNAL_STORAGE)
-//                            != PackageManager.PERMISSION_GRANTED) {
-//
-//                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-//                                FILE_REQUES);
-//                    } else {
-//                        if (Build.VERSION.SDK_INT >= 24) {
-//                            try {
-//                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-//                                m.invoke(null);
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//                        startActivityForResult(intent, CAMERA_REQUEST);
-//                    }
-//                }
-//                return;
-//            }
-//            case FILE_REQUES: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    if (Build.VERSION.SDK_INT >= 24) {
-//                        try {
-//                            Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
-//                            m.invoke(null);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//                    startActivityForResult(intent, CAMERA_REQUEST);
-//                }
-//            }
-//        }
-//    }
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case CAMERA_REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                FILE_REQUES);
+                    } else {
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            try {
+                                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                                m.invoke(null);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                        startActivityForResult(intent, CAMERA_REQUEST);
+                    }
+                }
+                return;
+            }
+            case FILE_REQUES: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (Build.VERSION.SDK_INT >= 24) {
+                        try {
+                            Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                            m.invoke(null);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                    startActivityForResult(intent, CAMERA_REQUEST);
+                }
+            }
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

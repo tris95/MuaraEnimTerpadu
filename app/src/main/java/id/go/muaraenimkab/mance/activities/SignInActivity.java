@@ -82,50 +82,36 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-        TedRx2Permission.with(Objects.requireNonNull(SignInActivity.this))
-                .setRationaleTitle("Izin Akses")
-                .setRationaleMessage("Untuk mengakses aplikasi harap izinkan telepon")
-                .setPermissions(Manifest.permission.READ_PHONE_STATE)
-                .request()
-                .subscribe(new Observer<TedPermissionResult>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @SuppressLint("HardwareIds")
-                    @Override
-                    public void onNext(TedPermissionResult tedPermissionResult) {
-                        if (tedPermissionResult.isGranted()) {
-                            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(SignInActivity.this), Manifest.permission.READ_PHONE_STATE) !=
-                                    PackageManager.PERMISSION_GRANTED) {
-                                // TODO: Consider calling
-                                //    ActivityCompat#requestPermissions
-                                // here to request the missing permissions, and then overriding
-                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                //                                          int[] grantResults)
-                                // to handle the case where the user grants the permission. See the documentation
-                                // for ActivityCompat#requestPermissions for more details.
-                                return;
-                            }
-                            //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
-                            idp = Settings.Secure.getString(Objects.requireNonNull(SignInActivity.this).getContentResolver(), Settings.Secure.ANDROID_ID);
-                        } else {
-                            Snackbar.make(Objects.requireNonNull(SignInActivity.this).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
-                                    Snackbar.LENGTH_INDEFINITE)
-                                    .setAction("OK", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent = new Intent();
-                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                            Uri uri = Uri.fromParts("package", getPackageName(), null);
-                                            intent.setData(uri);
-                                            startActivity(intent);
-                                        }
-                                    })
-                                    .show();
-//                            Snackbar.make(getWindow().getDecorView().getRootView(),
-//                                    "Harap mengaktifkan izin Telepon",
+//        TedRx2Permission.with(Objects.requireNonNull(SignInActivity.this))
+//                .setRationaleTitle("Izin Akses")
+//                .setRationaleMessage("Untuk mengakses aplikasi harap izinkan telepon")
+//                .setPermissions(Manifest.permission.READ_PHONE_STATE)
+//                .request()
+//                .subscribe(new Observer<TedPermissionResult>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @SuppressLint("HardwareIds")
+//                    @Override
+//                    public void onNext(TedPermissionResult tedPermissionResult) {
+//                        if (tedPermissionResult.isGranted()) {
+//                            if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(SignInActivity.this), Manifest.permission.READ_PHONE_STATE) !=
+//                                    PackageManager.PERMISSION_GRANTED) {
+//                                // TODO: Consider calling
+//                                //    ActivityCompat#requestPermissions
+//                                // here to request the missing permissions, and then overriding
+//                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                                //                                          int[] grantResults)
+//                                // to handle the case where the user grants the permission. See the documentation
+//                                // for ActivityCompat#requestPermissions for more details.
+//                                return;
+//                            }
+//                            //ime = Objects.requireNonNull(telephonyManager).getDeviceId();
+//                            idp = Settings.Secure.getString(Objects.requireNonNull(SignInActivity.this).getContentResolver(), Settings.Secure.ANDROID_ID);
+//                        } else {
+//                            Snackbar.make(Objects.requireNonNull(SignInActivity.this).findViewById(android.R.id.content), "Harap mengaktifkan izin Telepon",
 //                                    Snackbar.LENGTH_INDEFINITE)
 //                                    .setAction("OK", new View.OnClickListener() {
 //                                        @Override
@@ -138,19 +124,33 @@ public class SignInActivity extends AppCompatActivity {
 //                                        }
 //                                    })
 //                                    .show();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+////                            Snackbar.make(getWindow().getDecorView().getRootView(),
+////                                    "Harap mengaktifkan izin Telepon",
+////                                    Snackbar.LENGTH_INDEFINITE)
+////                                    .setAction("OK", new View.OnClickListener() {
+////                                        @Override
+////                                        public void onClick(View v) {
+////                                            Intent intent = new Intent();
+////                                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+////                                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+////                                            intent.setData(uri);
+////                                            startActivity(intent);
+////                                        }
+////                                    })
+////                                    .show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
         try {
             idp = Settings.Secure.getString(Objects.requireNonNull(SignInActivity.this).getContentResolver(), Settings.Secure.ANDROID_ID);
         } catch (Exception e) {
