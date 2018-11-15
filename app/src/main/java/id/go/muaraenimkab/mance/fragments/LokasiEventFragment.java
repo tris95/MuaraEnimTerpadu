@@ -65,7 +65,7 @@ public class LokasiEventFragment extends Fragment {
     MapView mapView;
     Toolbar toolbar;
     GoogleMap gMap;
-    FusedLocationProviderClient mFusedLocationClient;
+//    FusedLocationProviderClient mFusedLocationClient;
 //    LatLng currentLatLng;
 
     public LokasiEventFragment() {
@@ -110,7 +110,7 @@ public class LokasiEventFragment extends Fragment {
             Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(namaEvent);
         }
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
 //        if (ContextCompat.checkSelfPermission(getActivity(),
 //                android.Manifest.permission.ACCESS_FINE_LOCATION)

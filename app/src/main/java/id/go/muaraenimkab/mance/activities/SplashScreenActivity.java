@@ -82,7 +82,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == 4){
+        if (keyCode == 4) {
             Snackbar.make(findViewById(android.R.id.content), "Loading...",
                     Snackbar.LENGTH_SHORT).show();
         }
@@ -182,7 +182,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         protected Document doInBackground(String... params) {
 
             try {
-                document = Jsoup.connect("https://play.google.com/store/apps/details?id="+SplashScreenActivity.this.getPackageName() +"&hl=en")
+                document = Jsoup.connect("https://play.google.com/store/apps/details?id=" + SplashScreenActivity.this.getPackageName() + "&hl=en")
                         .timeout(30000)
                         .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
                         .get();
@@ -198,12 +198,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         protected void onPostExecute(Document d) {
             super.onPostExecute(d);
 
-            String newVersion="bull";
+            String newVersion = "bull";
 
             try {
                 Elements es = d.body().getElementsByClass("xyOfqd").select(".hAyfc");
                 newVersion = es.get(3).child(1).child(0).child(0).ownText();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -216,7 +216,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
-            Log.e("version", myVersionCode+" "+newVersion);
+            Log.e("version", myVersionCode + " " + newVersion);
 
             if (Utilities.isNetworkAvailable(SplashScreenActivity.this)) {
                 if (!myVersionCode.equalsIgnoreCase(newVersion)) {
@@ -239,8 +239,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // do nothing
                                     dialog.dismiss();
-                                    Intent myIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                                    startActivity(myIntent);
+                                    Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class)
+                                            .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    startActivity(intent);
                                     finish();
 //                                onBackPressed();
                                 }
@@ -250,14 +251,34 @@ public class SplashScreenActivity extends AppCompatActivity {
                             .show();
 
                 } else {
-                    Intent myIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                    startActivity(myIntent);
+                    Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                     finish();
                 }
-            }else {
-                Intent myIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                startActivity(myIntent);
-                finish();
+            } else {
+                Thread splashTread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            int waited = 0;
+                            while (waited < 1500) {
+                                sleep(100);
+                                waited += 100;
+                            }
+
+                            Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class)
+                                    .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            finish();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } finally {
+                            finish();
+                        }
+                    }
+                };
+                splashTread.start();
             }
         }
     }

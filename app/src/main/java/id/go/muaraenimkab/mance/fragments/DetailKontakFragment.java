@@ -82,8 +82,8 @@ public class DetailKontakFragment extends Fragment {
 
     MapView mapView;
     GoogleMap gMap;
-    FusedLocationProviderClient mFusedLocationClient;
-    LatLng currentLatLng;
+//    FusedLocationProviderClient mFusedLocationClient;
+//    LatLng currentLatLng;
 
     public DetailKontakFragment() {
         // Required empty public constructor
@@ -189,7 +189,7 @@ public class DetailKontakFragment extends Fragment {
             }
         });
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         mapView = v.findViewById(R.id.mapsKontak);
         mapView.onCreate(savedInstanceState);

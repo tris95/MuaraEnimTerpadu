@@ -89,8 +89,8 @@ public class DetailWisataFragment extends Fragment {
 
     MapView mapView;
     GoogleMap gMap;
-    FusedLocationProviderClient mFusedLocationClient;
-    LatLng currentLatLng;
+//    FusedLocationProviderClient mFusedLocationClient;
+//    LatLng currentLatLng;
 
     boolean loadingFinished = true;
     boolean redirect = false;
@@ -222,7 +222,7 @@ public class DetailWisataFragment extends Fragment {
 //            }
 //        });
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         mapView = v.findViewById(R.id.mapsWisata);
         mapView.onCreate(savedInstanceState);
