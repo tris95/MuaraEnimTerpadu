@@ -156,7 +156,7 @@ public class SignUpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        etEmail.addTextChangedListener(new MyTextWatcher(etEmail));
+//        etEmail.addTextChangedListener(new MyTextWatcher(etEmail));
 
         btnDaftar.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
