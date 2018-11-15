@@ -659,11 +659,11 @@ public class ProfilFragment extends Fragment {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                        startActivityForResult(intent, MainActivity.CAMERA_REQUEST);
+                        startActivityForResult(intent, CAMERA_REQUEST);
                 //    }
                 } else if (options[item].equals("Galeri")) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, MainActivity.FILE_REQUES);
+                    startActivityForResult(intent, FILE_REQUES);
                 }
             }
         }).setNegativeButton("Batal", new DialogInterface.OnClickListener() {
@@ -680,7 +680,7 @@ public class ProfilFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == MainActivity.CAMERA_REQUEST) {
+            if (requestCode == CAMERA_REQUEST) {
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp : f.listFiles()) {
                     if (temp.getName().equals("temp.jpg")) {
@@ -723,7 +723,7 @@ public class ProfilFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (requestCode == MainActivity.FILE_REQUES) {
+            } else if (requestCode == FILE_REQUES) {
                 Uri imageUri = data.getData();
                 InputStream imageStream = null;
                 try {

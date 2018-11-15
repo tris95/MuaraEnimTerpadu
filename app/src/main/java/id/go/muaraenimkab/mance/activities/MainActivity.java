@@ -71,7 +71,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
     Fragment fragment;
-    public static final int PHONE_REQUEST = 1, CAMERA_REQUEST = 2, FILE_REQUES = 3;
+    public static final int PHONE_REQUEST = 1;
     public static int flag2, flag3;
     String idp;
     static Fragment lastFragment, lastFragment2, lastFragment3;
