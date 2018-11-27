@@ -16,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,6 +32,9 @@ import id.go.muaraenimkab.mance.utils.Utilities;
  */
 
 public class SplashScreenActivity extends AppCompatActivity {
+    TextView textView;
+    String myVersionCode;
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +46,19 @@ public class SplashScreenActivity extends AppCompatActivity {
 //        decorView.setSystemUiVisibility(uiOptions);
 
         setContentView(R.layout.splash_screen);
+        textView = findViewById(R.id.tvVersion);
+
+        PackageManager packageManager = SplashScreenActivity.this.getPackageManager();
+        String packageName = SplashScreenActivity.this.getPackageName();
+        myVersionCode = "null";
+
+        try {
+            myVersionCode = String.valueOf(packageManager.getPackageInfo(packageName, 0).versionName);
+            textView.setText(myVersionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 //        splashTread = new Thread() {
 //            @Override
 //            public void run() {
@@ -207,15 +224,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            PackageManager packageManager = SplashScreenActivity.this.getPackageManager();
-            String packageName = SplashScreenActivity.this.getPackageName();
-            String myVersionCode = "null";
-
-            try {
-                myVersionCode = String.valueOf(packageManager.getPackageInfo(packageName, 0).versionName);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
             Log.e("version", myVersionCode + " " + newVersion);
 
             if (Utilities.isNetworkAvailable(SplashScreenActivity.this)) {

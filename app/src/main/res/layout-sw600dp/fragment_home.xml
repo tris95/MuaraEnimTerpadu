@@ -120,6 +120,80 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:visibility="gone"
+                        android:id="@+id/ll_weather">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1.1">
+                            <!--<TextView-->
+                            <!--android:id="@+id/weather_icon"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_gravity="center_horizontal"-->
+                            <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+                            <!--android:textSize="70sp"/>-->
+                            <TextView
+                                android:id="@+id/weather_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="90sp"/>
+                            <!--<TextView-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                            <!--android:id="@+id/details_field"-->
+                            <!--android:textSize="13sp"-->
+                            <!--android:layout_marginTop="-15dp"-->
+                            <!--android:layout_gravity="center_horizontal"/>-->
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:layout_margin="20dp"
+                            android:layout_weight="0.8">
+                            <TextView
+                                android:id="@+id/city_field"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textSize="28sp"
+                                android:textColor="@color/colorPrimary"/>
+                            <TextView
+                                android:id="@+id/updated_field"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textSize="23sp" />
+                            <TextView
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:id="@+id/details_field"
+                                android:textSize="23sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/current_temperature_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="40sp"
+                            android:layout_weight="1.1"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_marginTop="10dp">
                         <TextView

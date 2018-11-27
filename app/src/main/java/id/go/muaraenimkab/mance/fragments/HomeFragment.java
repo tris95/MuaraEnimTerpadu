@@ -1,7 +1,10 @@
 package id.go.muaraenimkab.mance.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +15,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -21,15 +25,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 
@@ -42,6 +53,7 @@ import id.go.muaraenimkab.mance.models.Berita;
 import id.go.muaraenimkab.mance.models.Content;
 import id.go.muaraenimkab.mance.models.Value;
 import id.go.muaraenimkab.mance.services.APIServices;
+import id.go.muaraenimkab.mance.services.Function;
 import id.go.muaraenimkab.mance.utils.Utilities;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -62,15 +74,18 @@ public class HomeFragment extends Fragment {
     ArrayList<Berita> mListBerita;
     public static List<Berita> mListisiBerita = new ArrayList<>();
     LinearLayoutManager linearLayoutManagercontent, linearLayoutManagerberita;
-    LinearLayout llkategoriberita, llProfil;
+    LinearLayout llkategoriberita, llProfil, llweather;
     SwipeRefreshLayout swipeRefreshLayout;
     PagerIndicator indicator;
     ImageView tvArrow;
     CardView cvTentang, cvVisiMisi;
     public static boolean flag = false;
+    TextView cityField, currentTemperatureField, detailsField, weatherIcon, updatedField;
+    Typeface weatherFont;
+    String city = "Palembang, ID";
+    String OPEN_WEATHER_MAP_API = "2868da8f7b4fc2e07277a5dfed5368bd";
 
     public HomeFragment() {
-
     }
 
     public static HomeFragment newInstance() {
@@ -102,6 +117,14 @@ public class HomeFragment extends Fragment {
         cvTentang = v.findViewById(R.id.cv1);
         cvVisiMisi = v.findViewById(R.id.cv2);
         llProfil = v.findViewById(R.id.llProfil);
+        weatherIcon = v.findViewById(R.id.weather_icon);
+        weatherFont = Typeface.createFromAsset(Objects.requireNonNull(getActivity()).getAssets(), "fonts/weathericons-regular-webfont.ttf");
+        weatherIcon.setTypeface(weatherFont);
+        cityField = v.findViewById(R.id.city_field);
+        updatedField = v.findViewById(R.id.updated_field);
+        currentTemperatureField = v.findViewById(R.id.current_temperature_field);
+        detailsField = v.findViewById(R.id.details_field);
+        llweather = v.findViewById(R.id.ll_weather);
 
         //((AppCompatActivity) Objects.requireNonNull(getActivity())).setSupportActionBar(toolbar);
 
@@ -157,7 +180,7 @@ public class HomeFragment extends Fragment {
             }
 
 //            mSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOutSlide);
-            randomSlider();
+//            randomSlider();
             mSlider.setCustomIndicator(indicator);
             mSlider.setDuration(5000);
 
@@ -178,7 +201,7 @@ public class HomeFragment extends Fragment {
 //            cvTentang.setVisibility(View.VISIBLE);
 //            cvVisiMisi.setVisibility(View.VISIBLE);
             llProfil.setVisibility(View.VISIBLE);
-
+            taskLoadUp(city);
         } else {
             getAd();
         }
@@ -233,6 +256,61 @@ public class HomeFragment extends Fragment {
         });
 
         return v;
+    }
+
+    @SuppressLint("NewApi")
+    public void taskLoadUp(String query) {
+        if (Function.isNetworkAvailable(Objects.requireNonNull(getContext()))) {
+            DownloadWeather task = new DownloadWeather();
+            task.execute(query);
+        } else {
+//            Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Tidak terhubung ke Internet",
+//                    Snackbar.LENGTH_LONG).show();
+            llweather.setVisibility(View.GONE);
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    class DownloadWeather extends AsyncTask< String, Void, String > {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        protected String doInBackground(String...args) {
+            String xml = Function.excuteGet("http://api.openweathermap.org/data/2.5/weather?q=" + args[0] +
+                    "&units=metric&appid=" + OPEN_WEATHER_MAP_API);
+            return xml;
+        }
+        @SuppressLint("NewApi")
+        @Override
+        protected void onPostExecute(String xml) {
+
+            try {
+                JSONObject json = new JSONObject(xml);
+                if (json != null) {
+                    JSONObject details = json.getJSONArray("weather").getJSONObject(0);
+                    JSONObject main = json.getJSONObject("main");
+                    DateFormat df = DateFormat.getDateTimeInstance();
+
+                    llweather.setVisibility(View.VISIBLE);
+//                    cityField.setText(json.getString("name").toUpperCase(Locale.US) + ", " + json.getJSONObject("sys").getString("country"));
+                    cityField.setText("Muara Enim, Indonesia");
+                    detailsField.setText(details.getString("description").toUpperCase(Locale.US));
+                    currentTemperatureField.setText(String.format("%.1f", main.getDouble("temp")) + "°C");
+//                    humidity_field.setText("Humidity: " + main.getString("humidity") + "%");
+//                    pressure_field.setText("Pressure: " + main.getString("pressure") + " hPa");
+                    updatedField.setText(df.format(new Date(json.getLong("dt") * 1000)));
+                    weatherIcon.setText(Html.fromHtml(Function.setWeatherIcon(details.getInt("id"),
+                            json.getJSONObject("sys").getLong("sunrise") * 1000,
+                            json.getJSONObject("sys").getLong("sunset") * 1000)));
+
+                }
+            } catch (JSONException e) {
+//                Snackbar.make(Objects.requireNonNull(getActivity()).findViewById(android.R.id.content), "Kota "+ city+" tidak terdaftar",
+//                        Snackbar.LENGTH_LONG).show();
+                llweather.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void randomSlider() {
@@ -456,6 +534,8 @@ public class HomeFragment extends Fragment {
 //                        cvTentang.setVisibility(View.VISIBLE);
 //                        cvVisiMisi.setVisibility(View.VISIBLE);
                         llProfil.setVisibility(View.VISIBLE);
+//                        llweather.setVisibility(View.VISIBLE);
+                        taskLoadUp(city);
                         pDialog.dismiss();
 
                     } else {
@@ -520,6 +600,7 @@ public class HomeFragment extends Fragment {
 //                        cvTentang.setVisibility(View.VISIBLE);
 //                        cvVisiMisi.setVisibility(View.VISIBLE);
                         llProfil.setVisibility(View.VISIBLE);
+//                        llweather.setVisibility(View.VISIBLE);
                     }
                 }
             }
