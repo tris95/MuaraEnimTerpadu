@@ -100,21 +100,19 @@
                             android:id="@+id/custom_indicator"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginBottom="40dp"
                             android:gravity="center"
-                            app:selected_color="@color/colorPrimary"
-                            app:selected_height="6dp"
+                            app:selected_color="@color/colorOrange"
+                            app:unselected_color="@color/white"
+                            app:selected_height="15dp"
+                            app:selected_width="15dp"
+                            app:unselected_height="10dp"
+                            app:unselected_width="10dp"
+                            app:shape="oval"
                             app:selected_padding_left="5dp"
                             app:selected_padding_right="5dp"
-                            app:selected_width="6dp"
-                            app:shape="oval"
-                            app:unselected_color="#55333333"
-                            app:unselected_height="6dp"
                             app:unselected_padding_left="5dp"
                             app:unselected_padding_right="5dp"
-                            app:unselected_width="6dp" />
+                            android:layout_margin="17dp"/>
                     </RelativeLayout>
 
                     <LinearLayout
@@ -140,9 +138,10 @@
                                 android:id="@+id/weather_icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
+                                android:layout_gravity="center"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textSize="90sp"/>
+                                android:textSize="90sp"
+                                android:textColor="@color/colorDefault"/>
                             <!--<TextView-->
                             <!--android:layout_height="wrap_content"-->
                             <!--android:layout_width="wrap_content"-->
@@ -166,19 +165,21 @@
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textSize="28sp"
-                                android:textColor="@color/colorPrimary"/>
+                                android:textColor="@color/colorAccent"/>
                             <TextView
                                 android:id="@+id/updated_field"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:textSize="23sp" />
+                                android:textSize="23sp"
+                                android:textColor="@color/colorDefault"/>
                             <TextView
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:id="@+id/details_field"
-                                android:textSize="23sp" />
+                                android:textSize="23sp"
+                                android:textColor="@color/colorDefault"/>
                         </LinearLayout>
 
                         <TextView
@@ -188,7 +189,8 @@
                             android:layout_gravity="center"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:textSize="40sp"
-                            android:layout_weight="1.1"/>
+                            android:layout_weight="1.1"
+                            android:textColor="@color/colorDefault"/>
                     </LinearLayout>
 
                     <LinearLayout

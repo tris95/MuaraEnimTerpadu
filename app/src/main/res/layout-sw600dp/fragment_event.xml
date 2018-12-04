@@ -121,16 +121,16 @@
                 android:gravity="center"
                 app:selected_color="@color/colorOrange"
                 app:unselected_color="@color/white"
-                app:selected_height="10dp"
-                app:selected_width="10dp"
-                app:unselected_height="7dp"
-                app:unselected_width="7dp"
+                app:selected_height="15dp"
+                app:selected_width="15dp"
+                app:unselected_height="10dp"
+                app:unselected_width="10dp"
                 app:shape="oval"
-                app:selected_padding_left="3dp"
-                app:selected_padding_right="3dp"
-                app:unselected_padding_left="3dp"
-                app:unselected_padding_right="3dp"
-                android:layout_margin="7dp"/>
+                app:selected_padding_left="5dp"
+                app:selected_padding_right="5dp"
+                app:unselected_padding_left="5dp"
+                app:unselected_padding_right="5dp"
+                android:layout_margin="17dp"/>
         </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 

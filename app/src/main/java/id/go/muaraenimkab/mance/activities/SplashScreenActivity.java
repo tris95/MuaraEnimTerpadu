@@ -200,7 +200,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             try {
                 document = Jsoup.connect("https://play.google.com/store/apps/details?id=" + SplashScreenActivity.this.getPackageName() + "&hl=en")
-                        .timeout(30000)
+                        .timeout(3000)
                         .userAgent("Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36")
                         .get();
 

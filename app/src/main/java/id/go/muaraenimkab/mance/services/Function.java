@@ -12,9 +12,6 @@ import java.util.Date;
 
 public class Function {
 
-    // Project Created by Ferdousur Rahman Shajib
-    // www.androstock.com
-
     public static boolean isNetworkAvailable(Context context)
     {
         return ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() != null;

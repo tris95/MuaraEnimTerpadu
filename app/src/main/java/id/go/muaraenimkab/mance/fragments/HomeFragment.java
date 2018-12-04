@@ -31,6 +31,9 @@ import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.squareup.picasso.Picasso;
+//import com.synnapps.carouselview.CarouselView;
+//import com.synnapps.carouselview.ImageListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,6 +70,7 @@ public class HomeFragment extends Fragment {
     //Toolbar toolbar;
     View view;
     private SliderLayout mSlider;
+//    CarouselView carouselView;
     RelativeLayout rl, rlberita, rlslider;
     TextView lblBeritaselengkapnya, lblBeritaterbaru, tv_cobalagi, lblkonten;
     RecyclerView rvContent, rvBerita;
@@ -82,7 +86,7 @@ public class HomeFragment extends Fragment {
     public static boolean flag = false;
     TextView cityField, currentTemperatureField, detailsField, weatherIcon, updatedField;
     Typeface weatherFont;
-    String city = "Palembang, ID";
+    String city = "Lahat, ID";
     String OPEN_WEATHER_MAP_API = "2868da8f7b4fc2e07277a5dfed5368bd";
 
     public HomeFragment() {
@@ -131,6 +135,8 @@ public class HomeFragment extends Fragment {
 //        if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
 //            Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("Muara Enim Center");
 //        }
+
+//        carouselView = v.findViewById(R.id.carouselView);
 
         mSlider = v.findViewById(R.id.slider);
         rvContent = v.findViewById(R.id.rvContent);
@@ -258,6 +264,14 @@ public class HomeFragment extends Fragment {
         return v;
     }
 
+//    ImageListener imageListener = new ImageListener() {
+//        @Override
+//        public void setImageForPosition(int position, ImageView imageView) {
+////            imageView.setImageResource(MainActivity.ads[position]);
+//            Picasso.with(getContext()).load(Utilities.getURLImageIklan() + MainActivity.ads.get(position).getGambar_iklan()).into(imageView);
+//        }
+//    };
+
     @SuppressLint("NewApi")
     public void taskLoadUp(String query) {
         if (Function.isNetworkAvailable(Objects.requireNonNull(getContext()))) {
@@ -278,7 +292,7 @@ public class HomeFragment extends Fragment {
         }
         protected String doInBackground(String...args) {
             String xml = Function.excuteGet("http://api.openweathermap.org/data/2.5/weather?q=" + args[0] +
-                    "&units=metric&appid=" + OPEN_WEATHER_MAP_API);
+                    "&units=metric&lang=id&appid=" + OPEN_WEATHER_MAP_API);
             return xml;
         }
         @SuppressLint("NewApi")
@@ -313,44 +327,44 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void randomSlider() {
-        Random rand = new Random();
-        int n = rand.nextInt(16);
-//        Log.e("random", n+"");
-        if (n == 0) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOutSlide);
-        } else if (n == 1) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOut);
-        } else if (n == 2) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.Background2Foreground);
-        } else if (n == 3) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.ZoomIn);
-        } else if (n == 4) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        } else if (n == 5) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.CubeIn);
-        } else if (n == 6) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.Default);
-        } else if (n == 7) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.DepthPage);
-        } else if (n == 8) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.Fade);
-        } else if (n == 9) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.FlipHorizontal);
-        } else if (n == 10) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.FlipPage);
-        } else if (n == 11) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.Tablet);
-        } else if (n == 12) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.Stack);
-        } else if (n == 13) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.RotateUp);
-        } else if (n == 14) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.RotateDown);
-        } else if (n == 15) {
-            mSlider.setPresetTransformer(SliderLayout.Transformer.Foreground2Background);
-        }
-    }
+//    private void randomSlider() {
+//        Random rand = new Random();
+//        int n = rand.nextInt(16);
+////        Log.e("random", n+"");
+//        if (n == 0) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOutSlide);
+//        } else if (n == 1) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOut);
+//        } else if (n == 2) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.Background2Foreground);
+//        } else if (n == 3) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.ZoomIn);
+//        } else if (n == 4) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+//        } else if (n == 5) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.CubeIn);
+//        } else if (n == 6) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+//        } else if (n == 7) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.DepthPage);
+//        } else if (n == 8) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.Fade);
+//        } else if (n == 9) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.FlipHorizontal);
+//        } else if (n == 10) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.FlipPage);
+//        } else if (n == 11) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.Tablet);
+//        } else if (n == 12) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.Stack);
+//        } else if (n == 13) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.RotateUp);
+//        } else if (n == 14) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.RotateDown);
+//        } else if (n == 15) {
+//            mSlider.setPresetTransformer(SliderLayout.Transformer.Foreground2Background);
+//        }
+//    }
 
     private void getAd() {
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
@@ -408,6 +422,10 @@ public class HomeFragment extends Fragment {
                             mSlider.setDuration(4000);
 
                             rl.setVisibility(View.GONE);
+
+//                            carouselView.setImageListener(imageListener);
+//                            carouselView.setPageCount(listDataAd.size());
+
                             getContent(pDialog);
                         } else {
                             mSlider.setBackgroundResource(R.drawable.defaultimage);
