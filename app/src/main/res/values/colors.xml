@@ -2,7 +2,7 @@
 <resources>
     <!--<color name="colorPrimary">#41c300</color>-->
     <color name="colorPrimary">#509030</color>
-    <color name="colorPrimaryDark">#408020</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#1a9ea5</color>
     <color name="red">#ff0000</color>
     <color name="colorBackgroundLayout">#F1F8E9</color>
@@ -18,6 +18,8 @@
     <color name="colorGreen">#00c600</color>
 
     <color name="colorDefault">#757575</color>
+    <color name="selected">#509030</color>
+    <color name="unselected">#a19f9f</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#20d2bb</color>

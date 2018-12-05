@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ext="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +15,10 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:titleTextColor="@color/colorDefault"
+            android:theme="@style/ToolbarColoredBackArrow"/>
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
@@ -221,9 +224,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rlket"
-                    ext:documentView_textAlignment="justified"
-                    ext:documentView_textColor="@color/colorDefault"
-                    ext:documentView_textSize="26sp" />
+                    app:documentView_textAlignment="justified"
+                    app:documentView_textColor="@color/colorDefault"
+                    app:documentView_textSize="26sp" />
 
             </RelativeLayout>
         </LinearLayout>

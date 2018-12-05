@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="exitUntilCollapsed|scroll">
 
             <ImageView
@@ -40,8 +39,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:layout_collapseMode="pin" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -92,8 +90,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:src="@drawable/baseline_call_24"
-                    android:tint="@android:color/white"
-                    app:backgroundTint="@color/colorPrimary"
+                    android:tint="@color/colorAccent"
+                    app:backgroundTint="@color/white"
                     tools:ignore="RelativeOverlap" />
 
                 <!--<LinearLayout-->
@@ -113,7 +111,7 @@
                     android:background="@drawable/phone_background"
                     android:padding="10dp"
                     android:textSize="17sp"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/colorDefault" />
 
                 <!--<TextView-->
                 <!--android:id="@+id/lblnohp"-->

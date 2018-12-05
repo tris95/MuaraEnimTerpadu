@@ -126,6 +126,6 @@
             android:layout_marginBottom="15dp"
             android:background="@drawable/button_background"
             android:text="Kirim"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorDefault" />
     </LinearLayout>
 </ScrollView>

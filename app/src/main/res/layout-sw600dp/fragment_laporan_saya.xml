@@ -22,11 +22,11 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_above="@+id/ll"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="@android:color/darker_gray" />
+        android:background="@color/colorDivider" />
 
     <LinearLayout
         android:id="@+id/ll"
@@ -136,7 +136,6 @@
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:src="@drawable/nointernet"
-                android:tint="@android:color/darker_gray"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -180,7 +179,6 @@
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:src="@drawable/nointernet"
-                android:tint="@android:color/darker_gray"
                 tools:ignore="ContentDescription" />
 
             <TextView

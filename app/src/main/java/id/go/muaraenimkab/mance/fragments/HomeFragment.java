@@ -274,7 +274,7 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("NewApi")
     public void taskLoadUp(String query) {
-        if (Function.isNetworkAvailable(Objects.requireNonNull(getContext()))) {
+        if (Utilities.isNetworkAvailable(Objects.requireNonNull(getActivity()))) {
             DownloadWeather task = new DownloadWeather();
             task.execute(query);
         } else {

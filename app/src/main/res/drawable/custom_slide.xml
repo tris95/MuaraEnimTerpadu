@@ -16,6 +16,6 @@
         android:width="0dp"
         android:color="@color/colorPrimaryDark" />
 
-    <solid android:color="@color/colorPrimary" />
+    <solid android:color="@color/white" />
 
 </shape>

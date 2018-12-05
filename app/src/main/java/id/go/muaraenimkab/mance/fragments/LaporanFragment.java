@@ -77,7 +77,7 @@ public class LaporanFragment extends Fragment {
         tabLayout = v.findViewById(R.id.tabs);
         mViewPager = v.findViewById(R.id.container);
 
-        tabLayout.setTabTextColors(Color.parseColor("#E0E0E0"), Color.parseColor("#FFFFFF"));
+        tabLayout.setTabTextColors(Color.parseColor("#E0E0E0"), Color.parseColor("#1a9ea5"));
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         mViewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
 

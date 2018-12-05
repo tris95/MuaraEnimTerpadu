@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content"
         android:paddingLeft="30dp"
-        android:paddingRight="30dp">
+        android:paddingRight="30dp"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="210dp"
             android:layout_height="160dp"
-            android:layout_above="@+id/rl"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="60dp"
             android:scaleType="fitXY"
             android:src="@drawable/mance"
             tools:ignore="ContentDescription" />
@@ -49,7 +49,7 @@
                         android:layout_height="25dp"
                         android:layout_gravity="center"
                         android:src="@drawable/baseline_email_black_24dp"
-                        android:tint="@color/colorDefault"
+                        android:tint="@color/unselected"
                         tools:ignore="ContentDescription" />
 
                     <EditText
@@ -59,7 +59,6 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
-                        android:backgroundTint="@color/colorDefault"
                         android:hint="Alamat Email"
                         android:inputType="textEmailAddress"
                         android:textSize="24sp"
@@ -79,7 +78,7 @@
                         android:layout_height="25dp"
                         android:layout_gravity="center"
                         android:src="@drawable/baseline_lock_24"
-                        android:tint="@color/colorDefault"
+                        android:tint="@color/unselected"
                         tools:ignore="ContentDescription" />
 
                     <EditText
@@ -89,7 +88,6 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
-                        android:backgroundTint="@color/colorDefault"
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:textSize="24sp"
@@ -100,12 +98,12 @@
                     android:id="@+id/button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/button_background"
                     android:text="Masuk"
                     android:textSize="17sp"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/colorDefault"
+                    android:textAllCaps="false" />
                 <!--<TextView-->
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content"-->
@@ -189,7 +187,7 @@
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:visibility="gone" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <!--<com.facebook.login.widget.LoginButton-->
     <!--android:id="@+id/login_button"-->
@@ -200,13 +198,18 @@
     <!--android:layout_marginBottom="30dp"-->
     <!--android:visibility="gone"/>-->
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorDivider"
+        android:layout_above="@+id/ll_daftar"/>
+
     <LinearLayout
         android:id="@+id/ll_daftar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="15dp">
@@ -216,8 +219,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/belum_punya_akun"
-            android:textSize="24sp"
-            android:textColor="@android:color/white" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textView4"
@@ -226,6 +228,6 @@
             android:layout_gravity="center"
             android:text=" Daftar"
             android:textSize="24sp"
-            android:textColor="@android:color/white" />
+            android:textStyle="bold"/>
     </LinearLayout>
 </RelativeLayout>

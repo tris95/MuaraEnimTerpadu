@@ -246,10 +246,10 @@ public class DetailWisataFragment extends Fragment {
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                if (slideOffset < 0.7) {
+                if (slideOffset < 0.1) {
                     mapView.setAlpha((float) 1);
                     //    tb1.setVisibility(View.GONE);
-                } else if (slideOffset > 0.3) {
+                } else if (slideOffset > 0.1) {
                     mapView.setAlpha((float) 0.2);
                     //    tb1.setVisibility(View.VISIBLE);
                 }

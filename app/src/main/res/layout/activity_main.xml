@@ -10,7 +10,8 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation"></FrameLayout>
+        android:layout_above="@+id/bottom_navigation">
+    </FrameLayout>
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/bottom_navigation"
@@ -18,10 +19,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="start"
-        android:background="@color/white"
         app:elevation="16dp"
-        app:itemIconTint="@color/colorPrimary"
-        app:itemTextColor="@color/colorPrimary"
-        app:menu="@menu/navigation" />
+        app:menu="@menu/navigation"
+        android:background="@color/white"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/selector"
+        app:itemTextColor="@color/selector"/>
 
 </RelativeLayout>

@@ -16,7 +16,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
+            android:background="@color/white"
+            ext:titleTextColor="@color/colorDefault"
+            android:theme="@style/ToolbarColoredBackArrow"/>
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
@@ -39,7 +41,6 @@
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:src="@drawable/nointernet"
-                android:tint="@android:color/darker_gray"
                 tools:ignore="ContentDescription" />
 
             <TextView
