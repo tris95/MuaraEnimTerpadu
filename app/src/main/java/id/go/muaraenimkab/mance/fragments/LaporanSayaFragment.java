@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -101,8 +102,10 @@ public class LaporanSayaFragment extends Fragment {
         if (MainActivity.laporans.size() != 0) {
             if (flag != null) {
                 if (flag.equals("3")) {
-                    //getLaporan();
-                    getLaporanspik();
+                    if (id != null) {
+                        //getLaporan();
+                        getLaporanspik();
+                    }
                 } else {
                     linearLayoutManager = new LinearLayoutManager(getContext());
                     rView.setLayoutManager(linearLayoutManager);
@@ -116,8 +119,10 @@ public class LaporanSayaFragment extends Fragment {
                 rView.setAdapter(laporanViewAdapter);
             }
         } else {
-            //getLaporan();
-            getLaporanspik();
+            if (id != null) {
+                //getLaporan();
+                getLaporanspik();
+            }
         }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
