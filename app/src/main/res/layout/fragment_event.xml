@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorWhite"
+            android:theme="@style/ToolbarColoredBackArrow"
             app:titleTextColor="@color/colorDefault"/>
     </android.support.design.widget.AppBarLayout>
 
@@ -98,10 +99,10 @@
     <!--android:paddingBottom="@dimen/activity_margin"-->
     <!--android:paddingLeft="@dimen/activity_margin">-->
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+        <!--android:id="@+id/swipeRefresh"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -111,27 +112,28 @@
                 android:id="@+id/rvEvent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal" />
+                android:orientation="vertical" />
 
-            <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-                android:id="@+id/indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                app:selected_color="@color/colorOrange"
-                app:unselected_color="@color/white"
-                app:selected_height="10dp"
-                app:selected_width="10dp"
-                app:unselected_height="7dp"
-                app:unselected_width="7dp"
-                app:shape="oval"
-                app:selected_padding_left="3dp"
-                app:selected_padding_right="3dp"
-                app:unselected_padding_left="3dp"
-                app:unselected_padding_right="3dp"
-                android:layout_margin="7dp"/>
+            <!--<ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator-->
+                <!--android:id="@+id/indicator"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--app:selected_color="@color/colorOrange"-->
+                <!--app:unselected_color="@color/white"-->
+                <!--app:selected_height="10dp"-->
+                <!--app:selected_width="10dp"-->
+                <!--app:unselected_height="7dp"-->
+                <!--app:unselected_width="7dp"-->
+                <!--app:shape="oval"-->
+                <!--app:selected_padding_left="3dp"-->
+                <!--app:selected_padding_right="3dp"-->
+                <!--app:unselected_padding_left="3dp"-->
+                <!--app:unselected_padding_right="3dp"-->
+                <!--android:layout_margin="7dp"-->
+                <!--android:visibility="gone"/>-->
         </RelativeLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
     <!--</RelativeLayout>-->
 

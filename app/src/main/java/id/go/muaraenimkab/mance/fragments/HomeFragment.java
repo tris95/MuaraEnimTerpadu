@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -190,10 +191,16 @@ public class HomeFragment extends Fragment {
             mSlider.setCustomIndicator(indicator);
             mSlider.setDuration(5000);
 
-            linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-            rvContent.setLayoutManager(linearLayoutManagercontent);
-            ContentViewAdapter contentViewAdapter = new ContentViewAdapter(getContext(), (ArrayList<Content>) MainActivity.contents);
-            rvContent.setAdapter(contentViewAdapter);
+//            linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+//            rvContent.setLayoutManager(linearLayoutManagercontent);
+//            ContentViewAdapter contentViewAdapter = new ContentViewAdapter(getContext(), (ArrayList<Content>) MainActivity.contents);
+//            rvContent.setAdapter(contentViewAdapter);
+
+            rvContent.setHasFixedSize(true);
+            rvContent.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+            ContentViewAdapter rcAdapter = new ContentViewAdapter(getActivity(), (ArrayList<Content>) MainActivity.contents);
+            rvContent.setAdapter(rcAdapter);
+
 
             linearLayoutManagerberita = new LinearLayoutManager(getContext());
             rvBerita.setLayoutManager(linearLayoutManagerberita);
@@ -482,10 +489,15 @@ public class HomeFragment extends Fragment {
                         MainActivity.contents.clear();
                         MainActivity.contents = mListContent;
 
-                        linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                        rvContent.setLayoutManager(linearLayoutManagercontent);
-                        ContentViewAdapter contentViewAdapter = new ContentViewAdapter(getContext(), mListContent);
-                        rvContent.setAdapter(contentViewAdapter);
+//                        linearLayoutManagercontent = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+//                        rvContent.setLayoutManager(linearLayoutManagercontent);
+//                        ContentViewAdapter contentViewAdapter = new ContentViewAdapter(getContext(), mListContent);
+//                        rvContent.setAdapter(contentViewAdapter);
+
+                        rvContent.setHasFixedSize(true);
+                        rvContent.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+                        ContentViewAdapter rcAdapter = new ContentViewAdapter(getActivity(), (ArrayList<Content>) MainActivity.contents);
+                        rvContent.setAdapter(rcAdapter);
 
                         rl.setVisibility(View.GONE);
 

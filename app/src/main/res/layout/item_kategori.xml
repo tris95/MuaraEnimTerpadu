@@ -45,9 +45,7 @@
                 android:layout_below="@+id/rlimgkategori"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="-20dp"
-                android:background="@color/colorDivider"
-                android:padding="5dp">
+                android:padding="7dp">
 
                 <TextView
                     android:id="@+id/lbljudulkategori"

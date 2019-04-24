@@ -17,6 +17,11 @@
     <color name="colorBlue">#0000ff</color>
     <color name="colorGreen">#00c600</color>
 
+    <color name="colorYellowFestival">#ff009c</color>
+    <color name="colorBlueFestival">#00aeef</color>
+    <color name="colorOrangeFestival">#f7941d</color>
+    <color name="coloGreenFestival">#39c040</color>
+
     <color name="colorDefault">#757575</color>
     <color name="selected">#509030</color>
     <color name="unselected">#a19f9f</color>

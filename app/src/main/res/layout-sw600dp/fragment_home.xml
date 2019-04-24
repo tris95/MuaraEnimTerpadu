@@ -215,7 +215,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="10dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"/>
                     </LinearLayout>
@@ -233,7 +233,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="25dp"
                         android:visibility="gone">
                         <TextView
                             android:id="@+id/lblprofil"
@@ -252,7 +252,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:gravity="center_horizontal"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="10dp"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp">
 
@@ -310,7 +310,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:visibility="gone">
 
                         <TextView
@@ -364,8 +364,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp" />
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
         </RelativeLayout>

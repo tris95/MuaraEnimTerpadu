@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,10 +83,18 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
             Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
             final DisplayMetrics outMetrics = new DisplayMetrics();
             display.getMetrics(outMetrics);
-            int viewPagerWidth = Math.round(outMetrics.widthPixels) / 3;
-            int viewPagerHeight = Math.round(outMetrics.widthPixels) / 4;
+            int viewPagerWidth = Math.round(outMetrics.widthPixels)/4;
+//            int viewPagerHeight = viewPagerWidth + (viewPagerWidth/4);
 
-            rl.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth+30, viewPagerHeight));
+            rl.setLayoutParams(new LinearLayout.LayoutParams(viewPagerWidth+10, viewPagerWidth));
+
+//            Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
+//            final DisplayMetrics outMetrics = new DisplayMetrics();
+//            display.getMetrics(outMetrics);
+//            int viewPagerWidth = Math.round(outMetrics.widthPixels) / 3;
+//            int viewPagerHeight = Math.round(outMetrics.widthPixels) / 4;
+//
+//            rl.setLayoutParams(new RelativeLayout.LayoutParams(viewPagerWidth+30, viewPagerHeight));
             //content.setTextSize(TypedValue.COMPLEX_UNIT_SP,Width/44);
         }
     }

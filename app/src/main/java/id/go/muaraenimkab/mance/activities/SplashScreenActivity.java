@@ -48,53 +48,52 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.splash_screen);
         textView = findViewById(R.id.tvVersion);
 
-        PackageManager packageManager = SplashScreenActivity.this.getPackageManager();
-        String packageName = SplashScreenActivity.this.getPackageName();
-        myVersionCode = "null";
-
-        try {
-            myVersionCode = String.valueOf(packageManager.getPackageInfo(packageName, 0).versionName);
-            textView.setText(myVersionCode);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-//        splashTread = new Thread() {
-//            @Override
-//            public void run() {
-//                try {
-//                    int waited = 0;
-//                    while (waited < 1500) {
-//                        sleep(100);
-//                        waited += 100;
-//                    }
-//                    if (!Utilities.isFirstLaunch(SplashScreenActivity.this)) {
-//                        Utilities.setFirstLaunch(SplashScreenActivity.this);
-//                    }
+//        PackageManager packageManager = SplashScreenActivity.this.getPackageManager();
+//        String packageName = SplashScreenActivity.this.getPackageName();
+//        myVersionCode = "null";
 //
-//                    Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class)
-//                            .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                    startActivity(intent);
-//                    finish();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    finish();
-//                }
-//            }
-//        };
-//        splashTread.start();
+//        try {
+//            myVersionCode = String.valueOf(packageManager.getPackageInfo(packageName, 0).versionName);
+//            textView.setText(myVersionCode);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
-        if (!Utilities.isFirstLaunch(SplashScreenActivity.this)) {
-            Utilities.setFirstLaunch(SplashScreenActivity.this);
-        }
+        Thread splashTread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    int waited = 0;
+                    while (waited < 1500) {
+                        sleep(100);
+                        waited += 100;
+                    }
+                    if (!Utilities.isFirstLaunch(SplashScreenActivity.this)) {
+                        Utilities.setFirstLaunch(SplashScreenActivity.this);
+                    }
 
+                    Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
+                    finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    finish();
+                }
+            }
+        };
+        splashTread.start();
+
+//        if (!Utilities.isFirstLaunch(SplashScreenActivity.this)) {
+//            Utilities.setFirstLaunch(SplashScreenActivity.this);
+//        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        new VersionChecker().execute();
+//        new VersionChecker().execute();
     }
 
     @Override
@@ -224,7 +223,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            Log.e("version", myVersionCode + " " + newVersion);
+            Log.e("version", myVersionCode + " " + newVersion + d.body());
 
             if (Utilities.isNetworkAvailable(SplashScreenActivity.this)) {
                 if (!myVersionCode.equalsIgnoreCase(newVersion)) {
